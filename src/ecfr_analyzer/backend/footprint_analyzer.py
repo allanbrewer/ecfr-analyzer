@@ -2,16 +2,13 @@
 Footprint analyzer for eCFR data, focusing on specific keyword patterns.
 """
 
-import json
 import logging
 import re
 import time
 from datetime import datetime
-from typing import Dict, List, Set, Tuple, Any
 from collections import defaultdict, Counter
 
 from ecfr_analyzer.backend.base_analyzer import BaseECFRAnalyzer
-from ecfr_analyzer.backend.word_count_analyzer import WordCountAnalyzer
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -114,14 +111,11 @@ class FootprintAnalyzer(BaseECFRAnalyzer):
         matches = pattern.findall(text.lower())
         return Counter(matches)
 
-    def _footprint_analysis_function(
-        self, agency_slug, ref_key, ref_text, ref_desc, pattern
-    ):
+    def _footprint_analysis_function(self, agency_slug, ref_text, ref_desc, pattern):
         """Analysis function for keyword footprint.
 
         Args:
             agency_slug: Agency slug
-            ref_key: Reference key
             ref_text: Extracted text for the reference
             ref_desc: Description of the reference
             pattern: Compiled regex pattern for keywords
@@ -153,102 +147,79 @@ class FootprintAnalyzer(BaseECFRAnalyzer):
         }
 
     def analyze_keyword_footprint(self, keywords, footprint_name):
-        """Analyze footprint of specific keywords by agency.
-
-        Args:
-            keywords: Set of keywords to search for
-            footprint_name: Name of the footprint for logging and output
-
-        Returns:
-            Dictionary with footprint data by agency
-        """
-        start_time = time.time()
-        logger.info(f"Starting {footprint_name} footprint analysis...")
-
+        """Analyze footprint of specific keywords by agency."""
         # Compile regex pattern once for efficiency
         pattern = self._compile_regex_pattern(keywords)
 
-        # Create a function that includes our pattern
-        def analysis_function(agency_slug, ref_key, ref_text, ref_desc):
-            return self._footprint_analysis_function(
-                agency_slug, ref_key, ref_text, ref_desc, pattern
+        logger.info(f"Starting {footprint_name} footprint analysis...")
+        start_time = time.time()
+
+        # Process agency references with footprint analysis function
+        agency_ref_matches = self._process_agency_references(
+            lambda agency_slug, ref_text, ref_desc: self._footprint_analysis_function(
+                agency_slug, ref_text, ref_desc, pattern
             )
+        )
 
-        # Process agency references with footprint analysis
-        agency_ref_footprints = self._process_agency_references(analysis_function)
-
-        # Get word count data for relative calculations
-        if not hasattr(self, "word_count_data") or not self.word_count_data:
-            # Initialize word count analyzer if needed
-            if not self.word_count_analyzer:
-                self.word_count_analyzer = WordCountAnalyzer()
-                self.word_count_data = (
-                    self.word_count_analyzer.analyze_word_count_by_agency()
-                )
-            else:
-                self.word_count_data = self.word_count_analyzer.word_count_data
-
-        # Calculate totals and relative values for each agency
+        # Calculate totals for each agency
         agency_totals = defaultdict(int)
-        agency_relative = {}
-
-        for agency_slug, ref_footprints in agency_ref_footprints.items():
-            # Sum up all matches for this agency
-            total_matches = sum(
-                data["total_matches"] for data in ref_footprints.values()
+        for agency_slug, ref_matches in agency_ref_matches.items():
+            agency_totals[agency_slug] = sum(
+                data["total_matches"] for data in ref_matches.values() if data
             )
-            agency_totals[agency_slug] = total_matches
 
-            # Calculate relative footprint (matches per 10,000 words)
-            agency_word_count = (
-                self.word_count_data.get("agencies", {})
-                .get(agency_slug, {})
-                .get("total", 0)
-            )
-            if agency_word_count > 0:
-                relative_value = (total_matches / agency_word_count) * 10000
-                agency_relative[agency_slug] = round(relative_value, 2)
-            else:
-                agency_relative[agency_slug] = 0
+        # Calculate the unique total (avoiding double-counting)
+        title_totals = defaultdict(int)
+        counted_refs = set()
 
-        # Prepare the final results
+        for agency_slug, ref_matches in agency_ref_matches.items():
+            for ref_key, ref_data in ref_matches.items():
+                if ref_data and ref_key not in counted_refs:
+                    title_num = ref_key[0]  # Title is first element in the tuple
+                    title_totals[title_num] += ref_data["total_matches"]
+                    counted_refs.add(ref_key)
+
+        # Prepare the agency data structure for the roll-up function
+        agency_data = {
+            agency_slug: {
+                "total": agency_totals[agency_slug],
+                "references": {
+                    ref_key: ref_data
+                    for ref_key, ref_data in ref_matches.items()
+                    if ref_data  # Only include non-None data
+                },
+            }
+            for agency_slug, ref_matches in agency_ref_matches.items()
+        }
+
+        # Roll up child agency data to parent agencies
+        rolled_up_agency_data = self._roll_up_agency_totals(
+            agency_data, metric_key="total", ref_data_key="total_matches"
+        )
+
+        # Prepare the final footprint data
         footprint_data = {
             "timestamp": datetime.now().isoformat(),
             "footprint_name": footprint_name,
-            "total_matches": sum(agency_totals.values()),
-            "agencies": {
-                slug: {
-                    "total_matches": agency_totals[slug],
-                    "relative_per_10k_words": agency_relative.get(slug, 0),
-                    "references": {
-                        f"{data['description']}": {
-                            "total_matches": data["total_matches"],
-                            "keyword_matches": data["keyword_matches"],
-                        }
-                        for ref_key, data in ref_footprints.items()
-                    },
-                }
-                for slug, ref_footprints in agency_ref_footprints.items()
-            },
+            "keywords": list(keywords),
+            "total_matches": sum(title_totals.values()),
+            "title_totals": dict(title_totals),
+            "agencies": rolled_up_agency_data,
         }
 
         total_time = time.time() - start_time
         logger.info(
-            f"Total {footprint_name} footprint analysis took {total_time:.2f} seconds"
+            f"{footprint_name} footprint analysis took {total_time:.2f} seconds"
         )
         logger.info(
-            f"Total {footprint_name} matches across all agencies: {footprint_data['total_matches']}"
+            f"Total {footprint_name} footprint: {footprint_data['total_matches']}"
         )
 
         # Save the results
+        filename = f"{footprint_name.lower()}_footprint.json"
         self._save_analysis_results(
-            footprint_data,
-            f"{footprint_name}_footprint.json",
-            f"{footprint_name} footprint",
+            footprint_data, filename, f"{footprint_name} footprint"
         )
-
-        # Store for future reference
-        self.footprint_results[footprint_name] = footprint_data
 
         return footprint_data
 

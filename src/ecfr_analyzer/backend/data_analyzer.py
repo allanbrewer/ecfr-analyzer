@@ -5,16 +5,12 @@ historical changes, DEI footprint, and bureaucracy metrics.
 
 import logging
 import json
-import re
-from collections import Counter, defaultdict
+
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Set
-from bs4 import BeautifulSoup
+from typing import Dict, List
 import time
-
-import nltk
-from tqdm import tqdm
 
 # Configure logging
 logging.basicConfig(
@@ -252,43 +248,78 @@ class ECFRDataAnalyzer:
         logger.info("Starting word count analysis by agency...")
         result = self.word_count_analyzer.analyze_word_count_by_agency()
         self.analysis_results["word_count"] = result
-        return result
-
-    def analyze_bureaucracy_footprint(self):
-        """Analyze bureaucratic language by agency."""
-        logger.info("Starting bureaucracy footprint analysis...")
-        result = self.footprint_analyzer.analyze_keyword_footprint(
-            BUREAUCRACY_WORDS, "bureaucracy"
-        )
-        self.analysis_results["bureaucracy_footprint"] = result
-        return result
 
     def analyze_dei_footprint(self):
-        """Analyze DEI language by agency."""
-        logger.info("Starting DEI footprint analysis...")
-        result = self.footprint_analyzer.analyze_keyword_footprint(DEI_WORDS, "dei")
+        """Analyze DEI footprint for each agency.
+
+        Returns:
+            Dictionary with DEI footprint data
+        """
+        # Get DEI keywords
+        dei_keywords = self.get_dei_keywords()
+
+        # Initialize footprint analyzer if needed
+        if not self.footprint_analyzer:
+            self.footprint_analyzer = FootprintAnalyzer()
+
+        # Run the analysis
+        result = self.footprint_analyzer.analyze_keyword_footprint(dei_keywords, "DEI")
         self.analysis_results["dei_footprint"] = result
+
+    def analyze_bureaucracy_footprint(self):
+        """Analyze bureaucracy footprint for each agency.
+
+        Returns:
+            Dictionary with bureaucracy footprint data
+        """
+        # Get bureaucracy keywords
+        bureaucracy_keywords = self.get_bureaucracy_keywords()
+
+        # Initialize footprint analyzer if needed
+        if not self.footprint_analyzer:
+            self.footprint_analyzer = FootprintAnalyzer()
+
+        # Run the analysis
+        result = self.footprint_analyzer.analyze_keyword_footprint(
+            bureaucracy_keywords, "Bureaucracy"
+        )
+        self.analysis_results["bureaucracy_footprint"] = result
+
+    def analyze_custom_footprint(self, keywords, footprint_name):
+        """Analyze custom keyword footprint for each agency.
+
+        Args:
+            keywords: Set of keywords to search for
+            footprint_name: Name of the footprint for reporting
+
+        Returns:
+            Dictionary with custom footprint data
+        """
+        # Initialize footprint analyzer if needed
+        if not self.footprint_analyzer:
+            self.footprint_analyzer = FootprintAnalyzer()
+
+        # Run the analysis
+        result = self.footprint_analyzer.analyze_keyword_footprint(
+            keywords, footprint_name
+        )
+        self.analysis_results[footprint_name.lower() + "_footprint"] = result
         return result
 
     def run_all_analyses(self):
         """Run all analyses and compile results."""
-        logger.info("Starting analysis of eCFR data...")
+        logger.info("Running all analyses...")
+        start_time = time.time()
 
-        # Word count must be run first as the footprint analysis depends on it
-        logger.info("Analyzing word count by agency...")
+        # Run each analysis
         self.analyze_word_count_by_agency()
-
-        logger.info("Analyzing DEI footprint...")
         self.analyze_dei_footprint()
-
-        logger.info("Analyzing bureaucracy footprint...")
         self.analyze_bureaucracy_footprint()
 
-        # Compile all results
-        summary = {
+        # Compile summary
+        self.summary = {
             "timestamp": datetime.now().isoformat(),
-            "analyses_completed": list(self.analysis_results.keys()),
-            "key_stats": {
+            "totals": {
                 "total_word_count": self.analysis_results.get("word_count", {}).get(
                     "total_word_count", 0
                 ),
@@ -304,10 +335,13 @@ class ECFRDataAnalyzer:
         # Save summary
         summary_file = self.analysis_dir / "analysis_summary.json"
         with open(summary_file, "w") as f:
-            json.dump(summary, f, indent=2)
+            json.dump(self.summary, f, indent=2)
 
+        # Log total time
+        total_time = time.time() - start_time
         logger.info(f"Analysis complete. Summary written to {summary_file}")
-        return summary
+        logger.info(f"Total analysis time: {total_time:.2f} seconds")
+        return self.summary
 
 
 def main():
@@ -322,13 +356,11 @@ def main():
     analyzer = ECFRDataAnalyzer()
     summary = analyzer.run_all_analyses()
 
-    logger.info(f"Analysis complete with {len(summary['analyses_completed'])} analyses")
-    logger.info(f"Total word count: {summary['key_stats']['total_word_count']} words")
+    logger.info(f"Analysis complete with {len(summary['totals'])} analyses")
+    logger.info(f"Total word count: {summary['totals']['total_word_count']} words")
+    logger.info(f"Total DEI matches: {summary['totals']['total_dei_matches']} matches")
     logger.info(
-        f"Total DEI matches: {summary['key_stats']['total_dei_matches']} matches"
-    )
-    logger.info(
-        f"Total bureaucracy matches: {summary['key_stats']['total_bureaucracy_matches']} matches"
+        f"Total bureaucracy matches: {summary['totals']['total_bureaucracy_matches']} matches"
     )
 
 

@@ -4,12 +4,11 @@ Base analyzer for eCFR data, providing shared functionality for different analys
 
 import json
 import logging
-import re
 import time
-from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple, Any
+from typing import Dict, List
 from collections import defaultdict
+import copy
 
 from bs4 import BeautifulSoup
 from tqdm import tqdm
@@ -110,6 +109,8 @@ class BaseECFRAnalyzer:
             Dictionary mapping agency slugs to lists of CFR reference dictionaries
         """
         references = {}
+        count_parent = 0
+        count_child = 0
 
         # Process top-level agencies
         for agency in self.agencies_data.get("agencies", []):
@@ -117,21 +118,19 @@ class BaseECFRAnalyzer:
             if not agency_slug:
                 continue
 
-            logger.info(f"Processing agency: {agency_slug} - {agency.get('name', '')}")
+            count_parent += 1
 
             # Get references for this agency
             agency_refs = agency.get("cfr_references", [])
             references[agency_slug] = agency_refs
 
             # Process child agencies if any
-            for child in agency.get("child_agencies", []):
+            for child in agency.get("children", []):
                 child_slug = child.get("slug", "")
                 if not child_slug:
                     continue
 
-                logger.info(
-                    f"Processing child agency: {child_slug} - {child.get('name', '')}"
-                )
+                count_child += 1
 
                 # Get references for this child agency
                 child_refs = child.get("cfr_references", [])
@@ -139,6 +138,9 @@ class BaseECFRAnalyzer:
 
         logger.info(
             f"Found {sum(len(refs) for refs in references.values())} CFR references across {len(references)} agencies"
+        )
+        logger.info(
+            f"Total of {count_parent} parent agencies and {count_child} child agencies"
         )
         return references
 
@@ -157,7 +159,7 @@ class BaseECFRAnalyzer:
                 continue
 
             # Map each child to this parent
-            for child in agency.get("child_agencies", []):
+            for child in agency.get("children", []):
                 child_slug = child.get("slug", "")
                 if child_slug:
                     hierarchy[child_slug] = parent_slug
@@ -362,7 +364,7 @@ class BaseECFRAnalyzer:
 
         Args:
             analysis_function: Function that processes extracted text and returns results
-                The function should accept (agency_slug, ref_key, ref_text, ref_desc)
+                The function should accept (agency_slug, ref_text, ref_desc)
 
         Returns:
             Analysis results organized by agency
@@ -393,7 +395,6 @@ class BaseECFRAnalyzer:
 
         # Step 3: Initialize data structures
         agency_results = defaultdict(dict)
-        agency_hierarchy = self._build_agency_hierarchy()
         processed_title_agency_pairs = (
             set()
         )  # Track processed pairs to avoid duplicates
@@ -434,9 +435,7 @@ class BaseECFRAnalyzer:
                     if ref_key in self.extracted_text_cache:
                         ref_text, ref_desc = self.extracted_text_cache[ref_key]
                         # Apply the analysis function
-                        result = analysis_function(
-                            agency_slug, ref_key, ref_text, ref_desc
-                        )
+                        result = analysis_function(agency_slug, ref_text, ref_desc)
                         if result:
                             agency_results[agency_slug][ref_key] = result
                     continue
@@ -451,7 +450,7 @@ class BaseECFRAnalyzer:
 
                 # Apply the analysis function if we have text
                 if ref_text:
-                    result = analysis_function(agency_slug, ref_key, ref_text, ref_desc)
+                    result = analysis_function(agency_slug, ref_text, ref_desc)
                     if result:
                         agency_results[agency_slug][ref_key] = result
 
@@ -483,3 +482,162 @@ class BaseECFRAnalyzer:
             json.dump(results, f, indent=2)
 
         logger.info(f"Saved {analysis_type} results to {output_file}")
+
+    def _roll_up_agency_totals(
+        self, agency_data, metric_key="total", ref_data_key=None
+    ):
+        """Roll up totals from child agencies to parent agencies while avoiding double-counting.
+
+        This function takes a dictionary of agency data with metrics and references,
+        and calculates aggregated totals for parent agencies based on their children.
+        It avoids double-counting by tracking which references have already been counted.
+
+        Args:
+            agency_data: Dictionary mapping agency slugs to their metric data
+            metric_key: The key in the agency data dictionary that contains the metric to sum up
+                        (e.g., "total" for word count, "total_matches" for footprint analysis)
+            ref_data_key: Optional key within reference data that contains the metric
+                         (e.g., "count" for word count, "total_matches" for footprint)
+
+        Returns:
+            Dictionary with updated totals for all agencies, with parent agencies
+            including aggregated data from their children
+        """
+        logger.info("Rolling up agency totals to include child agencies...")
+        start_time = time.time()
+
+        # Build agency hierarchy if not already built
+        agency_hierarchy = self._build_agency_hierarchy()
+
+        # Create a mapping from parent agencies to their children
+        parent_to_children = defaultdict(list)
+        for child, parent in agency_hierarchy.items():
+            parent_to_children[parent].append(child)
+
+        # Make a copy of the original data to avoid modifying it in place
+        updated_agency_data = copy.deepcopy(agency_data)
+
+        # First, collect all references for each agency to avoid double-counting
+        agency_refs = {}
+        for agency_slug, data in updated_agency_data.items():
+            if "references" in data:
+                agency_refs[agency_slug] = set(data["references"].keys())
+            else:
+                agency_refs[agency_slug] = set()
+
+        # Process each parent agency
+        for parent_agency, child_agencies in parent_to_children.items():
+            # Skip if parent agency is not in the data
+            if parent_agency not in updated_agency_data:
+                continue
+
+            # Track references we've already counted for this parent
+            counted_refs = set(agency_refs.get(parent_agency, set()))
+
+            # Calculate additional metrics from children
+            for child_agency in child_agencies:
+                # Skip if child agency is not in the data
+                if child_agency not in updated_agency_data:
+                    continue
+
+                # Get child's references we haven't counted yet for the parent
+                child_refs = agency_refs.get(child_agency, set())
+                new_refs = child_refs - counted_refs
+
+                # Add child's data to parent for new references
+                for ref_key in new_refs:
+                    # Skip if child doesn't have data for this reference
+                    if "references" not in updated_agency_data[child_agency]:
+                        continue
+                    if ref_key not in updated_agency_data[child_agency]["references"]:
+                        continue
+
+                    # Add reference to parent if it doesn't exist
+                    if "references" not in updated_agency_data[parent_agency]:
+                        updated_agency_data[parent_agency]["references"] = {}
+                    if ref_key not in updated_agency_data[parent_agency]["references"]:
+                        updated_agency_data[parent_agency]["references"][ref_key] = {}
+
+                    # Add the reference metric to parent total
+                    child_ref_data = updated_agency_data[child_agency]["references"][
+                        ref_key
+                    ]
+
+                    # If ref_data_key is provided, use it to get the specific metric
+                    if ref_data_key:
+                        if ref_data_key not in child_ref_data:
+                            continue
+
+                        # Initialize the metric in parent if needed
+                        if (
+                            ref_key
+                            not in updated_agency_data[parent_agency]["references"]
+                        ):
+                            updated_agency_data[parent_agency]["references"][
+                                ref_key
+                            ] = {}
+                        if (
+                            ref_data_key
+                            not in updated_agency_data[parent_agency]["references"][
+                                ref_key
+                            ]
+                        ):
+                            updated_agency_data[parent_agency]["references"][ref_key][
+                                ref_data_key
+                            ] = 0
+
+                        # Add the metric value to parent
+                        updated_agency_data[parent_agency]["references"][ref_key][
+                            ref_data_key
+                        ] += child_ref_data[ref_data_key]
+
+                        # Update parent's total
+                        if metric_key not in updated_agency_data[parent_agency]:
+                            updated_agency_data[parent_agency][metric_key] = 0
+                        updated_agency_data[parent_agency][
+                            metric_key
+                        ] += child_ref_data[ref_data_key]
+                    else:
+                        # If no ref_data_key, just add the entire reference data to parent
+                        updated_agency_data[parent_agency]["references"][
+                            ref_key
+                        ] = child_ref_data
+
+                        # Update parent's total if there's a metric to add
+                        if (
+                            metric_key in child_ref_data
+                            and metric_key in updated_agency_data[parent_agency]
+                        ):
+                            updated_agency_data[parent_agency][
+                                metric_key
+                            ] += child_ref_data[metric_key]
+
+                # Mark these references as counted
+                counted_refs.update(new_refs)
+
+        # Calculate the new totals for each agency based on their references
+        for agency_slug in updated_agency_data:
+            if "references" in updated_agency_data[agency_slug]:
+                if ref_data_key:
+                    # Sum up the specific metric from each reference
+                    updated_agency_data[agency_slug][metric_key] = sum(
+                        ref_data.get(ref_data_key, 0)
+                        for ref_data in updated_agency_data[agency_slug][
+                            "references"
+                        ].values()
+                        if ref_data_key in ref_data
+                    )
+                else:
+                    # Sum up the main metric from each reference
+                    updated_agency_data[agency_slug][metric_key] = sum(
+                        ref_data.get(metric_key, 0)
+                        for ref_data in updated_agency_data[agency_slug][
+                            "references"
+                        ].values()
+                        if metric_key in ref_data
+                    )
+
+        total_time = time.time() - start_time
+        logger.info(f"Completed agency rollup in {total_time:.2f} seconds")
+
+        return updated_agency_data

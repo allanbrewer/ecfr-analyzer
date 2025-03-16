@@ -2,13 +2,11 @@
 Word count analyzer for eCFR data.
 """
 
-import json
 import logging
 import re
 import nltk
 import time
 from datetime import datetime
-from typing import Dict, List, Set, Tuple
 from collections import defaultdict
 
 from ecfr_analyzer.backend.base_analyzer import BaseECFRAnalyzer
@@ -130,12 +128,11 @@ class WordCountAnalyzer(BaseECFRAnalyzer):
                 word for word in text.split() if word and word not in self.stopwords
             ]
 
-    def _word_count_analysis_function(self, agency_slug, ref_key, ref_text, ref_desc):
+    def _word_count_analysis_function(self, agency_slug, ref_text, ref_desc):
         """Analysis function for word counting.
 
         Args:
             agency_slug: Agency slug
-            ref_key: Reference key
             ref_text: Extracted text for the reference
             ref_desc: Description of the reference
 
@@ -157,14 +154,12 @@ class WordCountAnalyzer(BaseECFRAnalyzer):
         }
 
     def analyze_word_count_by_agency(self):
-        """Analyze word count for each agency based on their specific CFR references.
-
-        Calculates word counts for each agency, tracking specific references to
-        titles, chapters, parts, etc., and organizing by agency hierarchy.
+        """Analyze word count for each agency based on their CFR references.
 
         Returns:
             Dictionary with word count data by agency
         """
+        logger.info("Starting word count analysis by agency...")
         start_time = time.time()
 
         # Process agency references with word count analysis
@@ -175,32 +170,53 @@ class WordCountAnalyzer(BaseECFRAnalyzer):
         # Calculate totals for each agency
         agency_totals = defaultdict(int)
         for agency_slug, ref_counts in agency_ref_counts.items():
-            # Sum up all reference counts for this agency
             agency_totals[agency_slug] = sum(
                 data["count"] for data in ref_counts.values()
             )
 
-        # Prepare the final results
+        # Calculate the unique total (avoiding double-counting)
+        title_totals = defaultdict(int)
+        # Track which references we've counted for the global total
+        counted_refs = set()
+
+        for agency_slug, ref_counts in agency_ref_counts.items():
+            for ref_key, ref_data in ref_counts.items():
+                # Only count each reference once for the global total
+                if ref_key not in counted_refs:
+                    title_num = ref_key[0]  # Title is first element in the tuple
+                    title_totals[title_num] += ref_data["count"]
+                    counted_refs.add(ref_key)
+
+        # Calculate the total word count across all agencies
+        total_word_count = sum(title_totals.values())
+
+        # Prepare the agency data structure for the roll-up function
+        agency_data = {
+            agency_slug: {
+                "total": agency_totals[agency_slug],
+                "references": {
+                    ref_key: ref_data for ref_key, ref_data in ref_counts.items()
+                },
+            }
+            for agency_slug, ref_counts in agency_ref_counts.items()
+        }
+
+        # Roll up child agency data to parent agencies
+        rolled_up_agency_data = self._roll_up_agency_totals(
+            agency_data, metric_key="total", ref_data_key="count"
+        )
+
+        # Prepare the final word count data
         word_count_data = {
             "timestamp": datetime.now().isoformat(),
-            "total_word_count": sum(agency_totals.values()),
-            "agencies": {
-                slug: {
-                    "total": agency_totals[slug],
-                    "references": {
-                        f"{data['description']}": data["count"]
-                        for ref_key, data in counts.items()
-                    },
-                }
-                for slug, counts in agency_ref_counts.items()
-            },
+            "total_word_count": total_word_count,
+            "title_totals": dict(title_totals),
+            "agencies": rolled_up_agency_data,
         }
 
         total_time = time.time() - start_time
         logger.info(f"Total word count analysis took {total_time:.2f} seconds")
-        logger.info(
-            f"Total word count across all agencies: {word_count_data['total_word_count']}"
-        )
+        logger.info(f"Total word count across all agencies: {total_word_count}")
 
         # Save the results
         self._save_analysis_results(
