@@ -9,14 +9,20 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, Optional
+import logging
 import requests
-from bs4 import BeautifulSoup
 import zipfile
 import io
 
 import requests
 from dotenv import load_dotenv
 from tqdm import tqdm
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -99,12 +105,12 @@ class ECFRApiClient:
 
         # Return cached response if recent enough
         if cache and cache_path.exists():
-            print(f"Checking cache age for {url}")
+            logger.info(f"Checking cache age for {url}")
             cache_age = datetime.now() - datetime.fromtimestamp(
                 cache_path.stat().st_mtime
             )
             if cache_age < timedelta(days=self.cache_days):
-                print(f"Using cached response for {url}")
+                logger.info(f"Using cached response for {url}")
                 # If cache_path is json then load json
                 if cache_path.suffix == ".json":
                     with open(cache_path, "r") as f:
@@ -116,7 +122,7 @@ class ECFRApiClient:
 
         # Make API request
         response = self.session.get(url, params=request_params)
-        print(f"Request headers: {self.session.headers}")
+        logger.info(f"Request headers: {self.session.headers}")
         response.raise_for_status()
         if self.session.headers["Accept"] == "application/xml":
             data = response.content
@@ -144,7 +150,7 @@ class ECFRApiClient:
             return self._get(f"{ECFR_API_BASE_URL}/admin/v1/agencies.json")
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                print(f"Warning: Agency endpoint not available: {e}")
+                logger.info(f"Warning: Agency endpoint not available: {e}")
                 return {"agencies": [], "timestamp": datetime.now().isoformat()}
             raise
 
@@ -164,7 +170,7 @@ class ECFRApiClient:
             )
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                print(
+                logger.info(
                     f"Warning: Title corrections endpoint not available for title {title}: {e}"
                 )
                 # Return a structured empty response
@@ -182,7 +188,7 @@ class ECFRApiClient:
             return self._get(f"{ECFR_API_BASE_URL}/versioner/v1/titles.json")
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                print(f"Warning: Title summary endpoint not available: {e}")
+                logger.info(f"Warning: Title summary endpoint not available: {e}")
                 return {
                     "titles": [],
                     "meta": {"date": None},
@@ -207,7 +213,7 @@ class ECFRApiClient:
             )
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                print(
+                logger.info(
                     f"Warning: Structure endpoint not available for title {title}: {e}"
                 )
                 return {"identifier": str(title), "type": "title", "children": []}
@@ -231,7 +237,7 @@ class ECFRApiClient:
             return self._get(endpoint)
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                print(
+                logger.info(
                     f"Warning: Full text endpoint not available for title {title}: {e}"
                 )
                 root = ET.Element("data")
@@ -247,39 +253,39 @@ def download_admin_data():
 
     # Download agency data
     try:
-        print("Downloading agency information...")
+        logger.info("Downloading agency information...")
         agencies_data = client.get_admin_agencies()
         output_file = ADMIN_DATA_DIR / "agencies.json"
         with open(output_file, "w") as f:
             json.dump(agencies_data, f, indent=2)
-        print(f"Agency data saved to {output_file}")
+        logger.info(f"Agency data saved to {output_file}")
     except Exception as e:
-        print(f"Error downloading agency data: {e}")
+        logger.info(f"Error downloading agency data: {e}")
 
     # Download title summary data
     try:
-        print("Downloading title summary data...")
+        logger.info("Downloading title summary data...")
         title_summary_data = client.get_title_summary()
         output_file = ADMIN_DATA_DIR / "title_summary.json"
         with open(output_file, "w") as f:
             json.dump(title_summary_data, f, indent=2)
-        print(f"Title summary data saved to {output_file}")
+        logger.info(f"Title summary data saved to {output_file}")
     except Exception as e:
-        print(f"Error downloading title summary data: {e}")
+        logger.info(f"Error downloading title summary data: {e}")
 
     # Download title corrections data
     try:
-        print("Downloading title data...")
+        logger.info("Downloading title data...")
         titles = [{"number": i} for i in range(1, 51)]
 
         # Save the titles data
         output_file = ADMIN_DATA_DIR / "titles.json"
         with open(output_file, "w") as f:
             json.dump({"data": titles}, f, indent=2)
-        print(f"Title data saved to {output_file}")
+        logger.info(f"Title data saved to {output_file}")
 
         # Download title-specific corrections
-        print("Downloading title-specific corrections...")
+        logger.info("Downloading title-specific corrections...")
         for title_info in tqdm(titles, desc="Downloading title corrections"):
             try:
                 title_number = title_info.get("number", 0)
@@ -292,18 +298,20 @@ def download_admin_data():
                 )
                 with open(output_file, "w") as f:
                     json.dump(corrections_data, f, indent=2)
-                print(f"Title {title_number} corrections saved to {output_file}")
+                logger.info(f"Title {title_number} corrections saved to {output_file}")
                 time.sleep(1)  # Avoid rate limiting
             except Exception as e:
-                print(f"Error downloading corrections for title {title_number}: {e}")
+                logger.info(
+                    f"Error downloading corrections for title {title_number}: {e}"
+                )
 
     except Exception as e:
-        print(f"Error in title corrections download process: {e}")
+        logger.info(f"Error in title corrections download process: {e}")
         # Create an empty titles file as fallback
         output_file = PROCESSED_DATA_DIR / "titles.json"
         with open(output_file, "w") as f:
             json.dump({"data": [{"number": i} for i in range(1, 51)]}, f, indent=2)
-        print(f"Created fallback title data at {output_file}")
+        logger.info(f"Created fallback title data at {output_file}")
 
 
 def download_bulk_data(title_summary_data: Dict):
@@ -317,26 +325,26 @@ def download_bulk_data(title_summary_data: Dict):
         date = item["latest_issue_date"]
         # Download title summary data
         try:
-            print("Downloading title structure data...")
+            logger.info("Downloading title structure data...")
             structure = client.get_structure(title, date)
             output_file = STRUCT_DIR / f"title_{title}_{date}_structure.json"
             with open(output_file, "w") as f:
                 json.dump(structure, f, indent=2)
-            print(f"Structure data saved to {output_file}")
+            logger.info(f"Structure data saved to {output_file}")
         except Exception as e:
-            print(f"Error downloading structure for title {title}: {e}")
+            logger.info(f"Error downloading structure for title {title}: {e}")
             return
 
         # Download full text
         try:
-            print("Downloading full text data...")
+            logger.info("Downloading full text data...")
             full_text = client.get_full_text(title, date)
             output_file = TEXT_DIR / f"title_{title}_{date}_full_text.xml"
             with open(output_file, "wb") as f:
                 f.write(full_text)
-            print(f"Full text data saved to {output_file}")
+            logger.info(f"Full text data saved to {output_file}")
         except Exception as e:
-            print(f"Error downloading full text for title {title}: {e}")
+            logger.info(f"Error downloading full text for title {title}: {e}")
             return
 
 
@@ -354,6 +362,6 @@ if __name__ == "__main__":
                 )
             )
         else:
-            print(f"Unknown command: {command}")
-            print("Available commands: download_admin_data, download_bulk_data")
+            logger.info(f"Unknown command: {command}")
+            logger.info("Available commands: download_admin_data, download_bulk_data")
             sys.exit(1)
