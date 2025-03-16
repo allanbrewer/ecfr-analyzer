@@ -10,8 +10,9 @@ from pathlib import Path
 
 from ecfr_analyzer.backend.ecfr_api import (
     ECFRApiClient,
-    download_all_current_titles,
-    download_historical_data,
+    download_admin_data,
+    download_bulk_data,
+    ADMIN_DATA_DIR,
 )
 from ecfr_analyzer.backend.data_analyzer import ECFRDataAnalyzer
 from ecfr_analyzer.website.generator import WebsiteGenerator
