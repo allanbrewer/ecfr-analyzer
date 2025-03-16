@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- Overview Stats -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">eCFR Overview</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-primary bg-opacity-10 rounded me-3">
+                                <i class="bi bi-building fs-1 text-primary"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Total Agencies</h6>
+                                <h4 id="total-agencies" class="mb-0">{{
+                                    summary.total_agencies_analyzed|default('Loading...') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-success bg-opacity-10 rounded me-3">
+                                <i class="bi bi-book fs-1 text-success"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Word Count</h6>
+                                <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0))
+                                    }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-warning bg-opacity-10 rounded me-3">
+                                <i class="bi bi-clock-history fs-1 text-warning"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Historical Years</h6>
+                                <h4 id="historical-years" class="mb-0">5</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-info bg-opacity-10 rounded me-3">
+                                <i class="bi bi-calendar-check fs-1 text-info"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Last Updated</h6>
+                                <h4 id="last-updated" class="mb-0">{{ timestamp }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Agencies by Word Count -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Top Agencies by Word Count</h5>
+            </div>
+            <div class="card-body">
+                <div id="word-count-chart" style="height: 400px;"></div>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="agency.html" class="btn btn-sm btn-outline-primary">See Full Agency Analysis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEI and Waste Footprint -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Keyword Analysis Overview</h5>
+            </div>
+            <div class="card-body">
+                <div id="keyword-overview-chart" style="height: 400px;"></div>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="insights.html" class="btn btn-sm btn-outline-primary">See Detailed Insights</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historical Changes -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Historical Regulation Changes</h5>
+            </div>
+            <div class="card-body">
+                <div id="historical-changes-chart" style="height: 400px;"></div>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="historical.html" class="btn btn-sm btn-outline-primary">View Historical Data</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bureaucratic Complexity -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Bureaucratic Complexity</h5>
+            </div>
+            <div class="card-body">
+                <div id="bureaucratic-complexity-chart" style="height: 400px;"></div>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="insights.html#bureaucratic" class="btn btn-sm btn-outline-primary">Explore Complexity
+                    Metrics</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Search Box -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Quick Search</h5>
+            </div>
+            <div class="card-body">
+                <form id="quick-search-form" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="search-keyword" class="form-label">Keyword or Phrase</label>
+                        <input type="text" class="form-control" id="search-keyword" placeholder="Enter keyword...">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="search-agency" class="form-label">Agency</label>
+                        <select class="form-select" id="search-agency">
+                            <option value="">All Agencies</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="search-date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="search-date">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Search Regulations</button>
+                        <a href="search.html" class="btn btn-outline-secondary">Advanced Search</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- What's New Section -->
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Recent Regulatory Changes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Agency</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-changes-table">
+                            <!-- Will be populated by JavaScript -->
+                            <tr>
+                                <td colspan="5" class="text-center">Loading recent changes...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="historical.html" class="btn btn-sm btn-outline-primary">View All Changes</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="static/js/charts.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize dashboard charts
+        initDashboardCharts();
+
+        // Load agency dropdown for quick search
+        loadAgencyDropdown('search-agency');
+
+        // Load recent changes data
+        loadRecentChanges();
+    });
+</script>
+{% endblock %}

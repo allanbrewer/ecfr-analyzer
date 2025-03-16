@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- About the Project -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">About the eCFR Analyzer</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <i class="bi bi-building-gear fs-1 text-primary"></i>
+                        <h3 class="mt-3">Department of Government Efficiency</h3>
+                        <p class="text-muted">Making government work better</p>
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Project Overview</h4>
+                        <p>
+                            The eCFR Analyzer is a tool developed by the Department of Government Efficiency (DOGE) to
+                            analyze the
+                            Electronic Code of Federal Regulations. This project aims to identify opportunities for
+                            regulatory
+                            streamlining by examining the language, complexity, and historical changes in federal
+                            regulations.
+                        </p>
+                        <p>
+                            Using data directly from the eCFR API and the govinfo.gov bulk data API, we provide insights
+                            into
+                            regulatory trends, agency activities, and language patterns that may indicate inefficiencies
+                            or
+                            opportunities for improvement.
+                        </p>
+                        <h4 class="mt-4">Key Features</h4>
+                        <ul>
+                            <li>Comprehensive word count analysis by agency</li>
+                            <li>Historical tracking of regulatory changes over time</li>
+                            <li>Analysis of corrections and amendments</li>
+                            <li>DEI footprint analysis</li>
+                            <li>Waste and inefficiency identification</li>
+                            <li>Bureaucratic complexity metrics</li>
+                            <li>Advanced search capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Sources -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Data Sources</h5>
+            </div>
+            <div class="card-body">
+                <h5>eCFR API</h5>
+                <p>
+                    The Electronic Code of Federal Regulations API provides access to the most current version of the
+                    CFR.
+                    This API allows us to retrieve the full text of regulations, their structure, and metadata.
+                </p>
+                <a href="https://www.ecfr.gov/developers/documentation/api/v1#/"
+                    class="btn btn-sm btn-outline-primary mb-4" target="_blank">
+                    <i class="bi bi-box-arrow-up-right"></i> View eCFR API Documentation
+                </a>
+
+                <h5>GovInfo Bulk Data</h5>
+                <p>
+                    The govinfo.gov bulk data repository provides access to historical versions of the CFR,
+                    enabling analysis of how regulations have changed over time.
+                </p>
+                <a href="https://www.govinfo.gov/bulkdata/ECFR" class="btn btn-sm btn-outline-primary mb-4"
+                    target="_blank">
+                    <i class="bi bi-box-arrow-up-right"></i> View GovInfo Bulk Data
+                </a>
+
+                <h5>GovInfo API</h5>
+                <p>
+                    The GovInfo API provides programmatic access to metadata and content published on the govinfo.gov
+                    website.
+                </p>
+                <a href="https://api.govinfo.gov/docs/" class="btn btn-sm btn-outline-primary" target="_blank">
+                    <i class="bi bi-box-arrow-up-right"></i> View GovInfo API Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Methodology</h5>
+            </div>
+            <div class="card-body">
+                <h5>Data Collection</h5>
+                <p>
+                    The eCFR Analyzer downloads data from official government APIs, processes it, and stores it locally
+                    for analysis.
+                    Historical data is retrieved from the GovInfo bulk data repository to enable time-series analysis.
+                </p>
+
+                <h5>Analysis Techniques</h5>
+                <p>
+                    Our analysis includes:
+                </p>
+                <ul>
+                    <li><strong>Word Count Analysis:</strong> Quantifies the volume of regulations by agency.</li>
+                    <li><strong>Keyword Analysis:</strong> Identifies specific terms related to DEI, waste, and
+                        bureaucracy.</li>
+                    <li><strong>Complexity Metrics:</strong> Measures sentence length, vague language usage, and other
+                        readability factors.</li>
+                    <li><strong>Historical Comparison:</strong> Tracks changes in regulations over time to identify
+                        trends.</li>
+                </ul>
+
+                <h5>Data Updates</h5>
+                <p>
+                    The website is automatically updated on a daily basis using GitHub Actions, ensuring that the
+                    analysis
+                    reflects the most current regulatory environment.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Limitations -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Limitations and Disclaimers</h5>
+            </div>
+            <div class="card-body">
+                <h5>Data Limitations</h5>
+                <p>
+                    While we strive for accuracy, the analysis has certain limitations:
+                </p>
+                <ul>
+                    <li>The analysis is based on text patterns and may not capture the full context of regulations.</li>
+                    <li>Historical data availability varies by agency and title.</li>
+                    <li>API rate limits may affect the comprehensiveness of some analyses.</li>
+                    <li>Keyword analysis is based on predetermined sets of terms that may not capture all relevant
+                        language.</li>
+                </ul>
+
+                <h5>Disclaimer</h5>
+                <p>
+                    This tool is intended for informational purposes only. While the data is sourced from official
+                    government APIs,
+                    the analysis and interpretations are those of the Department of Government Efficiency and should not
+                    be
+                    considered official government positions. Always refer to the official eCFR website for the
+                    authoritative
+                    version of any regulation.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Contact and Feedback</h5>
+            </div>
+            <div class="card-body">
+                <h5>Get in Touch</h5>
+                <p>
+                    We welcome feedback, suggestions, and questions about the eCFR Analyzer project.
+                </p>
+
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-envelope fs-4 me-3 text-primary"></i>
+                    <div>
+                        <h6 class="mb-0">Email</h6>
+                        <p class="mb-0">info@doge.gov</p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-github fs-4 me-3 text-primary"></i>
+                    <div>
+                        <h6 class="mb-0">GitHub</h6>
+                        <p class="mb-0">
+                            <a href="https://github.com/allanbrewer/ecfr-analyzer"
+                                target="_blank">github.com/allanbrewer/ecfr-analyzer</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-building fs-4 me-3 text-primary"></i>
+                    <div>
+                        <h6 class="mb-0">Department of Government Efficiency</h6>
+                        <p class="mb-0">Washington, DC</p>
+                    </div>
+                </div>
+
+                <h5 class="mt-4">Report Issues or Contribute</h5>
+                <p>
+                    This is an open-source project. If you find issues or want to contribute, please visit our GitHub
+                    repository.
+                </p>
+                <a href="https://github.com/allanbrewer/ecfr-analyzer/issues" class="btn btn-outline-primary"
+                    target="_blank">
+                    <i class="bi bi-bug"></i> Report an Issue
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
