@@ -366,9 +366,6 @@ class ECFRDataAnalyzer:
                 "total_corrections": self.analysis_results.get("corrections", {}).get(
                     "total_corrections", 0
                 ),
-                "total_corrections_over_time": self.analysis_results.get(
-                    "corrections_over_time", {}
-                ).get("total_corrections", 0),
             },
         }
 
