@@ -94,9 +94,6 @@ Or run specific analyses:
 # Word count analysis
 poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_word_count
 
-# Historical changes analysis
-poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_historical_changes
-
 # Corrections analysis
 poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_corrections
 

@@ -27,43 +27,6 @@
         </div>
     </div>
 
-    <!-- Overview Stats -->
-    <div class="col-12 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">eCFR Overview</h5>
-            </div>
-            <div class="card-body">
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <div>
-                            <h6 class="fw-normal text-muted mb-0">Total Agencies</h6>
-                            <h4 id="total-agencies" class="mb-0">{{ summary.total_agencies_analyzed|default('Loading...') }}</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div>
-                            <h6 class="fw-normal text-muted mb-0">Word Count</h6>
-                            <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0)) }}</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div>
-                            <h6 class="fw-normal text-muted mb-0">Corrections History</h6>
-                            <h4 id="corrections-history" class="mb-0">{{ summary.total_corrections|default(0) }}</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div>
-                            <h6 class="fw-normal text-muted mb-0">Last Updated</h6>
-                            <h4 id="last-updated" class="mb-0">{{ timestamp }}</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Top Agencies by Word Count -->
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
@@ -71,7 +34,9 @@
                 <h5 class="card-title mb-0">Top Agencies by Word Count</h5>
             </div>
             <div class="card-body">
-                <div id="word-count-chart" style="height: 400px;"></div>
+                <div id="word-count-chart" style="height: 400px;">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
             <div class="card-footer bg-light">
                 <a href="agency.html" class="btn btn-sm btn-outline-primary">See Full Agency Analysis</a>
@@ -86,7 +51,9 @@
                 <h5 class="card-title mb-0">Keyword Analysis Overview</h5>
             </div>
             <div class="card-body">
-                <div id="keyword-overview-chart" style="height: 400px;"></div>
+                <div id="keyword-overview-chart" style="height: 400px;">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
             <div class="card-footer bg-light">
                 <button class="btn btn-sm btn-outline-primary" disabled>Detailed Analysis Coming Soon</button>
@@ -101,7 +68,9 @@
                 <h5 class="card-title mb-0">Corrections by Agency</h5>
             </div>
             <div class="card-body">
-                <div id="corrections-chart" style="height: 400px;"></div>
+                <div id="corrections-chart" style="height: 400px;">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
             <div class="card-footer bg-light">
                 <a href="historical.html" class="btn btn-sm btn-outline-primary">View Corrections Data</a>
@@ -116,7 +85,9 @@
                 <h5 class="card-title mb-0">Bureaucratic Complexity</h5>
             </div>
             <div class="card-body">
-                <div id="bureaucratic-complexity-chart" style="height: 400px;"></div>
+                <div id="bureaucratic-complexity-chart" style="height: 400px;">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
             <div class="card-footer bg-light">
                 <button class="btn btn-sm btn-outline-primary" disabled>Complexity Metrics Coming Soon</button>
@@ -154,7 +125,8 @@
                 <form id="quick-search-form" class="row g-3" action="search.html" method="get">
                     <div class="col-md-6">
                         <label for="search-keyword" class="form-label">Keyword or Phrase</label>
-                        <input type="text" class="form-control" id="search-keyword" name="q" placeholder="Enter keyword...">
+                        <input type="text" class="form-control" id="search-keyword" name="q"
+                            placeholder="Enter keyword...">
                     </div>
                     <div class="col-md-3">
                         <label for="search-agency" class="form-label">Agency</label>

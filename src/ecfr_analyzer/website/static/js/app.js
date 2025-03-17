@@ -13,18 +13,20 @@ let titles = [];
  * @returns {Promise} - Promise that resolves with the data
  */
 async function loadData(url) {
-    console.log(`Attempting to load data from: ${url}`);
+    // Adjust the URL to point to the analysis directory
+    const adjustedUrl = url.replace('/data/', '/data/analysis/');
+    console.log(`Attempting to load data from: ${adjustedUrl}`);
     try {
-        const response = await fetch(url);
+        const response = await fetch(adjustedUrl);
         if (!response.ok) {
-            console.error(`Failed to load ${url} - Status: ${response.status} ${response.statusText}`);
+            console.error(`Failed to load ${adjustedUrl} - Status: ${response.status} ${response.statusText}`);
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(`Successfully loaded data from: ${url}`, { dataSize: JSON.stringify(data).length });
+        console.log(`Successfully loaded data from: ${adjustedUrl}`, { dataSize: JSON.stringify(data).length });
         return data;
     } catch (error) {
-        console.error(`Error loading data from ${url}:`, error);
+        console.error(`Error loading data from ${adjustedUrl}:`, error);
         return null;
     }
 }

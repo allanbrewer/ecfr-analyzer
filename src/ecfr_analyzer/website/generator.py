@@ -94,10 +94,17 @@ class WebsiteGenerator:
         data_output_dir = self.output_dir / "data"
         data_output_dir.mkdir(exist_ok=True)
 
+        # Create analysis subdirectory in data
+        analysis_output_dir = data_output_dir / "analysis"
+        analysis_output_dir.mkdir(exist_ok=True)
+
         # Copy all data files
         if self.data_dir.exists():
             for file_path in self.data_dir.glob("*.json"):
+                # Copy to both the data directory and the data/analysis directory
+                # This ensures compatibility with both old and new paths
                 shutil.copy2(file_path, data_output_dir / file_path.name)
+                shutil.copy2(file_path, analysis_output_dir / file_path.name)
 
     def _render_template(self, template_name: str, output_name: str, **context):
         """Render a template and write it to the output directory.
@@ -130,8 +137,6 @@ class WebsiteGenerator:
         # Generate pages
         self._generate_index_page(analysis_data)
         self._generate_agency_page(analysis_data)
-        self._generate_historical_page(analysis_data)
-        self._generate_insights_page(analysis_data)
         self._generate_search_page()
         self._generate_about_page()
 
@@ -178,41 +183,21 @@ class WebsiteGenerator:
             active_page="agency",
         )
 
-    def _generate_historical_page(self, analysis_data: Dict):
-        """Generate the historical analysis page.
+    def _generate_historical_corrections_page(self, analysis_data: Dict):
+        """Generate the historical corrections analysis page.
 
         Args:
             analysis_data: Analysis data dictionary
         """
         self._render_template(
-            "historical.html",
-            "historical.html",
+            "historical_corrections.html",
+            "historical_corrections.html",
             title=self.title,
-            page_title="Historical Analysis",
+            page_title="Historical Corrections Analysis",
             static_data=self.static_data,
-            historical_changes=analysis_data.get("historical_changes", {}),
             corrections=analysis_data.get("corrections_over_time", {}),
             timestamp=datetime.now().strftime("%Y-%m-%d"),
-            active_page="historical",
-        )
-
-    def _generate_insights_page(self, analysis_data: Dict):
-        """Generate the insights page.
-
-        Args:
-            analysis_data: Analysis data dictionary
-        """
-        self._render_template(
-            "insights.html",
-            "insights.html",
-            title=self.title,
-            page_title="Regulatory Insights",
-            static_data=self.static_data,
-            bureaucratic_complexity=analysis_data.get("bureaucratic_complexity", {}),
-            dei_footprint=analysis_data.get("dei_footprint", {}),
-            waste_footprint=analysis_data.get("waste_footprint", {}),
-            timestamp=datetime.now().strftime("%Y-%m-%d"),
-            active_page="insights",
+            active_page="historical_corrections",
         )
 
     def _generate_search_page(self):

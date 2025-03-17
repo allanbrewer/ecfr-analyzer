@@ -56,9 +56,6 @@
                 <div class="row g-4">
                     <div class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <div class="p-3 bg-primary bg-opacity-10 rounded me-3">
-                                <i class="bi bi-pencil-square fs-1 text-primary"></i>
-                            </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Total Corrections</h6>
                                 <h4 id="total-corrections" class="mb-0">{{ stats.total_corrections|default('Loading...')
@@ -68,9 +65,6 @@
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <div class="p-3 bg-success bg-opacity-10 rounded me-3">
-                                <i class="bi bi-calendar-event fs-1 text-success"></i>
-                            </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Avg. Per Year</h6>
                                 <h4 id="avg-corrections-per-year" class="mb-0">{{
@@ -80,9 +74,6 @@
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <div class="p-3 bg-info bg-opacity-10 rounded me-3">
-                                <i class="bi bi-graph-up fs-1 text-info"></i>
-                            </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Peak Year</h6>
                                 <h4 id="peak-correction-year" class="mb-0">{{ stats.peak_year|default('Loading...') }}
@@ -92,9 +83,6 @@
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <div class="p-3 bg-warning bg-opacity-10 rounded me-3">
-                                <i class="bi bi-building fs-1 text-warning"></i>
-                            </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Top Agency</h6>
                                 <h4 id="top-agency" class="mb-0">{{ stats.top_agency|default('Loading...') }}</h4>
