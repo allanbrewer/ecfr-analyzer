@@ -96,7 +96,7 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
         """
         # Structure of ref_key from _create_ref_key:
         # (title, subtitle, chapter, subchapter, part)
-        
+
         # Extract title from correction hierarchy
         corr_title = correction_hierarchy.get("title", "")
 
@@ -107,7 +107,7 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
         # If ref_key only has title, then we have a match if titles match
         if len(ref_key) == 1:
             return True
-            
+
         # Now check each hierarchy element in sequence, handling cases where
         # the correction hierarchy might skip levels or use different naming
 
@@ -115,41 +115,41 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
         if len(ref_key) > 1 and ref_key[1]:
             ref_subtitle = ref_key[1]
             corr_subtitle = correction_hierarchy.get("subtitle")
-            
+
             # If correction has a subtitle and it doesn't match, no match
             if corr_subtitle and corr_subtitle != ref_subtitle:
                 return False
-        
+
         # Check chapter (ref_key[2])
         if len(ref_key) > 2 and ref_key[2]:
             ref_chapter = ref_key[2]
             corr_chapter = correction_hierarchy.get("chapter")
-            
+
             # If correction has a chapter and it doesn't match, no match
             if corr_chapter and corr_chapter != ref_chapter:
                 return False
-        
+
         # Check subchapter (ref_key[3])
         if len(ref_key) > 3 and ref_key[3]:
             ref_subchapter = ref_key[3]
             corr_subchapter = correction_hierarchy.get("subchapter")
-            
+
             # If correction has a subchapter and it doesn't match, no match
             if corr_subchapter and corr_subchapter != ref_subchapter:
                 return False
-        
+
         # Check part (ref_key[4])
         if len(ref_key) > 4 and ref_key[4]:
             ref_part = ref_key[4]
             corr_part = correction_hierarchy.get("part")
-            
+
             # If correction has a part and it doesn't match, no match
             if corr_part and corr_part != ref_part:
                 return False
-        
+
         # Special case: If correction has section details but the ref_key doesn't go that deep,
         # we should still consider it a match if all the higher-level elements match
-        
+
         # If we get here, either:
         # 1. All levels in both hierarchies match
         # 2. The correction hierarchy is at a deeper level than ref_key but matches at all overlapping levels
@@ -205,7 +205,9 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
                             continue
 
                         # Check if this correction applies to this reference
-                        if self._matches_reference(ref_key, cfr_ref["hierarchy"], title_num):
+                        if self._matches_reference(
+                            ref_key, cfr_ref["hierarchy"], title_num
+                        ):
                             # Add this correction to the agency's list for this reference
                             # Use a tuple of reference elements as the key
                             agency_corrections[agency_slug][ref_key].append(
@@ -271,6 +273,9 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
             "agencies": rolled_up_agency_data,
         }
 
+        # Also analyze corrections over time
+        self.analyze_corrections_over_time(agency_corrections)
+
         total_time = time.time() - start_time
         logger.info(f"Corrections analysis took {total_time:.2f} seconds")
         logger.info(f"Total corrections: {len(counted_corrections)}")
@@ -281,3 +286,203 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
         )
 
         return corrections_data
+
+    def analyze_corrections_over_time(self, agency_corrections=None):
+        """Analyze corrections over time by year and agency hierarchy.
+
+        This method generates a time series of corrections data, categorized by:
+        1. Year of correction
+        2. Agency hierarchy (parent vs child)
+        3. Total corrections per year
+
+        The results are saved to corrections_over_time.json
+
+        Args:
+            agency_corrections: Optional pre-calculated corrections by agency.
+                               If None, will use analyze_corrections_by_agency first.
+
+        Returns:
+            Dictionary with corrections over time data
+        """
+        logger.info("Starting analysis of corrections over time...")
+        start_time = time.time()
+
+        # If agency_corrections not provided, get them
+        if agency_corrections is None:
+            # Run the main analysis to get agency corrections
+            self.analyze_corrections_by_agency()
+            return  # The below will be called by analyze_corrections_by_agency
+
+        # Build agency hierarchy if not already built
+        agency_hierarchy = self._build_agency_hierarchy()
+
+        # Create a mapping of child agencies to their parents
+        child_to_parent = {}
+        for child, parent in agency_hierarchy.items():
+            child_to_parent[child] = parent
+
+        # Create sets of parent and child agencies
+        parent_agencies = set()
+        child_agencies = set()
+
+        for child, parent in child_to_parent.items():
+            child_agencies.add(child)
+            parent_agencies.add(parent)
+
+        # Initialize results structure
+        years_data = {}
+        all_years = set()
+
+        # Process corrections by year for each agency
+        for agency_slug, ref_corrections in agency_corrections.items():
+            # Determine if this is a parent or child agency
+            is_parent = agency_slug in parent_agencies
+            is_child = agency_slug in child_agencies
+
+            # We need to count each unique correction once per agency
+            counted_corrections_by_year = defaultdict(set)
+
+            # Process each reference and its corrections
+            for ref_key, corrections in ref_corrections.items():
+                for correction in corrections:
+                    # Extract year from error_corrected date
+                    corrected_date = correction.get("error_corrected")
+                    correction_id = correction.get("id")
+
+                    if not corrected_date or not correction_id:
+                        continue
+
+                    # Extract year from date (format: YYYY-MM-DD)
+                    try:
+                        year = int(corrected_date.split("-")[0])
+                        all_years.add(year)
+
+                        # Add this correction to the set for this year
+                        counted_corrections_by_year[year].add(correction_id)
+                    except (ValueError, IndexError, AttributeError):
+                        # Skip corrections with invalid dates
+                        continue
+
+            # Now add the counted corrections to the appropriate category in years_data
+            for year, correction_ids in counted_corrections_by_year.items():
+                if year not in years_data:
+                    years_data[year] = {
+                        "total": 0,
+                        "parent_agencies": defaultdict(int),
+                        "child_agencies": defaultdict(int),
+                        "all_agencies": defaultdict(int),
+                    }
+
+                # Add to the appropriate agency category
+                agency_count = len(correction_ids)
+
+                if is_parent:
+                    years_data[year]["parent_agencies"][agency_slug] = agency_count
+
+                if is_child:
+                    years_data[year]["child_agencies"][agency_slug] = agency_count
+
+                # Add to all_agencies regardless
+                years_data[year]["all_agencies"][agency_slug] = agency_count
+
+                # Note: We don't add to the total yet to avoid double-counting
+
+        # Now calculate the total for each year across all agencies, avoiding double-counting
+        all_correction_ids = defaultdict(set)
+
+        for agency_slug, ref_corrections in agency_corrections.items():
+            for ref_key, corrections in ref_corrections.items():
+                for correction in corrections:
+                    corrected_date = correction.get("error_corrected")
+                    correction_id = correction.get("id")
+
+                    if not corrected_date or not correction_id:
+                        continue
+
+                    try:
+                        year = int(corrected_date.split("-")[0])
+                        all_correction_ids[year].add(correction_id)
+                    except (ValueError, IndexError, AttributeError):
+                        continue
+
+        # Update the total counts
+        for year, correction_ids in all_correction_ids.items():
+            if year in years_data:
+                years_data[year]["total"] = len(correction_ids)
+
+        # Convert defaultdicts to regular dicts for serialization
+        for year in years_data:
+            years_data[year]["parent_agencies"] = dict(
+                years_data[year]["parent_agencies"]
+            )
+            years_data[year]["child_agencies"] = dict(
+                years_data[year]["child_agencies"]
+            )
+            years_data[year]["all_agencies"] = dict(years_data[year]["all_agencies"])
+
+        # Calculate top agencies across all years
+        top_agencies = self._calculate_top_correction_agencies(years_data)
+
+        # Prepare the final data structure
+        corrections_over_time = {
+            "timestamp": datetime.now().isoformat(),
+            "years": dict(years_data),
+            "top_agencies": top_agencies,
+            "min_year": min(all_years) if all_years else None,
+            "max_year": max(all_years) if all_years else None,
+        }
+
+        # Convert any tuples or other non-JSON-serializable types
+        corrections_over_time = self._convert_for_json(corrections_over_time)
+
+        total_time = time.time() - start_time
+        logger.info(f"Corrections over time analysis took {total_time:.2f} seconds")
+
+        # Save the results
+        self._save_analysis_results(
+            corrections_over_time, "corrections_over_time.json", "corrections"
+        )
+
+        return corrections_over_time
+
+    def _calculate_top_correction_agencies(self, years_data):
+        """Calculate the top agencies by total corrections across all years.
+
+        Args:
+            years_data: Dictionary of years data from analyze_corrections_over_time
+
+        Returns:
+            Dictionary with top agencies in different categories
+        """
+        # Aggregate corrections by agency across all years
+        total_by_agency = defaultdict(int)
+        total_by_parent_agency = defaultdict(int)
+        total_by_child_agency = defaultdict(int)
+
+        for year_data in years_data.values():
+            # All agencies
+            for agency, count in year_data["all_agencies"].items():
+                total_by_agency[agency] += count
+
+            # Parent agencies
+            for agency, count in year_data["parent_agencies"].items():
+                total_by_parent_agency[agency] += count
+
+            # Child agencies
+            for agency, count in year_data["child_agencies"].items():
+                total_by_child_agency[agency] += count
+
+        # Get top 20 agencies in each category
+        top_all = sorted(total_by_agency.items(), key=lambda x: x[1], reverse=True)[:20]
+        top_parents = sorted(
+            total_by_parent_agency.items(), key=lambda x: x[1], reverse=True
+        )[:20]
+        top_children = sorted(
+            total_by_child_agency.items(), key=lambda x: x[1], reverse=True
+        )[:20]
+
+        return {
+            "all": dict(top_all),
+            "parents": dict(top_parents),
+            "children": dict(top_children),
+        }

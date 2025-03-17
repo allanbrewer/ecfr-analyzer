@@ -9,11 +9,12 @@ async function initDashboardCharts() {
     try {
         // Load all necessary data
         const wordCountData = await loadData('data/word_count_by_agency.json');
-        const deiData = await loadData('data/dei_footprint.json');
+        const deiData = await loadData('data/DEI_footprint.json');
         const wasteData = await loadData('data/waste_footprint.json');
         const historicalData = await loadData('data/historical_changes.json');
-        const bureaucracyData = await loadData('data/bureaucratic_complexity.json');
+        const bureaucracyData = await loadData('data/Bureaucracy_footprint.json');
         const correctionsData = await loadData('data/corrections_by_agency.json');
+        const correctionsOverTimeData = await loadData('data/corrections_over_time.json');
         const agencyHierarchyData = await loadData('data/agency_hierarchy_map.json');
 
         if (wordCountData) {
@@ -36,6 +37,10 @@ async function initDashboardCharts() {
             createBureaucraticComplexityChart(bureaucracyData);
         }
 
+        if (correctionsOverTimeData) {
+            createCorrectionsOverTimeChart(correctionsOverTimeData);
+        }
+
         // Load recent changes
         loadRecentChanges();
     } catch (error) {
@@ -53,9 +58,9 @@ function createCorrectionsChart(data) {
 
     // Get top agencies by corrections
     const topAgencies = Object.entries(data.agencies)
-        .map(([key, value]) => ({ 
-            name: key.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), 
-            count: value.total 
+        .map(([key, value]) => ({
+            name: key.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            count: value.total
         }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 15); // Get top 15 agencies
@@ -94,7 +99,7 @@ function createCorrectionsChart(data) {
     };
 
     // Create the plot
-    Plotly.newPlot(container, [plotData], layout, {responsive: true});
+    Plotly.newPlot(container, [plotData], layout, { responsive: true });
 }
 
 /**
@@ -735,4 +740,533 @@ function performSearch() {
 function sortSearchResults(sortBy) {
     console.log(`Sorting search results by: ${sortBy}`);
     // This would be implemented to sort the search results
+}
+
+/**
+ * Create corrections over time chart
+ * @param {Object} data - Corrections over time data
+ */
+function createCorrectionsOverTimeChart(data) {
+    const container = document.getElementById('corrections-over-time-chart');
+    if (!container || !data || !data.years) return;
+
+    // Extract year numbers and sort them chronologically
+    const years = Object.keys(data.years).map(Number).sort();
+
+    // Prepare datasets for plotting
+    const totalCorrections = years.map(year => data.years[year].total);
+
+    // Calculate aggregated parent and child agency totals per year
+    // (sum of all parent agencies and all child agencies per year)
+    const parentAgencyTotals = years.map(year => {
+        const parentData = data.years[year].parent_agencies;
+        return Object.values(parentData).reduce((sum, count) => sum + count, 0);
+    });
+
+    const childAgencyTotals = years.map(year => {
+        const childData = data.years[year].child_agencies;
+        return Object.values(childData).reduce((sum, count) => sum + count, 0);
+    });
+
+    // Create three traces for the plot
+    const traces = [
+        {
+            x: years,
+            y: totalCorrections,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Total Corrections',
+            line: {
+                color: 'rgba(41, 128, 185, 1)',
+                width: 3
+            },
+            marker: {
+                size: 8
+            }
+        },
+        {
+            x: years,
+            y: parentAgencyTotals,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Parent Agencies',
+            line: {
+                color: 'rgba(46, 204, 113, 1)',
+                width: 2
+            },
+            marker: {
+                size: 6
+            }
+        },
+        {
+            x: years,
+            y: childAgencyTotals,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Child Agencies',
+            line: {
+                color: 'rgba(231, 76, 60, 1)',
+                width: 2
+            },
+            marker: {
+                size: 6
+            }
+        }
+    ];
+
+    // Layout configuration
+    const layout = {
+        title: 'Regulatory Corrections Over Time',
+        xaxis: {
+            title: 'Year',
+            tickmode: 'linear',
+            dtick: 1,
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Number of Corrections'
+        },
+        legend: {
+            orientation: 'h',
+            y: -0.2
+        },
+        hovermode: 'closest',
+        height: 400,
+        margin: {
+            l: 60,
+            r: 30,
+            t: 50,
+            b: 100
+        }
+    };
+
+    // Plot configuration
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+    };
+
+    // Create the plot
+    Plotly.newPlot(container, traces, layout, config);
+
+    // Create additional chart for top agencies if data is available
+    createTopAgenciesByCorrectionsChart(data);
+}
+
+/**
+ * Create chart for top agencies by corrections
+ * @param {Object} data - Corrections over time data
+ */
+function createTopAgenciesByCorrectionsChart(data) {
+    const container = document.getElementById('top-changing-agencies-chart');
+    if (!container || !data || !data.top_agencies) return;
+
+    // Get top 10 agencies from all agencies
+    const topAgencies = Object.entries(data.top_agencies.all)
+        .slice(0, 10)
+        .map(([agency, count]) => ({
+            name: agency.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            count: count
+        }))
+        .sort((a, b) => b.count - a.count);
+
+    // Prepare plot data
+    const plotData = {
+        x: topAgencies.map(a => a.name),
+        y: topAgencies.map(a => a.count),
+        type: 'bar',
+        marker: {
+            color: 'rgba(52, 152, 219, 0.8)',
+            line: {
+                color: 'rgba(52, 152, 219, 1.0)',
+                width: 1
+            }
+        }
+    };
+
+    // Layout configuration
+    const layout = {
+        title: 'Top Agencies by Number of Corrections',
+        xaxis: {
+            title: 'Agency',
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Number of Corrections'
+        },
+        margin: {
+            l: 60,
+            r: 30,
+            t: 50,
+            b: 150
+        },
+        height: 400
+    };
+
+    // Plot configuration
+    const config = {
+        responsive: true,
+        displayModeBar: false
+    };
+
+    // Create the plot
+    Plotly.newPlot(container, [plotData], layout, config);
+}
+
+/**
+ * Create historical changes over time chart
+ * @param {Object} data - Historical changes data
+ */
+function createHistoricalChangesOverTimeChart(data) {
+    const container = document.getElementById('historical-changes-over-time-chart');
+    if (!container || !data) return;
+
+    // For now use a placeholder chart if historical_changes.json isn't available yet
+    // We'll use corrections data as a proxy until historical changes are implemented
+
+    // Sample data for demonstration
+    const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 9 + i);
+    const sampleData = years.map(year => ({
+        year,
+        additions: Math.floor(Math.random() * 100) + 50,
+        deletions: Math.floor(Math.random() * 70) + 30,
+        modifications: Math.floor(Math.random() * 120) + 40
+    }));
+
+    // Create traces for additions, deletions, and modifications
+    const traces = [
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.additions),
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Additions',
+            line: {
+                color: 'rgba(46, 204, 113, 1)',
+                width: 2
+            },
+            marker: {
+                size: 6
+            }
+        },
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.deletions),
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Deletions',
+            line: {
+                color: 'rgba(231, 76, 60, 1)',
+                width: 2
+            },
+            marker: {
+                size: 6
+            }
+        },
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.modifications),
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Modifications',
+            line: {
+                color: 'rgba(241, 196, 15, 1)',
+                width: 2
+            },
+            marker: {
+                size: 6
+            }
+        }
+    ];
+
+    // Layout configuration
+    const layout = {
+        title: 'eCFR Changes Over Time',
+        xaxis: {
+            title: 'Year',
+            tickmode: 'linear',
+            dtick: 1,
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Number of Changes'
+        },
+        legend: {
+            orientation: 'h',
+            y: -0.2
+        },
+        hovermode: 'closest',
+        height: 500
+    };
+
+    // Create the plot
+    Plotly.newPlot(container, traces, layout, { responsive: true });
+
+    // Update the stats panel with the sample data
+    updateChangeStats(sampleData);
+}
+
+/**
+ * Update change statistics panel
+ * @param {Object} data - Historical changes data
+ */
+function updateChangeStats(data) {
+    // For now use placeholder data if historical_changes.json isn't available yet
+
+    // Calculate totals from sample data (assuming the data structure from createHistoricalChangesOverTimeChart)
+    let totalAdditions = 0;
+    let totalDeletions = 0;
+    let totalModifications = 0;
+    let busiestYear = null;
+    let maxChanges = 0;
+
+    if (Array.isArray(data)) {
+        // Sample data from createHistoricalChangesOverTimeChart
+        data.forEach(yearData => {
+            totalAdditions += yearData.additions;
+            totalDeletions += yearData.deletions;
+            totalModifications += yearData.modifications;
+
+            const yearTotal = yearData.additions + yearData.deletions + yearData.modifications;
+            if (yearTotal > maxChanges) {
+                maxChanges = yearTotal;
+                busiestYear = yearData.year;
+            }
+        });
+    }
+
+    // Update the stats display
+    document.getElementById('total-changes').textContent = totalAdditions + totalDeletions + totalModifications;
+    document.getElementById('total-additions').textContent = totalAdditions;
+    document.getElementById('total-deletions').textContent = totalDeletions;
+    document.getElementById('total-modifications').textContent = totalModifications;
+    document.getElementById('busiest-year').textContent = busiestYear;
+}
+
+/**
+ * Create change type breakdown chart
+ * @param {Object} data - Historical changes data
+ */
+function createChangeTypeBreakdownChart(data) {
+    const container = document.getElementById('change-type-breakdown-chart');
+    if (!container) return;
+
+    // Use placeholder data until historical_changes.json is implemented
+    // Sample data for demonstration - last 5 years
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i);
+
+    // Create sample dataset
+    const sampleData = years.map(year => ({
+        year,
+        additions: Math.floor(Math.random() * 100) + 50,
+        deletions: Math.floor(Math.random() * 70) + 30,
+        modifications: Math.floor(Math.random() * 120) + 40
+    }));
+
+    // Create traces for the stacked bar chart
+    const traces = [
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.additions),
+            name: 'Additions',
+            type: 'bar',
+            marker: {
+                color: 'rgba(46, 204, 113, 0.8)'
+            }
+        },
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.deletions),
+            name: 'Deletions',
+            type: 'bar',
+            marker: {
+                color: 'rgba(231, 76, 60, 0.8)'
+            }
+        },
+        {
+            x: sampleData.map(d => d.year),
+            y: sampleData.map(d => d.modifications),
+            name: 'Modifications',
+            type: 'bar',
+            marker: {
+                color: 'rgba(241, 196, 15, 0.8)'
+            }
+        }
+    ];
+
+    // Layout configuration
+    const layout = {
+        title: 'Change Type Breakdown by Year',
+        barmode: 'stack',
+        xaxis: {
+            title: 'Year',
+            tickmode: 'linear',
+            dtick: 1
+        },
+        yaxis: {
+            title: 'Number of Changes'
+        },
+        legend: {
+            orientation: 'h',
+            y: -0.2
+        },
+        height: 400
+    };
+
+    // Create the plot
+    Plotly.newPlot(container, traces, layout, { responsive: true });
+}
+
+/**
+ * Load historical data based on time period and agency filter
+ * @param {Number} years - Number of years to display
+ * @param {String} agency - Agency slug to filter by, or 'all' for all agencies
+ */
+function loadHistoricalData(years, agency) {
+    console.log(`Loading historical data for last ${years} years, agency: ${agency}`);
+
+    // This function would load data from the server based on the parameters
+    // For now, just update the charts with sample data
+
+    // Sample data for demonstration
+    const currentYear = new Date().getFullYear();
+    const yearRange = Array.from({ length: years }, (_, i) => currentYear - years + 1 + i);
+
+    const sampleData = yearRange.map(year => ({
+        year,
+        additions: Math.floor(Math.random() * 100) + 50,
+        deletions: Math.floor(Math.random() * 70) + 30,
+        modifications: Math.floor(Math.random() * 120) + 40
+    }));
+
+    // Update charts with the new data
+    createHistoricalChangesOverTimeChart(sampleData);
+    createChangeTypeBreakdownChart(sampleData);
+    updateHistoricalTable(sampleData, agency);
+}
+
+/**
+ * Update the historical changes table
+ * @param {Array} data - Historical changes data
+ * @param {String} agency - Agency filter
+ */
+function updateHistoricalTable(data, agency) {
+    const tableBody = document.getElementById('historical-changes-table');
+    if (!tableBody) return;
+
+    // Clear existing rows
+    tableBody.innerHTML = '';
+
+    // Create sample table data - recent changes
+    const sampleTableData = [];
+
+    // Generate 10 sample entries
+    for (let i = 0; i < 10; i++) {
+        const changeTypes = ['Addition', 'Deletion', 'Modification'];
+        const agencies = ['Department of Agriculture', 'Department of Defense', 'Department of Education',
+            'Environmental Protection Agency', 'Department of Health and Human Services'];
+        const titles = ['Title 7', 'Title 10', 'Title 34', 'Title 40', 'Title 42'];
+
+        sampleTableData.push({
+            date: `${new Date().getFullYear()}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+            agency: agencies[Math.floor(Math.random() * agencies.length)],
+            title: titles[Math.floor(Math.random() * titles.length)],
+            changeType: changeTypes[Math.floor(Math.random() * changeTypes.length)],
+            description: `Sample change description ${i + 1}`,
+            wordCount: Math.floor(Math.random() * 1000) + 100
+        });
+    }
+
+    // Sort by date, newest first
+    sampleTableData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Add rows to the table
+    sampleTableData.forEach(item => {
+        const row = document.createElement('tr');
+
+        // Apply color based on change type
+        let badgeClass = '';
+        switch (item.changeType) {
+            case 'Addition':
+                badgeClass = 'bg-success';
+                break;
+            case 'Deletion':
+                badgeClass = 'bg-danger';
+                break;
+            case 'Modification':
+                badgeClass = 'bg-warning';
+                break;
+        }
+
+        row.innerHTML = `
+            <td>${item.date}</td>
+            <td>${item.agency}</td>
+            <td>${item.title}</td>
+            <td><span class="badge ${badgeClass}">${item.changeType}</span></td>
+            <td>${item.description}</td>
+            <td>${item.wordCount.toLocaleString()}</td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    // Update pagination
+    document.getElementById('prev-page').disabled = true;
+    document.getElementById('page-indicator').textContent = 'Page 1';
+    document.getElementById('next-page').disabled = false;
+}
+
+/**
+ * Change page in the historical changes table
+ * @param {Number} direction - Direction to change (-1 for previous, 1 for next)
+ */
+function changePage(direction) {
+    const pageIndicator = document.getElementById('page-indicator');
+    const currentPage = parseInt(pageIndicator.textContent.replace('Page ', ''));
+    const newPage = currentPage + direction;
+
+    if (newPage < 1) return;
+
+    pageIndicator.textContent = `Page ${newPage}`;
+    document.getElementById('prev-page').disabled = newPage === 1;
+    document.getElementById('next-page').disabled = newPage === 3; // Arbitrary limit
+
+    // Would load the appropriate page of data
+    console.log(`Changing to page ${newPage}`);
+}
+
+/**
+ * Load agency dropdown for filtering
+ * @param {String} elementId - ID of the select element to populate
+ */
+function loadAgencyDropdown(elementId) {
+    const selectElement = document.getElementById(elementId);
+    if (!selectElement) return;
+
+    // Sample agency data
+    const agencies = [
+        { slug: 'all', name: 'All Agencies' },
+        { slug: 'usda', name: 'Department of Agriculture' },
+        { slug: 'dod', name: 'Department of Defense' },
+        { slug: 'ed', name: 'Department of Education' },
+        { slug: 'epa', name: 'Environmental Protection Agency' },
+        { slug: 'hhs', name: 'Department of Health and Human Services' }
+    ];
+
+    // Clear existing options except the first one
+    while (selectElement.options.length > 1) {
+        selectElement.remove(1);
+    }
+
+    // Add options
+    agencies.forEach(agency => {
+        if (agency.slug === 'all') return; // Skip 'all' as it's already in the template
+
+        const option = document.createElement('option');
+        option.value = agency.slug;
+        option.textContent = agency.name;
+        selectElement.appendChild(option);
+    });
 }

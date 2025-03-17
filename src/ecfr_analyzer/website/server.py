@@ -36,6 +36,7 @@ def agency():
         page_title="Agency Analysis",
         word_count=load_word_count_data(),
         corrections=load_corrections_data(),
+        corrections_over_time=load_corrections_over_time_data(),
         dei_footprint=load_dei_footprint_data(),
         bureaucracy_footprint=load_bureaucracy_footprint_data(),
         timestamp=datetime.now().strftime("%Y-%m-%d"),
@@ -51,6 +52,7 @@ def historical():
         title="eCFR Analyzer - Historical Analysis",
         page_title="Historical Analysis",
         corrections=load_corrections_data(),
+        corrections_over_time=load_corrections_over_time_data(),
         timestamp=datetime.now().strftime("%Y-%m-%d"),
         active_page="historical",
     )
@@ -159,6 +161,11 @@ def load_word_count_data():
 def load_corrections_data():
     """Load corrections data from the analysis files."""
     return load_data_file("corrections_by_agency.json")
+
+
+def load_corrections_over_time_data():
+    """Load corrections over time data from the analysis files."""
+    return load_data_file("corrections_over_time.json")
 
 
 def load_dei_footprint_data():
