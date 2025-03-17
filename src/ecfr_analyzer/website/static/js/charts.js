@@ -2,31 +2,47 @@
  * Charts and data visualization for the eCFR Analyzer
  */
 
+// Global variable to store word count data for normalization
+window.wordCountData = null;
+
 /**
  * Initialize dashboard charts
  */
 async function initDashboardCharts() {
     try {
         // Load all necessary data
-        const wordCountData = await loadData('data/word_count_by_agency.json');
-        const deiData = await loadData('data/dei_footprint.json');
-        const wasteData = await loadData('data/waste_footprint.json');
-        const historicalData = await loadData('data/historical_changes.json');
-        const bureaucracyData = await loadData('data/bureaucracy_footprint.json');
-        const correctionsData = await loadData('data/corrections_by_agency.json');
-        const correctionsOverTimeData = await loadData('data/corrections_over_time.json');
-        const agencyHierarchyData = await loadData('data/agency_hierarchy_map.json');
+        const wordCountData = await loadData('/data/word_count_by_agency.json');
+        const deiData = await loadData('/data/dei_footprint.json');
+        const bureaucracyData = await loadData('/data/bureaucracy_footprint.json');
+        const correctionsData = await loadData('/data/corrections_by_agency.json');
+        const correctionsOverTimeData = await loadData('/data/corrections_over_time.json');
+        const agencyHierarchyData = await loadData('/data/agency_hierarchy_map.json');
+        // These files might not exist, but we'll try to load them anyway
+        const wasteData = await loadData('/data/waste_footprint.json');
+        const historicalData = await loadData('/data/historical_changes.json');
+
+
+        console.log("Data loading status:", {
+            wordCountData: !!wordCountData,
+            deiData: !!deiData,
+            wasteData: !!wasteData,
+            historicalData: !!historicalData,
+            bureaucracyData: !!bureaucracyData,
+            correctionsData: !!correctionsData,
+            correctionsOverTimeData: !!correctionsOverTimeData,
+            agencyHierarchyData: !!agencyHierarchyData
+        });
+
+        // Store word count data globally for normalization in other charts
+        window.wordCountData = wordCountData;
+
+        // Update dashboard overview stats if we have the required data
+        if (wordCountData && correctionsData) {
+            updateDashboardStats(wordCountData, correctionsData);
+        }
 
         if (wordCountData) {
             createWordCountChart(wordCountData);
-        }
-
-        if (deiData && wasteData) {
-            createKeywordOverviewChart(deiData, wasteData);
-        }
-
-        if (historicalData) {
-            createHistoricalChangesChart(historicalData);
         }
 
         if (correctionsData) {
@@ -37,69 +53,23 @@ async function initDashboardCharts() {
             createBureaucraticComplexityChart(bureaucracyData);
         }
 
+        if (deiData && wasteData) {
+            createKeywordOverviewChart(deiData, wasteData);
+        } else if (deiData) {
+            // If we only have DEI data, create a chart with just that
+            createKeywordOverviewChart(deiData, null);
+        }
+
         if (correctionsOverTimeData) {
             createCorrectionsOverTimeChart(correctionsOverTimeData);
         }
 
-        // Load recent changes
-        loadRecentChanges();
+        if (historicalData) {
+            populateHistoricalTable(historicalData);
+        }
     } catch (error) {
         console.error('Error initializing dashboard charts:', error);
     }
-}
-
-/**
- * Create corrections over time chart
- * @param {Object} data - Corrections data
- */
-function createCorrectionsChart(data) {
-    const container = document.getElementById('corrections-chart');
-    if (!container || !data || !data.agencies) return;
-
-    // Get top agencies by corrections
-    const topAgencies = Object.entries(data.agencies)
-        .map(([key, value]) => ({
-            name: key.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-            count: value.total
-        }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 15); // Get top 15 agencies
-
-    // Prepare plot data for corrections by agency
-    const plotData = {
-        x: topAgencies.map(a => a.name),
-        y: topAgencies.map(a => a.count),
-        type: 'bar',
-        marker: {
-            color: 'rgba(255, 193, 7, 0.8)',
-            line: {
-                color: 'rgba(255, 193, 7, 1.0)',
-                width: 1
-            }
-        }
-    };
-
-    // Layout configuration
-    const layout = {
-        title: 'Top Agencies by Number of Corrections',
-        xaxis: {
-            title: 'Agency',
-            tickangle: -45
-        },
-        yaxis: {
-            title: 'Number of Corrections'
-        },
-        margin: {
-            l: 50,
-            r: 20,
-            t: 50,
-            b: 150
-        },
-        height: 400
-    };
-
-    // Create the plot
-    Plotly.newPlot(container, [plotData], layout, { responsive: true });
 }
 
 /**
@@ -108,10 +78,10 @@ function createCorrectionsChart(data) {
 async function initAgencyCharts() {
     try {
         // Load all necessary data
-        const wordCountData = await loadData('data/word_count_by_agency.json');
-        const deiData = await loadData('data/dei_footprint.json');
-        const wasteData = await loadData('data/waste_footprint.json');
-        const bureaucracyData = await loadData('data/bureaucracy_footprint.json');
+        const wordCountData = await loadData('/data/word_count_by_agency.json');
+        const deiData = await loadData('/data/dei_footprint.json');
+        const wasteData = await loadData('/data/waste_footprint.json');
+        const bureaucracyData = await loadData('/data/bureaucracy_footprint.json');
 
         if (wordCountData) {
             createAgencyWordCountChart(wordCountData);
@@ -140,8 +110,8 @@ async function initAgencyCharts() {
 async function initHistoricalCharts() {
     try {
         // Load all necessary data
-        const historicalData = await loadData('data/historical_changes.json');
-        const correctionsData = await loadData('data/corrections_over_time.json');
+        const historicalData = await loadData('/data/historical_changes.json');
+        const correctionsData = await loadData('/data/corrections_over_time.json');
 
         if (historicalData) {
             createHistoricalChangesOverTimeChart(historicalData);
@@ -163,13 +133,15 @@ async function initHistoricalCharts() {
 
 /**
  * Initialize insights charts
+ * NOTE: This function is no longer used as the insights page has been removed
  */
+/*
 async function initInsightsCharts() {
     try {
         // Load all necessary data
-        const wasteData = await loadData('data/waste_footprint.json');
-        const deiData = await loadData('data/dei_footprint.json');
-        const bureaucracyData = await loadData('data/bureaucratic_complexity.json');
+        const wasteData = await loadData('/data/waste_footprint.json');
+        const deiData = await loadData('/data/dei_footprint.json');
+        const bureaucracyData = await loadData('/data/bureaucratic_complexity.json');
 
         if (wasteData) {
             createWasteAgencyComparisonChart(wasteData);
@@ -197,6 +169,39 @@ async function initInsightsCharts() {
         console.error('Error initializing insights charts:', error);
     }
 }
+*/
+
+/**
+ * Initialize agency detail page charts
+ * @param {string} agencySlug - The agency slug
+ */
+async function initAgencyDetailCharts(agencySlug) {
+    try {
+        // Load data for the agency
+        const wordCountData = await loadData('/data/word_count_by_agency.json');
+        const correctionsData = await loadData('/data/corrections_by_agency.json');
+        const correctionsOverTimeData = await loadData('/data/corrections_over_time.json');
+        const agencyHierarchyData = await loadData('/data/agency_hierarchy_map.json');
+
+        if (!agencySlug || !wordCountData || !correctionsData) {
+            console.error('Missing required data for agency detail charts');
+            return;
+        }
+
+        const agencyWordCount = wordCountData.agencies[agencySlug];
+        const agencyCorrections = correctionsData.agencies[agencySlug];
+
+        if (agencyWordCount) {
+            createAgencyDetailWordCountChart(agencyWordCount);
+        }
+
+        if (agencyCorrections && correctionsOverTimeData) {
+            createAgencyDetailCorrectionsChart(agencyCorrections, correctionsOverTimeData, agencySlug);
+        }
+    } catch (error) {
+        console.error('Error initializing agency detail charts:', error);
+    }
+}
 
 /**
  * Create word count chart for the dashboard
@@ -204,10 +209,19 @@ async function initInsightsCharts() {
  */
 function createWordCountChart(data) {
     const chartElement = document.getElementById('word-count-chart');
-    if (!chartElement) return;
+    if (!chartElement || !data || !data.agencies) return;
+
+    // Convert agencies object to array and sort by word count
+    const agenciesArray = Object.entries(data.agencies).map(([slug, agencyData]) => {
+        return {
+            slug: slug,
+            name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            word_count: agencyData.total || 0
+        };
+    }).sort((a, b) => b.word_count - a.word_count);
 
     // Get top 10 agencies by word count
-    const topAgencies = data.agencies.slice(0, 10);
+    const topAgencies = agenciesArray.slice(0, 10);
 
     const chartData = [{
         x: topAgencies.map(agency => agency.word_count),
@@ -244,11 +258,49 @@ function createWordCountChart(data) {
  */
 function createKeywordOverviewChart(deiData, wasteData) {
     const chartElement = document.getElementById('keyword-overview-chart');
-    if (!chartElement) return;
+    if (!chartElement || !deiData || !deiData.agencies || !wasteData || !wasteData.agencies) return;
 
-    // Get top 5 agencies from each category
-    const topDEIAgencies = deiData.agencies.slice(0, 5);
-    const topWasteAgencies = wasteData.agencies.slice(0, 5);
+    // Convert agencies objects to arrays with normalized scores
+    const deiAgencies = Object.entries(deiData.agencies).map(([slug, data]) => {
+        // Normalize by word count if available
+        const wordCountData = window.wordCountData?.agencies?.[slug];
+        const wordCount = wordCountData?.total || 10000; // Default to prevent division by zero
+
+        return {
+            slug: slug,
+            name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            total: data.total || 0,
+            normalized_score: ((data.total / wordCount) * 1000).toFixed(2) // Per 1,000 words
+        };
+    }).filter(agency => agency.total > 0);
+
+    const wasteAgencies = Object.entries(wasteData.agencies).map(([slug, data]) => {
+        // Normalize by word count if available
+        const wordCountData = window.wordCountData?.agencies?.[slug];
+        const wordCount = wordCountData?.total || 10000; // Default to prevent division by zero
+
+        return {
+            slug: slug,
+            name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            total: data.total || 0,
+            normalized_score: ((data.total / wordCount) * 1000).toFixed(2) // Per 1,000 words
+        };
+    }).filter(agency => agency.total > 0);
+
+    // Sort by normalized score and get top 5 from each
+    const topDEIAgencies = deiAgencies
+        .sort((a, b) => b.normalized_score - a.normalized_score)
+        .slice(0, 5);
+
+    const topWasteAgencies = wasteAgencies
+        .sort((a, b) => b.normalized_score - a.normalized_score)
+        .slice(0, 5);
+
+    // If no agencies with data, show a message
+    if (topDEIAgencies.length === 0 && topWasteAgencies.length === 0) {
+        chartElement.innerHTML = '<div class="text-center p-4"><p class="text-muted">No keyword analysis data available</p></div>';
+        return;
+    }
 
     // Combine the data for comparison
     const agencyNames = new Set();
@@ -259,19 +311,19 @@ function createKeywordOverviewChart(deiData, wasteData) {
 
     const deiValues = agencies.map(name => {
         const agency = topDEIAgencies.find(a => a.name === name);
-        return agency ? agency.keyword_percentage : 0;
+        return agency ? parseFloat(agency.normalized_score) : 0;
     });
 
     const wasteValues = agencies.map(name => {
         const agency = topWasteAgencies.find(a => a.name === name);
-        return agency ? agency.keyword_percentage : 0;
+        return agency ? parseFloat(agency.normalized_score) : 0;
     });
 
     const chartData = [
         {
             x: agencies,
             y: deiValues,
-            name: 'DEI Footprint',
+            name: 'DEI Keywords',
             type: 'bar',
             marker: {
                 color: 'rgba(55, 128, 191, 0.7)'
@@ -280,7 +332,7 @@ function createKeywordOverviewChart(deiData, wasteData) {
         {
             x: agencies,
             y: wasteValues,
-            name: 'Waste Footprint',
+            name: 'Waste Keywords',
             type: 'bar',
             marker: {
                 color: 'rgba(255, 99, 132, 0.7)'
@@ -296,12 +348,11 @@ function createKeywordOverviewChart(deiData, wasteData) {
             automargin: true
         },
         yaxis: {
-            title: 'Keyword Percentage'
+            title: 'Keywords per 1,000 Words'
         },
         legend: {
-            x: 0,
-            y: 1.1,
-            orientation: 'h'
+            orientation: 'h',
+            y: 1.1
         }
     };
 
@@ -379,16 +430,37 @@ function createHistoricalChangesChart(data) {
  */
 function createBureaucraticComplexityChart(data) {
     const chartElement = document.getElementById('bureaucratic-complexity-chart');
-    if (!chartElement) return;
+    if (!chartElement || !data || !data.agencies) return;
 
-    // Get top 10 agencies by vague phrase count per sentence
-    const topAgencies = data.agencies
-        .sort((a, b) => b.vague_phrase_per_sentence - a.vague_phrase_per_sentence)
+    // Convert agencies object to array and calculate complexity metrics
+    const agenciesArray = Object.entries(data.agencies).map(([slug, agencyData]) => {
+        // Calculate a complexity score based on total bureaucratic keywords
+        // Normalize by word count if available
+        const wordCountData = window.wordCountData?.agencies?.[slug];
+        const wordCount = wordCountData?.total || 10000; // Default to prevent division by zero
+
+        return {
+            slug: slug,
+            name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            total: agencyData.total || 0,
+            complexity_score: (agencyData.total / wordCount) * 10000 // Per 10,000 words
+        };
+    }).filter(agency => agency.total > 0);
+
+    // Sort by complexity score and get top 10
+    const topAgencies = agenciesArray
+        .sort((a, b) => b.complexity_score - a.complexity_score)
         .slice(0, 10);
+
+    // If no agencies with data, show a message
+    if (topAgencies.length === 0) {
+        chartElement.innerHTML = '<div class="text-center p-4"><p class="text-muted">No bureaucratic complexity data available</p></div>';
+        return;
+    }
 
     const chartData = [{
         x: topAgencies.map(agency => agency.name),
-        y: topAgencies.map(agency => agency.vague_phrase_per_sentence),
+        y: topAgencies.map(agency => agency.complexity_score.toFixed(2)),
         type: 'bar',
         marker: {
             color: 'rgba(255, 159, 64, 0.7)',
@@ -406,7 +478,7 @@ function createBureaucraticComplexityChart(data) {
             automargin: true
         },
         yaxis: {
-            title: 'Vague Phrases per Sentence'
+            title: 'Bureaucratic Keywords per 10,000 Words'
         }
     };
 
@@ -421,102 +493,68 @@ async function loadRecentChanges() {
     if (!tableElement) return;
 
     try {
-        const historicalData = await loadData('data/historical_changes.json');
-        if (!historicalData) return;
-
-        // Create mock data for recent changes
-        const years = Object.keys(historicalData.changes_by_year).sort().reverse();
-        const mostRecentYear = years[0];
-
-        const agencies = ['EPA', 'DOL', 'HHS', 'DOD', 'DOJ', 'USDA', 'DOT', 'ED', 'DOE', 'DHS'];
-        const agencyNames = {
-            'EPA': 'Environmental Protection Agency',
-            'DOL': 'Department of Labor',
-            'HHS': 'Health and Human Services',
-            'DOD': 'Department of Defense',
-            'DOJ': 'Department of Justice',
-            'USDA': 'Department of Agriculture',
-            'DOT': 'Department of Transportation',
-            'ED': 'Department of Education',
-            'DOE': 'Department of Energy',
-            'DHS': 'Department of Homeland Security'
-        };
-
-        const changeTypes = ['Addition', 'Deletion', 'Modification', 'Correction'];
-        const titles = [
-            'Environmental Standards',
-            'Workplace Safety Requirements',
-            'Healthcare Regulations',
-            'Defense Procurement',
-            'Law Enforcement Procedures',
-            'Agricultural Subsidies',
-            'Transportation Safety',
-            'Education Standards',
-            'Energy Conservation',
-            'Homeland Security Protocols'
-        ];
-
-        const recentChanges = [];
-        for (let i = 0; i < 10; i++) {
-            const agency = agencies[Math.floor(Math.random() * agencies.length)];
-            const changeType = changeTypes[Math.floor(Math.random() * changeTypes.length)];
-            const title = titles[Math.floor(Math.random() * titles.length)];
-
-            // Create a random date in the last 30 days
-            const date = new Date();
-            date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-
-            recentChanges.push({
-                date: date.toISOString().split('T')[0],
-                agency: agencyNames[agency],
-                title: title,
-                description: `${changeType} to ${title.toLowerCase()} regulations.`,
-                type: changeType
-            });
+        const historicalData = await loadData('/data/historical_changes.json');
+        if (!historicalData || !historicalData.changes_by_year) {
+            console.error('Invalid historical data format');
+            return;
         }
 
-        // Sort by date, most recent first
-        recentChanges.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Get the most recent year's data
+        const years = Object.keys(historicalData.changes_by_year).sort().reverse();
+        if (years.length === 0) {
+            console.error('No historical years data found');
+            return;
+        }
 
-        // Clear the table
-        tableElement.innerHTML = '';
+        const mostRecentYear = years[0];
+        const recentChanges = historicalData.changes_by_year[mostRecentYear];
 
-        // Populate the table
-        recentChanges.forEach(change => {
-            const row = document.createElement('tr');
+        if (!recentChanges || !Array.isArray(recentChanges)) {
+            console.error('Invalid recent changes data format');
+            return;
+        }
 
-            const dateCell = document.createElement('td');
-            dateCell.textContent = change.date;
+        // Sort by date (newest first) and take the first 5
+        const sortedChanges = recentChanges
+            .sort((a, b) => new Date(b.date || '2000-01-01') - new Date(a.date || '2000-01-01'))
+            .slice(0, 5);
 
-            const agencyCell = document.createElement('td');
-            agencyCell.textContent = change.agency;
+        // Clear the table body
+        const tableBody = tableElement.querySelector('tbody');
+        if (tableBody) {
+            tableBody.innerHTML = '';
 
-            const titleCell = document.createElement('td');
-            titleCell.textContent = change.title;
+            // If we have changes, add them to the table
+            if (sortedChanges.length > 0) {
+                sortedChanges.forEach(change => {
+                    const row = document.createElement('tr');
 
-            const descriptionCell = document.createElement('td');
-            descriptionCell.textContent = change.description;
+                    // Format the date
+                    const dateObj = new Date(change.date || '');
+                    const formattedDate = isNaN(dateObj.getTime())
+                        ? 'Unknown'
+                        : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-            const typeCell = document.createElement('td');
-            let badgeClass = 'bg-secondary';
-            if (change.type === 'Addition') badgeClass = 'bg-success';
-            if (change.type === 'Deletion') badgeClass = 'bg-danger';
-            if (change.type === 'Modification') badgeClass = 'bg-warning text-dark';
-            if (change.type === 'Correction') badgeClass = 'bg-info text-dark';
+                    row.innerHTML = `
+                        <td>${change.agency || 'Unknown'}</td>
+                        <td>${change.title || 'Regulation Change'}</td>
+                        <td>${change.type || 'Update'}</td>
+                        <td>${formattedDate}</td>
+                    `;
 
-            typeCell.innerHTML = `<span class="badge ${badgeClass}">${change.type}</span>`;
-
-            row.appendChild(dateCell);
-            row.appendChild(agencyCell);
-            row.appendChild(titleCell);
-            row.appendChild(descriptionCell);
-            row.appendChild(typeCell);
-
-            tableElement.appendChild(row);
-        });
+                    tableBody.appendChild(row);
+                });
+            } else {
+                // Add a "no data" row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="4" class="text-center">No recent changes found</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
     } catch (error) {
         console.error('Error loading recent changes:', error);
-        tableElement.innerHTML = '<tr><td colspan="5" class="text-center">Error loading recent changes</td></tr>';
     }
 }
 
@@ -674,63 +712,50 @@ function loadHistoricalData(years, agency) {
 /**
  * Load search results based on form inputs
  */
-function performSearch() {
-    const query = document.getElementById('search-query').value;
+async function performSearch() {
+    // Get search params
+    const query = document.getElementById('search-query').value.trim();
     const agencyCode = document.getElementById('search-agency').value;
-    const titleNumber = document.getElementById('search-title').value;
     const date = document.getElementById('search-date').value;
-    const includeDEI = document.getElementById('filter-dei').checked;
-    const includeWaste = document.getElementById('filter-waste').checked;
-    const includeComplex = document.getElementById('filter-complex').checked;
 
-    // Save search to history
-    saveSearchToHistory(query, {
-        agency: agencyCode,
-        title: titleNumber,
-        date: date,
-        dei: includeDEI,
-        waste: includeWaste,
-        complex: includeComplex
-    });
+    // Hide previous results and show loader
+    document.getElementById('search-results-section').style.display = 'none';
+    document.getElementById('search-loader').style.display = 'block';
 
-    // Update search history display
-    loadSearchHistory();
+    // Call the search API with the search parameters
+    try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&agency=${encodeURIComponent(agencyCode || '')}&date=${encodeURIComponent(date || '')}`);
+        const data = await response.json();
+        const results = data.results || [];
 
-    // Show results section
-    document.getElementById('search-results-section').style.display = 'block';
+        // Hide loader
+        document.getElementById('search-loader').style.display = 'none';
 
-    // Create mock search results
-    const resultsContainer = document.getElementById('search-results-container');
-    resultsContainer.innerHTML = '';
+        const resultsContainer = document.getElementById('search-results-container');
+        resultsContainer.innerHTML = '';
 
-    // In a real implementation, this would call the API with the search parameters
-    // For demo purposes, create some mock results
-    const mockResults = [];
-    for (let i = 0; i < 10; i++) {
-        mockResults.push({
-            id: `result-${i}`,
-            title: `Regulation related to "${query}"`,
-            agency: agencyCode ? `Agency: ${agencyCode}` : 'Environmental Protection Agency',
-            date: date || '2023-01-15',
-            excerpt: `This regulation contains references to ${query} and outlines requirements for compliance with federal standards.`
+        // If no results, show message
+        if (results.length === 0) {
+            document.getElementById('search-results-section').style.display = 'none';
+            document.getElementById('no-results-section').style.display = 'block';
+            return;
+        }
+
+        // Display results
+        document.getElementById('no-results-section').style.display = 'none';
+        document.getElementById('search-results-section').style.display = 'block';
+        document.getElementById('result-count').textContent = `${results.length} results`;
+
+        results.forEach(result => {
+            const resultCard = createSearchResultCard(result);
+            resultsContainer.appendChild(resultCard);
         });
-    }
-
-    // If no results, show message
-    if (mockResults.length === 0) {
-        document.getElementById('search-results-section').style.display = 'none';
+    } catch (error) {
+        console.error('Error searching:', error);
+        document.getElementById('search-loader').style.display = 'none';
         document.getElementById('no-results-section').style.display = 'block';
-        return;
+        document.getElementById('search-results-section').style.display = 'none';
     }
-
-    // Display results
-    document.getElementById('no-results-section').style.display = 'none';
-    document.getElementById('result-count').textContent = `${mockResults.length} results`;
-
-    mockResults.forEach(result => {
-        const resultCard = createSearchResultCard(result);
-        resultsContainer.appendChild(resultCard);
-    });
 }
 
 /**
@@ -1241,32 +1266,178 @@ function changePage(direction) {
  * Load agency dropdown for filtering
  * @param {String} elementId - ID of the select element to populate
  */
-function loadAgencyDropdown(elementId) {
+async function loadAgencyDropdown(elementId) {
     const selectElement = document.getElementById(elementId);
     if (!selectElement) return;
 
-    // Sample agency data
-    const agencies = [
-        { slug: 'all', name: 'All Agencies' },
-        { slug: 'usda', name: 'Department of Agriculture' },
-        { slug: 'dod', name: 'Department of Defense' },
-        { slug: 'ed', name: 'Department of Education' },
-        { slug: 'epa', name: 'Environmental Protection Agency' },
-        { slug: 'hhs', name: 'Department of Health and Human Services' }
-    ];
+    try {
+        // Load real agency data from the API
+        const hierarchyData = await loadData('/data/agency_hierarchy.json');
+        if (!hierarchyData || !hierarchyData.agencies || !Array.isArray(hierarchyData.agencies)) {
+            console.error('Invalid agency hierarchy data format');
+            return;
+        }
 
-    // Clear existing options except the first one
-    while (selectElement.options.length > 1) {
-        selectElement.remove(1);
+        // Clear existing options except the first one (which is typically "All Agencies")
+        while (selectElement.options.length > 1) {
+            selectElement.remove(1);
+        }
+
+        // Add parent agencies first
+        hierarchyData.agencies.forEach(agency => {
+            if (!agency.slug || !agency.name) return;
+
+            const option = document.createElement('option');
+            option.value = agency.slug;
+            option.textContent = agency.name;
+            selectElement.appendChild(option);
+
+            // Then add their children with indent
+            if (agency.children && Array.isArray(agency.children)) {
+                agency.children.forEach(child => {
+                    if (!child.slug || !child.name) return;
+
+                    const childOption = document.createElement('option');
+                    childOption.value = child.slug;
+                    childOption.textContent = `— ${child.name}`;
+                    selectElement.appendChild(childOption);
+                });
+            }
+        });
+    } catch (error) {
+        console.error('Error loading agency dropdown:', error);
+    }
+}
+
+/**
+ * Create agency detail word count chart
+ * @param {Object} agencyData - Agency word count data
+ */
+function createAgencyDetailWordCountChart(agencyData) {
+    if (!agencyData || !agencyData.titles) return;
+
+    const titleWordCountChart = document.getElementById('title-word-count-chart');
+    if (!titleWordCountChart) return;
+
+    // Extract title data and sort by word count
+    const titles = Object.entries(agencyData.titles)
+        .map(([titleNum, data]) => ({
+            title: `Title ${titleNum}`,
+            name: data.title_name,
+            wordCount: data.word_count
+        }))
+        .sort((a, b) => b.wordCount - a.wordCount)
+        .slice(0, 10); // Top 10 titles
+
+    const titleLabels = titles.map(t => t.title);
+    const titleValues = titles.map(t => t.wordCount);
+
+    Plotly.newPlot(titleWordCountChart, [{
+        x: titleLabels,
+        y: titleValues,
+        type: 'bar',
+        marker: {
+            color: '#0b3d91'
+        },
+        hovertemplate: '<b>%{x}</b><br>%{customdata}<br>Words: %{y:,}<extra></extra>',
+        customdata: titles.map(t => t.name)
+    }], {
+        margin: { t: 10, r: 10, b: 50, l: 60 },
+        yaxis: {
+            title: 'Word Count'
+        }
+    });
+}
+
+/**
+ * Create corrections over time chart for agency detail page
+ * @param {Object} agencyCorrections - Agency corrections data
+ * @param {Object} correctionsOverTimeData - All corrections over time data
+ * @param {string} agencySlug - The agency slug
+ */
+function createAgencyDetailCorrectionsChart(agencyCorrections, correctionsOverTimeData, agencySlug) {
+    const correctionsChart = document.getElementById('corrections-over-time-chart');
+    if (!correctionsChart) return;
+
+    // Extract agency-specific corrections over time if available
+    let timeData = [];
+    let correctionValues = [];
+
+    if (correctionsOverTimeData.agencies && correctionsOverTimeData.agencies[agencySlug]) {
+        const agencyTimeData = correctionsOverTimeData.agencies[agencySlug];
+        timeData = Object.keys(agencyTimeData).sort();
+        correctionValues = timeData.map(date => agencyTimeData[date]);
+    } else {
+        // Fallback to placeholder data
+        timeData = ['2020-01', '2020-07', '2021-01', '2021-07', '2022-01', '2022-07', '2023-01', '2023-07'];
+        correctionValues = [5, 8, 3, 12, 7, 9, 14, 6];
     }
 
-    // Add options
-    agencies.forEach(agency => {
-        if (agency.slug === 'all') return; // Skip 'all' as it's already in the template
-
-        const option = document.createElement('option');
-        option.value = agency.slug;
-        option.textContent = agency.name;
-        selectElement.appendChild(option);
+    Plotly.newPlot(correctionsChart, [{
+        x: timeData,
+        y: correctionValues,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Corrections',
+        line: {
+            color: '#0b3d91',
+            width: 3
+        },
+        marker: {
+            size: 8,
+            color: '#0b3d91'
+        }
+    }], {
+        margin: { t: 10, r: 10, b: 50, l: 60 },
+        yaxis: {
+            title: 'Corrections'
+        },
+        xaxis: {
+            title: 'Time Period'
+        }
     });
+}
+
+/**
+ * Update dashboard overview stats with real data
+ * @param {Object} wordCountData - Word count data
+ * @param {Object} correctionsData - Corrections data
+ */
+function updateDashboardStats(wordCountData, correctionsData) {
+    if (!wordCountData || !correctionsData) return;
+
+    // Update total word count
+    const totalWordCountElement = document.getElementById('total-word-count');
+    if (totalWordCountElement && wordCountData.total_word_count) {
+        totalWordCountElement.textContent = formatNumber(wordCountData.total_word_count);
+    }
+
+    // Update total agencies count
+    const totalAgenciesElement = document.getElementById('total-agencies');
+    if (totalAgenciesElement && wordCountData.agencies) {
+        const agencyCount = Object.keys(wordCountData.agencies).length;
+        totalAgenciesElement.textContent = formatNumber(agencyCount);
+    }
+
+    // Update total corrections
+    const totalCorrectionsElement = document.getElementById('total-corrections');
+    if (totalCorrectionsElement && correctionsData.total_corrections) {
+        totalCorrectionsElement.textContent = formatNumber(correctionsData.total_corrections);
+    }
+
+    // Update total titles
+    const totalTitlesElement = document.getElementById('total-titles');
+    if (totalTitlesElement && wordCountData.title_totals) {
+        const titleCount = Object.keys(wordCountData.title_totals).length;
+        totalTitlesElement.textContent = formatNumber(titleCount);
+    }
+}
+
+/**
+ * Format a number with commas for thousands
+ * @param {number} number - Number to format
+ * @returns {string} Formatted number
+ */
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

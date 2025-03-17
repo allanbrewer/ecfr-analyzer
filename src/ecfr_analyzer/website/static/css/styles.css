@@ -1,72 +1,170 @@
-/* eCFR Analyzer Styles */
+/* eCFR Analyzer Styles - DOGE.gov Inspired */
 
 /* General Styles */
+:root {
+    --doge-blue: #0b3d91;
+    --doge-light-blue: #205493;
+    --doge-red: #e31c3d;
+    --doge-white: #ffffff;
+    --doge-gray: #f1f1f1;
+    --doge-dark-gray: #323a45;
+    --doge-black: #212121;
+    --doge-border: #d6d7d9;
+}
+
 body {
-    font-family: 'Roboto', 'Segoe UI', sans-serif;
-    color: #333;
-    background-color: #f8f9fa;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: var(--doge-black);
+    background-color: white;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.bg-primary {
+    background-color: var(--doge-blue) !important;
+}
+
+.text-primary {
+    color: var(--doge-blue) !important;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    padding: 0 1rem;
+}
+
+/* Navigation */
+.navbar {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--doge-border);
+}
+
+.navbar-dark .navbar-brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.navbar-dark .nav-link {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+}
+
+/* Header */
+header {
+    background-color: var(--doge-gray);
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--doge-border);
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+header p {
+    margin-bottom: 0;
+    color: var(--doge-dark-gray);
 }
 
 /* Card Styles */
 .card {
-    transition: transform 0.3s, box-shadow 0.3s;
-    margin-bottom: 1.5rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
+    border: 1px solid var(--doge-border);
+    border-radius: 0;
+    margin-bottom: 2rem;
+    box-shadow: none;
+    transition: box-shadow 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-    border-bottom: none;
+    background-color: var(--doge-blue);
+    color: white;
+    font-weight: 600;
     padding: 1rem 1.5rem;
+    border-bottom: none;
 }
 
 .card-body {
     padding: 1.5rem;
 }
 
-/* Stat Card Styles */
-.stat-card {
-    height: 100%;
-    border: none;
-    background: white;
+/* Stat Cards */
+.main-card {
+    background-color: var(--doge-blue);
+    color: white;
+    padding: 2rem;
+    border-radius: 0;
+    margin-bottom: 2rem;
 }
 
-.stat-card .card-body {
-    padding: 1.5rem;
+.main-card h2 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
 }
 
-.stat-value {
-    font-size: 2rem;
-    font-weight: 600;
+.main-card-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.main-stat {
+    flex: 1;
+    min-width: 200px;
+}
+
+.main-stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
-.stat-label {
-    font-size: 0.9rem;
-    color: #6c757d;
+.main-stat-label {
+    font-size: 1rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
-/* Agency Card Styles */
+/* Agency Stats */
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--doge-blue);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--doge-dark-gray);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Agency Cards */
 .agency-card {
     height: 100%;
     cursor: pointer;
+    border: 1px solid var(--doge-border);
 }
 
 .agency-card .card-title {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--doge-blue);
 }
 
 .agency-card .card-subtitle {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--doge-dark-gray);
 }
 
 .agency-metrics {
@@ -81,135 +179,216 @@ body {
 }
 
 .metric-value {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--doge-blue);
 }
 
 .metric-label {
-    font-size: 0.8rem;
-    color: #6c757d;
+    font-size: 0.75rem;
+    color: var(--doge-dark-gray);
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
-/* Chart Container Styles */
+/* Chart Container */
 .chart-container {
     height: 350px;
     width: 100%;
 }
 
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background-color: var(--doge-gray);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+table th, table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--doge-border);
+}
+
 /* Search and Filter Styles */
-.filter-section {
-    background-color: #f1f4f9;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
+.search-container {
+    background-color: var(--doge-gray);
+    padding: 2rem;
     margin-bottom: 2rem;
 }
 
 .search-bar {
     position: relative;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .search-bar input {
-    padding-right: 40px;
-    border-radius: 2rem;
-    border: 1px solid #dee2e6;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    padding-right: 3rem;
+    border: 2px solid var(--doge-blue);
+    border-radius: 0;
+    font-size: 1rem;
 }
 
-.search-bar .bi-search {
+.search-bar button {
     position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6c757d;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background-color: var(--doge-blue);
+    border: none;
+    color: white;
+    width: 3rem;
 }
 
-/* Pagination Styles */
+/* Filter section */
+.filter-section {
+    background-color: var(--doge-gray);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--doge-blue);
+    border-color: var(--doge-blue);
+    border-radius: 0;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--doge-light-blue);
+    border-color: var(--doge-light-blue);
+}
+
+.btn-outline-primary {
+    color: var(--doge-blue);
+    border-color: var(--doge-blue);
+    border-radius: 0;
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--doge-blue);
+    border-color: var(--doge-blue);
+}
+
+/* Pagination */
 .pagination {
     justify-content: center;
     margin-top: 2rem;
 }
 
-/* Main Agency Card - for top central display */
-.main-card {
-    background: linear-gradient(135deg, #0061f2 0%, #6610f2 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    margin-bottom: 2rem;
+.pagination .page-link {
+    color: var(--doge-blue);
+    border-color: var(--doge-border);
+    min-width: 40px;
+    text-align: center;
 }
 
-.main-card h2 {
-    font-weight: 500;
+.pagination .page-item.active .page-link {
+    background-color: var(--doge-blue);
+    border-color: var(--doge-blue);
+}
+
+/* Footer */
+footer {
+    background-color: var(--doge-dark-gray);
+    color: white;
+    padding: 3rem 0;
+    margin-top: 3rem;
+}
+
+footer h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
     margin-bottom: 1.5rem;
 }
 
-.main-card-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+footer a {
+    color: white;
+    text-decoration: none;
 }
 
-.main-stat {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 1rem;
-    border-radius: 0.4rem;
-    min-width: 200px;
+footer a:hover {
+    text-decoration: underline;
+    color: rgba(255,255,255,0.8);
+}
+
+/* Utilities */
+.text-muted {
+    color: var(--doge-dark-gray) !important;
+}
+
+/* Agency Leaderboard */
+.leaderboard {
+    margin-top: 2rem;
+}
+
+.leaderboard-heading {
+    background-color: var(--doge-blue);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--doge-border);
+}
+
+.leaderboard-rank {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-right: 1.5rem;
+    color: var(--doge-blue);
+    min-width: 40px;
+}
+
+.leaderboard-agency {
     flex: 1;
 }
 
-.main-stat-value {
-    font-size: 1.8rem;
+.leaderboard-agency-name {
     font-weight: 600;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
 }
 
-.main-stat-label {
-    font-size: 0.9rem;
-    opacity: 0.9;
+.leaderboard-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-left: 1.5rem;
 }
 
-/* View toggle buttons */
-.view-toggle {
-    margin-bottom: 1.5rem;
+/* Agency search page */
+.agency-search-results {
+    margin-top: 2rem;
 }
 
-/* Chart styles */
-.chart-toggle {
+.agency-search-result {
+    padding: 1.5rem;
+    border: 1px solid var(--doge-border);
     margin-bottom: 1rem;
+    transition: background-color 0.3s;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .main-card-stats {
-        flex-direction: column;
-    }
-    
-    .card-deck {
-        flex-direction: column;
-    }
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Button styles */
-.btn-primary {
-    background-color: #0061f2;
-    border-color: #0061f2;
-}
-
-.btn-primary:hover {
-    background-color: #0056d6;
-    border-color: #0056d6;
-}
-
-/* Footer styles */
-footer {
-    margin-top: 3rem;
+.agency-search-result:hover {
+    background-color: var(--doge-gray);
 }

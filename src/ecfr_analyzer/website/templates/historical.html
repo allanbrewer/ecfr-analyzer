@@ -6,13 +6,14 @@
     <div class="col-12 mb-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Time Period Selection</h5>
+                <h5 class="card-title mb-0">Historical Corrections Analysis</h5>
             </div>
             <div class="card-body">
                 <form id="time-period-form" class="row g-3">
                     <div class="col-md-4">
                         <label for="time-period-select" class="form-label">Select Time Period</label>
                         <select class="form-select" id="time-period-select">
+                            <option value="all">All Available Years</option>
                             <option value="5">Last 5 Years</option>
                             <option value="3">Last 3 Years</option>
                             <option value="1">Last Year</option>
@@ -33,49 +34,70 @@
         </div>
     </div>
 
-    <!-- Historical Changes Overview -->
+    <!-- Corrections Over Time Chart -->
     <div class="col-12 mb-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Regulatory Changes Over Time</h5>
+                <h5 class="card-title mb-0">Corrections Over Time</h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div id="historical-changes-over-time-chart" style="height: 500px;"></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-header bg-light">
-                                <h6 class="card-title mb-0">Change Statistics</h6>
+                <div id="corrections-over-time-chart" style="height: 500px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Corrections Statistics -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Correction Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-primary bg-opacity-10 rounded me-3">
+                                <i class="bi bi-pencil-square fs-1 text-primary"></i>
                             </div>
-                            <div class="card-body">
-                                <ul class="list-group list-group-flush" id="change-stats">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Total Changes
-                                        <span class="badge bg-primary rounded-pill"
-                                            id="total-changes">Calculating...</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Additions
-                                        <span class="badge bg-success rounded-pill"
-                                            id="total-additions">Calculating...</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Deletions
-                                        <span class="badge bg-danger rounded-pill"
-                                            id="total-deletions">Calculating...</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Modifications
-                                        <span class="badge bg-warning rounded-pill"
-                                            id="total-modifications">Calculating...</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Year with Most Changes
-                                        <span class="badge bg-info rounded-pill" id="busiest-year">Calculating...</span>
-                                    </li>
-                                </ul>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Total Corrections</h6>
+                                <h4 id="total-corrections" class="mb-0">{{ stats.total_corrections|default('Loading...')
+                                    }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-success bg-opacity-10 rounded me-3">
+                                <i class="bi bi-calendar-event fs-1 text-success"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Avg. Per Year</h6>
+                                <h4 id="avg-corrections-per-year" class="mb-0">{{
+                                    stats.avg_per_year|default('Loading...') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-info bg-opacity-10 rounded me-3">
+                                <i class="bi bi-graph-up fs-1 text-info"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Peak Year</h6>
+                                <h4 id="peak-correction-year" class="mb-0">{{ stats.peak_year|default('Loading...') }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="p-3 bg-warning bg-opacity-10 rounded me-3">
+                                <i class="bi bi-building fs-1 text-warning"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-normal text-muted mb-0">Top Agency</h6>
+                                <h4 id="top-agency" class="mb-0">{{ stats.top_agency|default('Loading...') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -83,122 +105,78 @@
             </div>
         </div>
     </div>
-
-    <!-- Corrections Analysis -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Corrections Over Time</h5>
-            </div>
-            <div class="card-body">
-                <div id="corrections-over-time-chart" style="height: 400px;"></div>
-            </div>
-            <div class="card-footer bg-light">
-                <p class="small text-muted mb-0">Number of corrections published by agencies over time, indicating
-                    potential quality issues or frequent changes.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Top Changing Agencies -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Agencies with Most Changes</h5>
-            </div>
-            <div class="card-body">
-                <div id="top-changing-agencies-chart" style="height: 400px;"></div>
-            </div>
-            <div class="card-footer bg-light">
-                <p class="small text-muted mb-0">Agencies with the highest frequency of regulatory changes during the
-                    selected time period.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Change Type Breakdown -->
-    <div class="col-12 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Change Type Breakdown by Year</h5>
-            </div>
-            <div class="card-body">
-                <div id="change-type-breakdown-chart" style="height: 400px;"></div>
-            </div>
-            <div class="card-footer bg-light">
-                <p class="small text-muted mb-0">Breakdown of regulatory changes by type (additions, deletions,
-                    modifications) per year.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Changes Table -->
-    <div class="col-12">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Recent Regulatory Changes</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Agency</th>
-                                <th>Title</th>
-                                <th>Change Type</th>
-                                <th>Description</th>
-                                <th>Word Count Impact</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historical-changes-table">
-                            <!-- Will be populated by JavaScript -->
-                            <tr>
-                                <td colspan="6" class="text-center">Loading change history...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer bg-light d-flex justify-content-between">
-                <button id="prev-page" class="btn btn-sm btn-outline-secondary" disabled>Previous</button>
-                <span id="page-indicator">Page 1</span>
-                <button id="next-page" class="btn btn-sm btn-outline-secondary">Next</button>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="static/js/charts.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Initialize historical charts
-        initHistoricalCharts();
+        // Parse corrections over time data from server
+        var correctionsOverTimeData = JSON.parse('{{ corrections_over_time_json|safe }}');
 
-        // Load agency dropdown
-        loadAgencyDropdown('agency-filter');
+        // Create the corrections over time chart
+        if (correctionsOverTimeData && correctionsOverTimeData.length > 0) {
+            var years = correctionsOverTimeData.map(function (item) {
+                return item.year;
+            });
 
-        // Load initial historical data
-        loadHistoricalData(5, 'all');
+            var corrections = correctionsOverTimeData.map(function (item) {
+                return item.count;
+            });
 
-        // Handle time period form submission
-        document.getElementById('time-period-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const years = document.getElementById('time-period-select').value;
-            const agency = document.getElementById('agency-filter').value;
-            loadHistoricalData(years, agency);
-        });
+            var correctionsChart = document.getElementById('corrections-over-time-chart');
+            if (correctionsChart && typeof Plotly !== 'undefined') {
+                Plotly.newPlot(correctionsChart, [{
+                    x: years,
+                    y: corrections,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    name: 'Corrections',
+                    line: {
+                        color: '#0b3d91',
+                        width: 3
+                    },
+                    marker: {
+                        size: 8,
+                        color: '#0b3d91'
+                    }
+                }], {
+                    margin: { t: 20, r: 20, b: 50, l: 50 },
+                    xaxis: {
+                        title: 'Year'
+                    },
+                    yaxis: {
+                        title: 'Number of Corrections'
+                    }
+                });
+            }
+        }
 
-        // Handle pagination
-        document.getElementById('prev-page').addEventListener('click', function () {
-            changePage(-1);
-        });
+        // Populate agency filter
+        var agencyFilter = document.getElementById('agency-filter');
+        if (agencyFilter) {
+            var agencyHierarchy = JSON.parse('{{ agency_hierarchy_json|safe }}');
 
-        document.getElementById('next-page').addEventListener('click', function () {
-            changePage(1);
-        });
+            if (agencyHierarchy && agencyHierarchy.agencies) {
+                agencyHierarchy.agencies.forEach(function (agency) {
+                    var option = document.createElement('option');
+                    option.value = agency.slug;
+                    option.textContent = agency.name;
+                    agencyFilter.appendChild(option);
+                });
+            }
+        }
+
+        // Handle filter form submission
+        var filterForm = document.getElementById('time-period-form');
+        if (filterForm) {
+            filterForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Logic to filter data would go here
+                // This would typically make an AJAX request to get filtered data
+                alert('Filter functionality would be implemented here.');
+            });
+        }
     });
 </script>
 {% endblock %}

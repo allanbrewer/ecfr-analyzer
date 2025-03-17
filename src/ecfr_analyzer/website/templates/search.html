@@ -58,6 +58,68 @@
         </div>
     </div>
 
+    <!-- Agency Search -->
+    <div class="col-12 mb-4">
+        <div class="search-container">
+            <h2 class="text-center mb-4">Search Federal Agencies</h2>
+            <form id="agency-search-form" class="search-bar">
+                <input type="text" id="agency-search-input" placeholder="Enter agency name (e.g., 'Agriculture', 'Treasury', 'EPA')" 
+                       class="form-control" required>
+                <button type="submit" class="btn">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Agency Leaderboard -->
+    <div class="col-12 mb-4">
+        <h3 class="leaderboard-heading">Agency Efficiency Leaderboard</h3>
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Agency</th>
+                                <th>Word Count</th>
+                                <th>Corrections</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set agencies = [] %}
+                            {% if hierarchy and hierarchy.agencies %}
+                                {% for agency in hierarchy.agencies %}
+                                    {% if agency.slug %}
+                                        {% set _ = agencies.append(agency) %}
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% for agency in agencies[:10] %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ agency.name }}</td>
+                                        <td>N/A</td>
+                                        <td>N/A</td>
+                                        <td>
+                                            <a href="/agency-detail.html?id={{ agency.slug }}" class="btn btn-sm btn-primary">View</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No agency data available</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Search Results -->
     <div class="col-12" id="search-results-section" style="display: none;">
         <div class="card shadow-sm">
@@ -88,6 +150,16 @@
                     <span id="search-page-indicator">Page 1</span>
                     <button id="search-next-page" class="btn btn-sm btn-outline-secondary" disabled>Next</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agency Search Results -->
+    <div class="col-12">
+        <div id="agency-search-results" class="agency-search-results">
+            <!-- Results will be populated by JavaScript -->
+            <div class="alert alert-info">
+                Enter an agency name in the search box above to find specific agencies.
             </div>
         </div>
     </div>

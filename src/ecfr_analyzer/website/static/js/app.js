@@ -13,12 +13,16 @@ let titles = [];
  * @returns {Promise} - Promise that resolves with the data
  */
 async function loadData(url) {
+    console.log(`Attempting to load data from: ${url}`);
     try {
         const response = await fetch(url);
         if (!response.ok) {
+            console.error(`Failed to load ${url} - Status: ${response.status} ${response.statusText}`);
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return await response.json();
+        const data = await response.json();
+        console.log(`Successfully loaded data from: ${url}`, { dataSize: JSON.stringify(data).length });
+        return data;
     } catch (error) {
         console.error(`Error loading data from ${url}:`, error);
         return null;
@@ -33,31 +37,45 @@ async function loadAgencyDropdown(selectId) {
     const select = document.getElementById(selectId);
     if (!select) return;
 
-    // Clear existing options (except the first one)
-    while (select.options.length > 1) {
-        select.remove(1);
-    }
-
-    // If we've already loaded agencies, use the cached data
-    if (agencies.length === 0) {
-        try {
-            const data = await loadData('data/word_count_by_agency.json');
-            if (data && data.agencies) {
-                agencies = data.agencies;
-            }
-        } catch (error) {
-            console.error('Failed to load agencies:', error);
+    try {
+        // Load agency hierarchy data
+        const data = await loadData('/data/agency_hierarchy_map.json');
+        if (!data || !data.agencies || !Array.isArray(data.agencies)) {
+            console.error('Invalid agency hierarchy data format');
             return;
         }
-    }
 
-    // Add agencies to the dropdown
-    agencies.forEach(agency => {
-        const option = document.createElement('option');
-        option.value = agency.code;
-        option.textContent = agency.name;
-        select.appendChild(option);
-    });
+        // Clear existing options except the first one
+        while (select.options.length > 1) {
+            select.remove(1);
+        }
+
+        // Add parent agencies as optgroups and their children as options
+        data.agencies.forEach(agency => {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = agency.name;
+
+            // Add the parent agency as an option
+            const parentOption = document.createElement('option');
+            parentOption.value = agency.slug;
+            parentOption.textContent = agency.name;
+            optgroup.appendChild(parentOption);
+
+            // Add child agencies
+            if (agency.children && agency.children.length > 0) {
+                agency.children.forEach(child => {
+                    const option = document.createElement('option');
+                    option.value = child.slug;
+                    option.textContent = `— ${child.name}`;
+                    optgroup.appendChild(option);
+                });
+            }
+
+            select.appendChild(optgroup);
+        });
+    } catch (error) {
+        console.error('Error loading agencies:', error);
+    }
 }
 
 /**

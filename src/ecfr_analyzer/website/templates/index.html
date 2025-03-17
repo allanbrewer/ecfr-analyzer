@@ -36,47 +36,27 @@
             <div class="card-body">
                 <div class="row g-4">
                     <div class="col-md-3">
-                        <div class="d-flex align-items-center">
-                            <div class="p-3 bg-primary bg-opacity-10 rounded me-3">
-                                <i class="bi bi-building fs-1 text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-normal text-muted mb-0">Total Agencies</h6>
-                                <h4 id="total-agencies" class="mb-0">{{ summary.total_agencies_analyzed|default('Loading...') }}</h4>
-                            </div>
+                        <div>
+                            <h6 class="fw-normal text-muted mb-0">Total Agencies</h6>
+                            <h4 id="total-agencies" class="mb-0">{{ summary.total_agencies_analyzed|default('Loading...') }}</h4>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="d-flex align-items-center">
-                            <div class="p-3 bg-success bg-opacity-10 rounded me-3">
-                                <i class="bi bi-book fs-1 text-success"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-normal text-muted mb-0">Word Count</h6>
-                                <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0)) }}</h4>
-                            </div>
+                        <div>
+                            <h6 class="fw-normal text-muted mb-0">Word Count</h6>
+                            <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0)) }}</h4>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="d-flex align-items-center">
-                            <div class="p-3 bg-warning bg-opacity-10 rounded me-3">
-                                <i class="bi bi-clock-history fs-1 text-warning"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-normal text-muted mb-0">Historical Years</h6>
-                                <h4 id="historical-years" class="mb-0">5</h4>
-                            </div>
+                        <div>
+                            <h6 class="fw-normal text-muted mb-0">Corrections History</h6>
+                            <h4 id="corrections-history" class="mb-0">{{ summary.total_corrections|default(0) }}</h4>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="d-flex align-items-center">
-                            <div class="p-3 bg-info bg-opacity-10 rounded me-3">
-                                <i class="bi bi-calendar-check fs-1 text-info"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-normal text-muted mb-0">Last Updated</h6>
-                                <h4 id="last-updated" class="mb-0">{{ timestamp }}</h4>
-                            </div>
+                        <div>
+                            <h6 class="fw-normal text-muted mb-0">Last Updated</h6>
+                            <h4 id="last-updated" class="mb-0">{{ timestamp }}</h4>
                         </div>
                     </div>
                 </div>
@@ -109,7 +89,7 @@
                 <div id="keyword-overview-chart" style="height: 400px;"></div>
             </div>
             <div class="card-footer bg-light">
-                <a href="insights.html" class="btn btn-sm btn-outline-primary">See Detailed Insights</a>
+                <button class="btn btn-sm btn-outline-primary" disabled>Detailed Analysis Coming Soon</button>
             </div>
         </div>
     </div>
@@ -139,7 +119,7 @@
                 <div id="bureaucratic-complexity-chart" style="height: 400px;"></div>
             </div>
             <div class="card-footer bg-light">
-                <a href="insights.html#bureaucratic" class="btn btn-sm btn-outline-primary">Explore Complexity Metrics</a>
+                <button class="btn btn-sm btn-outline-primary" disabled>Complexity Metrics Coming Soon</button>
             </div>
         </div>
     </div>
@@ -171,21 +151,21 @@
                 <h5 class="card-title mb-0">Quick Search</h5>
             </div>
             <div class="card-body">
-                <form id="quick-search-form" class="row g-3">
+                <form id="quick-search-form" class="row g-3" action="search.html" method="get">
                     <div class="col-md-6">
                         <label for="search-keyword" class="form-label">Keyword or Phrase</label>
-                        <input type="text" class="form-control" id="search-keyword" placeholder="Enter keyword...">
+                        <input type="text" class="form-control" id="search-keyword" name="q" placeholder="Enter keyword...">
                     </div>
                     <div class="col-md-3">
                         <label for="search-agency" class="form-label">Agency</label>
-                        <select class="form-select" id="search-agency">
+                        <select class="form-select" id="search-agency" name="agency">
                             <option value="">All Agencies</option>
                             <!-- Will be populated by JavaScript -->
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="search-date" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="search-date">
+                        <input type="date" class="form-control" id="search-date" name="date">
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Search Regulations</button>
