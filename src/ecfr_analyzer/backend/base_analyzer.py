@@ -371,10 +371,11 @@ class BaseECFRAnalyzer:
         """
         start_time = time.time()
 
+        logger.info("Starting to process agency references...")
         # Step 1: Get all agency references
         agency_refs = self._get_agency_cfr_references()
         logger.info(
-            f"Found {sum(len(refs) for refs in agency_refs.values())} total CFR references across {len(agency_refs)} agencies"
+            f"Loaded {sum(len(refs) for refs in agency_refs.values())} total CFR references across {len(agency_refs)} agencies"
         )
 
         # Step 2: Create inverse mapping from titles to agencies that reference them
