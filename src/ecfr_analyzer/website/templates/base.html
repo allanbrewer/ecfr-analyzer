@@ -35,16 +35,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if active_page == 'agency' %}active{% endif %}" href="/agency.html">
+                        <!-- <a class="nav-link {% if active_page == 'agency' %}active{% endif %}" href="/agency.html">
                             Agencies
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_page == 'historical' %}active{% endif %}"
-                            href="/historical.html">
-                            Historical
-                        </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link {% if active_page == 'search' %}active{% endif %}" href="/search.html">
                             Search
@@ -60,7 +54,7 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <a href="/index.html" class="text-white text-decoration-none">Dashboard</a>
-                <a href="/agency.html" class="text-white text-decoration-none">Agencies</a>
+                <!-- <a href="/agency.html" class="text-white text-decoration-none">Agencies</a> -->
                 <a href="/search.html" class="text-white text-decoration-none">Search</a>
             </div>
         </div>
@@ -69,7 +63,7 @@
     <!-- Hero banner with title -->
     <header class="bg-light py-4">
         <div class="container">
-            <h1 class="display-5 mb-1">{{ page_title }}</h1>
+            <h2 class="display-5 mb-1">{{ page_title }}</h2>
             <p class="text-muted">Last updated: {{ timestamp }}</p>
         </div>
     </header>

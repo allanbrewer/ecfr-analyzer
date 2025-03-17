@@ -55,93 +55,13 @@ async function initDashboardCharts() {
         if (correctionsOverTimeData) {
             createCorrectionsOverTimeChart(correctionsOverTimeData);
         }
+
+        // Populate agency cards
+        populateAgencyCards();
     } catch (error) {
         console.error('Error initializing dashboard charts:', error);
     }
 }
-
-/**
- * Initialize agency charts
- */
-async function initAgencyCharts() {
-    try {
-        // Load all necessary data
-        const wordCountData = await loadData('/data/word_count_by_agency.json');
-        const deiData = await loadData('/data/dei_footprint.json');
-        const bureaucracyData = await loadData('/data/bureaucracy_footprint.json');
-
-        if (wordCountData) {
-            createAgencyWordCountChart(wordCountData);
-            updateWordCountStats(wordCountData);
-        }
-
-        if (deiData) {
-            createDEIFootprintChart(deiData);
-        }
-
-        if (wordCountData && deiData && bureaucracyData) {
-            createAgencyComparisonTable(wordCountData, deiData, bureaucracyData);
-        }
-    } catch (error) {
-        console.error('Error initializing agency charts:', error);
-    }
-}
-
-/**
- * Initialize historical charts
- */
-async function initHistoricalCharts() {
-    try {
-        // Load all necessary data
-        const correctionsData = await loadData('/data/corrections_over_time.json');
-
-        if (correctionsData) {
-            createCorrectionsOverTimeChart(correctionsData);
-        }
-    } catch (error) {
-        console.error('Error initializing historical charts:', error);
-    }
-}
-
-/**
- * Initialize insights charts
- * NOTE: This function is no longer used as the insights page has been removed
- */
-/*
-async function initInsightsCharts() {
-    try {
-        // Load all necessary data
-        const wasteData = await loadData('/data/waste_footprint.json');
-        const deiData = await loadData('/data/dei_footprint.json');
-        const bureaucracyData = await loadData('/data/bureaucratic_complexity.json');
-
-        if (wasteData) {
-            createWasteAgencyComparisonChart(wasteData);
-            createTopWasteKeywordsChart(wasteData);
-            populateWasteInsightsList(wasteData);
-        }
-
-        if (deiData) {
-            createDEIAgencyComparisonChart(deiData);
-            createTopDEIKeywordsChart(deiData);
-            createDEITrendsChart(deiData);
-        }
-
-        if (bureaucracyData) {
-            createVagueLanguageChart(bureaucracyData);
-            createComplexSentencesChart(bureaucracyData);
-            createVaguePhrasesTable(bureaucracyData);
-        }
-
-        // Create efficiency index chart
-        if (wasteData && bureaucracyData) {
-            createEfficiencyIndexChart(wasteData, bureaucracyData);
-        }
-    } catch (error) {
-        console.error('Error initializing insights charts:', error);
-    }
-}
-*/
 
 /**
  * Initialize agency detail page charts
@@ -190,20 +110,22 @@ function createWordCountChart(data) {
             name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
             word_count: agencyData.total || 0
         };
-    }).sort((a, b) => b.word_count - a.word_count);
+    }).filter(agency => agency.word_count > 0);
 
-    // Get top 10 agencies by word count
-    const topAgencies = agenciesArray.slice(0, 10);
+    // Sort by word count and get top 5
+    const topAgencies = agenciesArray
+        .sort((a, b) => b.word_count - a.word_count)
+        .slice(0, 5);
 
     const chartData = [{
-        x: topAgencies.map(agency => agency.word_count),
         y: topAgencies.map(agency => agency.name),
+        x: topAgencies.map(agency => agency.word_count),
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: 'rgba(55, 128, 191, 0.7)',
+            color: 'rgba(52, 152, 219, 0.8)',
             line: {
-                color: 'rgba(55, 128, 191, 1.0)',
+                color: 'rgba(52, 152, 219, 1.0)',
                 width: 1
             }
         }
@@ -245,10 +167,10 @@ function createKeywordOverviewChart(deiData) {
         };
     }).filter(agency => agency.total > 0);
 
-    // Sort by normalized score and get top 10
+    // Sort by normalized score and get top 5
     const topDEIAgencies = deiAgencies
         .sort((a, b) => b.normalized_score - a.normalized_score)
-        .slice(0, 10);
+        .slice(0, 5);
 
     // If no agencies with data, show a message
     if (topDEIAgencies.length === 0) {
@@ -256,103 +178,100 @@ function createKeywordOverviewChart(deiData) {
         return;
     }
 
-    const agencies = topDEIAgencies.map(agency => agency.name);
-    const deiValues = topDEIAgencies.map(agency => parseFloat(agency.normalized_score));
-
     const chartData = [
         {
-            x: agencies,
-            y: deiValues,
+            y: topDEIAgencies.map(agency => agency.name),
+            x: topDEIAgencies.map(agency => parseFloat(agency.normalized_score)),
             name: 'DEI Keywords',
             type: 'bar',
+            orientation: 'h',
             marker: {
-                color: 'rgba(55, 128, 191, 0.7)'
+                color: 'rgba(52, 152, 219, 0.8)',
+                line: {
+                    color: 'rgba(52, 152, 219, 1.0)',
+                    width: 1
+                }
             }
         }
     ];
 
     const layout = {
-        margin: { l: 50, r: 30, t: 30, b: 100 },
+        margin: { l: 200, r: 30, t: 30, b: 50 },
         xaxis: {
-            tickangle: -45,
-            automargin: true
-        },
-        yaxis: {
             title: 'Keywords per 1,000 Words'
         },
-        legend: {
-            orientation: 'h',
-            y: 1.1
-        }
+        yaxis: {
+            automargin: true
+        },
+        hovermode: 'closest'
     };
 
     Plotly.newPlot(chartElement, chartData, layout, { responsive: true });
 }
 
 /**
- * Create historical changes chart for the dashboard
- * @param {Object} data - Historical changes data
+ * Create corrections chart for the dashboard
+ * @param {Object} data - Corrections data
  */
-function createHistoricalChangesChart(data) {
-    const chartElement = document.getElementById('historical-changes-chart');
-    if (!chartElement) return;
+function createCorrectionsChart(data) {
+    const chartElement = document.getElementById('corrections-chart');
+    if (!chartElement || !data) return;
 
-    const years = Object.keys(data.changes_by_year).sort();
+    // Check if we have the expected data structure
+    if (!data.agencies) {
+        console.error('Invalid corrections data format');
+        return;
+    }
 
-    const additions = years.map(year => data.changes_by_year[year].additions);
-    const deletions = years.map(year => data.changes_by_year[year].deletions);
-    const modifications = years.map(year => data.changes_by_year[year].modifications);
+    // Convert agencies object to array with their total corrections
+    const agenciesArray = Object.entries(data.agencies).map(([slug, agencyData]) => ({
+        slug: slug,
+        name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        count: agencyData.total || 0
+    }));
 
-    const chartData = [
-        {
-            x: years,
-            y: additions,
-            name: 'Additions',
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: {
-                color: 'rgba(50, 171, 96, 0.7)'
-            }
-        },
-        {
-            x: years,
-            y: deletions,
-            name: 'Deletions',
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: {
-                color: 'rgba(255, 99, 132, 0.7)'
-            }
-        },
-        {
-            x: years,
-            y: modifications,
-            name: 'Modifications',
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: {
-                color: 'rgba(255, 159, 64, 0.7)'
+    // Sort by count score and get top 5
+    const topAgencies = agenciesArray
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
+
+    // If no agencies with data, show a message
+    if (topAgencies.length === 0) {
+        chartElement.innerHTML = '<div class="text-center p-4"><p class="text-muted">No corrections data available</p></div>';
+        return;
+    }
+
+    // Create chart data
+    const chartData = [{
+        y: topAgencies.map(agency => agency.name),
+        x: topAgencies.map(agency => agency.count),
+        type: 'bar',
+        orientation: 'h',
+        marker: {
+            color: 'rgba(52, 152, 219, 0.8)',
+            line: {
+                color: 'rgba(52, 152, 219, 1.0)',
+                width: 1
             }
         }
-    ];
+    }];
 
+    // Layout configuration
     const layout = {
-        margin: { l: 50, r: 30, t: 30, b: 50 },
+        margin: { l: 200, r: 30, t: 30, b: 50 },
         xaxis: {
-            title: 'Year'
+            title: 'Number of Corrections'
         },
         yaxis: {
-            title: 'Number of Changes'
+            automargin: true
         },
-        legend: {
-            x: 0,
-            y: 1.1,
-            orientation: 'h'
-        }
+        hovermode: 'closest'
     };
 
+    // Create the chart
     Plotly.newPlot(chartElement, chartData, layout, { responsive: true });
 }
+
 
 /**
  * Create bureaucratic complexity chart for the dashboard
@@ -377,10 +296,10 @@ function createBureaucraticComplexityChart(data) {
         };
     }).filter(agency => agency.total > 0);
 
-    // Sort by complexity score and get top 10
+    // Sort by complexity score and get top 5
     const topAgencies = agenciesArray
         .sort((a, b) => b.complexity_score - a.complexity_score)
-        .slice(0, 10);
+        .slice(0, 5);
 
     // If no agencies with data, show a message
     if (topAgencies.length === 0) {
@@ -389,34 +308,35 @@ function createBureaucraticComplexityChart(data) {
     }
 
     const chartData = [{
-        x: topAgencies.map(agency => agency.name),
-        y: topAgencies.map(agency => agency.complexity_score.toFixed(2)),
+        y: topAgencies.map(agency => agency.name),
+        x: topAgencies.map(agency => agency.complexity_score.toFixed(2)),
         type: 'bar',
+        orientation: 'h',
         marker: {
-            color: 'rgba(255, 159, 64, 0.7)',
+            color: 'rgba(52, 152, 219, 0.8)',
             line: {
-                color: 'rgba(255, 159, 64, 1.0)',
+                color: 'rgba(52, 152, 219, 1.0)',
                 width: 1
             }
         }
     }];
 
     const layout = {
-        margin: { l: 50, r: 30, t: 30, b: 100 },
+        margin: { l: 200, r: 30, t: 30, b: 50 },
         xaxis: {
-            tickangle: -45,
-            automargin: true
+            title: 'Complexity Score (per 10,000 words)'
         },
         yaxis: {
-            title: 'Bureaucratic Keywords per 10,000 Words'
-        }
+            automargin: true
+        },
+        hovermode: 'closest'
     };
 
     Plotly.newPlot(chartElement, chartData, layout, { responsive: true });
 }
 
 /**
- * Load recent changes data
+ * Load recent changes data for the dashboard
  */
 async function loadRecentChanges() {
     const tableElement = document.getElementById('recent-changes-table');
@@ -483,42 +403,6 @@ async function loadRecentChanges() {
 }
 
 /**
- * Create agency word count chart
- * @param {Object} data - Word count data
- */
-function createAgencyWordCountChart(data) {
-    const chartElement = document.getElementById('agency-word-count-chart');
-    if (!chartElement) return;
-
-    // Create chart data
-    const chartData = [{
-        x: data.agencies.map(agency => agency.name),
-        y: data.agencies.map(agency => agency.word_count),
-        type: 'bar',
-        marker: {
-            color: 'rgba(55, 128, 191, 0.7)',
-            line: {
-                color: 'rgba(55, 128, 191, 1.0)',
-                width: 1
-            }
-        }
-    }];
-
-    const layout = {
-        margin: { l: 50, r: 30, t: 30, b: 200 },
-        xaxis: {
-            tickangle: -45,
-            automargin: true
-        },
-        yaxis: {
-            title: 'Word Count'
-        }
-    };
-
-    Plotly.newPlot(chartElement, chartData, layout, { responsive: true });
-}
-
-/**
  * Update word count statistics
  * @param {Object} data - Word count data
  */
@@ -539,59 +423,11 @@ function updateWordCountStats(data) {
 }
 
 /**
- * Create DEI footprint chart
- * @param {Object} data - DEI footprint data
- */
-function createDEIFootprintChart(data) {
-    const chartElement = document.getElementById('dei-footprint-chart');
-    if (!chartElement) return;
-
-    // Get top 10 agencies by DEI footprint
-    const topAgencies = data.agencies.slice(0, 10);
-
-    const chartData = [{
-        x: topAgencies.map(agency => agency.name),
-        y: topAgencies.map(agency => agency.keyword_percentage),
-        type: 'bar',
-        marker: {
-            color: 'rgba(55, 128, 191, 0.7)',
-            line: {
-                color: 'rgba(55, 128, 191, 1.0)',
-                width: 1
-            }
-        }
-    }];
-
-    const layout = {
-        margin: { l: 50, r: 30, t: 30, b: 100 },
-        xaxis: {
-            tickangle: -45,
-            automargin: true
-        },
-        yaxis: {
-            title: 'DEI Keyword Percentage'
-        }
-    };
-
-    Plotly.newPlot(chartElement, chartData, layout, { responsive: true });
-}
-
-/**
  * Initialize search page functionality
  */
 function initSearchPage() {
     // This function will be implemented in search.js
     console.log('Search page initialized');
-}
-
-/**
- * Load historical data for the historical analysis page
- * @param {number} years - Number of years to load
- * @param {string} agency - Agency code to filter by
- */
-async function loadHistoricalData(years, agency) {
-    console.log(`Loading ${years} years of historical data for agency: ${agency}`);
-    // This would be implemented to filter the charts based on the parameters
 }
 
 /**
@@ -807,8 +643,9 @@ function createTopAgenciesByCorrectionsChart(data) {
             title: 'Number of Corrections'
         },
         legend: {
-            orientation: 'h',
-            y: -0.2
+            x: 0.1,
+            y: 1.1,
+            orientation: 'h'
         },
         height: 400
     };
@@ -821,369 +658,6 @@ function createTopAgenciesByCorrectionsChart(data) {
 
     // Create the plot
     Plotly.newPlot(container, [plotData], layout, config);
-}
-
-/**
- * Create historical changes over time chart
- * @param {Array} data - Historical changes data
- */
-function createHistoricalChangesOverTimeChart(data) {
-    const container = document.getElementById('historical-changes-over-time-chart');
-    if (!container || !data) return;
-
-    // Use the real data if it's in the expected format
-    let chartData;
-
-    if (Array.isArray(data) && data.length > 0 && data[0].year) {
-        chartData = data;
-    } else {
-        // Fallback to sample data if the format isn't as expected
-        console.warn('Historical changes data not in expected format, using fallback data');
-
-        // Sample data for demonstration
-        const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 9 + i);
-        chartData = years.map(year => ({
-            year,
-            additions: Math.floor(Math.random() * 100) + 50,
-            deletions: Math.floor(Math.random() * 70) + 30,
-            modifications: Math.floor(Math.random() * 120) + 40
-        }));
-    }
-
-    // Sort data by year
-    chartData.sort((a, b) => a.year - b.year);
-
-    // Create traces for the line chart
-    const traces = [
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.additions),
-            name: 'Additions',
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: {
-                color: 'rgba(46, 204, 113, 0.8)',
-                width: 3
-            },
-            marker: {
-                size: 8
-            }
-        },
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.deletions),
-            name: 'Deletions',
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: {
-                color: 'rgba(231, 76, 60, 0.8)',
-                width: 3
-            },
-            marker: {
-                size: 8
-            }
-        },
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.modifications),
-            name: 'Corrections',
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: {
-                color: 'rgba(52, 152, 219, 0.8)',
-                width: 3
-            },
-            marker: {
-                size: 8
-            }
-        }
-    ];
-
-    // Layout configuration
-    const layout = {
-        title: 'Regulatory Changes Over Time',
-        xaxis: {
-            title: 'Year',
-            tickmode: 'linear'
-        },
-        yaxis: {
-            title: 'Number of Changes'
-        },
-        legend: {
-            x: 0.1,
-            y: 1.1,
-            orientation: 'h'
-        },
-        margin: {
-            l: 50,
-            r: 20,
-            t: 50,
-            b: 50
-        }
-    };
-
-    // Create the chart
-    Plotly.newPlot(container, traces, layout);
-
-    // Update the stats display with this data
-    updateChangeStats(chartData);
-}
-
-/**
- * Update change statistics panel
- * @param {Object} data - Historical changes data
- */
-function updateChangeStats(data) {
-    // Calculate totals from sample data (assuming the data structure from createHistoricalChangesOverTimeChart)
-    let totalAdditions = 0;
-    let totalDeletions = 0;
-    let totalModifications = 0;
-    let busiestYear = null;
-    let maxChanges = 0;
-
-    if (Array.isArray(data)) {
-        // Sample data from createHistoricalChangesOverTimeChart
-        data.forEach(yearData => {
-            totalAdditions += yearData.additions;
-            totalDeletions += yearData.deletions;
-            totalModifications += yearData.modifications;
-
-            const yearTotal = yearData.additions + yearData.deletions + yearData.modifications;
-            if (yearTotal > maxChanges) {
-                maxChanges = yearTotal;
-                busiestYear = yearData.year;
-            }
-        });
-    }
-
-    // Update the stats display
-    document.getElementById('total-changes').textContent = totalAdditions + totalDeletions + totalModifications;
-    document.getElementById('total-additions').textContent = totalAdditions;
-    document.getElementById('total-deletions').textContent = totalDeletions;
-    document.getElementById('total-modifications').textContent = totalModifications;
-    document.getElementById('busiest-year').textContent = busiestYear;
-}
-
-/**
- * Create change type breakdown chart
- * @param {Array} data - Historical changes data
- */
-function createChangeTypeBreakdownChart(data) {
-    const container = document.getElementById('change-type-breakdown-chart');
-    if (!container) return;
-
-    // Use the real data if it's in the expected format
-    let chartData;
-
-    if (Array.isArray(data) && data.length > 0 && data[0].year) {
-        chartData = data;
-    } else {
-        // Fallback to sample data if the format isn't as expected
-        console.warn('Historical changes data not in expected format, using fallback data');
-
-        // Sample data for demonstration
-        const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 4 + i);
-        chartData = years.map(year => ({
-            year,
-            additions: Math.floor(Math.random() * 100) + 50,
-            deletions: Math.floor(Math.random() * 70) + 30,
-            modifications: Math.floor(Math.random() * 120) + 40
-        }));
-    }
-
-    // Create traces for the stacked bar chart
-    const traces = [
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.additions),
-            name: 'Additions',
-            type: 'bar',
-            marker: {
-                color: 'rgba(46, 204, 113, 0.8)'
-            }
-        },
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.deletions),
-            name: 'Deletions',
-            type: 'bar',
-            marker: {
-                color: 'rgba(231, 76, 60, 0.8)'
-            }
-        },
-        {
-            x: chartData.map(d => d.year),
-            y: chartData.map(d => d.modifications),
-            name: 'Corrections',
-            type: 'bar',
-            marker: {
-                color: 'rgba(52, 152, 219, 0.8)'
-            }
-        }
-    ];
-
-    // Layout configuration
-    const layout = {
-        title: 'Regulatory Changes by Type',
-        barmode: 'stack',
-        xaxis: {
-            title: 'Year'
-        },
-        yaxis: {
-            title: 'Number of Changes'
-        },
-        legend: {
-            x: 0.1,
-            y: 1.1,
-            orientation: 'h'
-        },
-        margin: {
-            l: 50,
-            r: 20,
-            t: 50,
-            b: 50
-        }
-    };
-
-    // Create the chart
-    Plotly.newPlot(container, traces, layout);
-}
-
-/**
- * Load historical data based on time period and agency filter
- * @param {Number} years - Number of years to display
- * @param {String} agency - Agency slug to filter by, or 'all' for all agencies
- */
-async function loadHistoricalData(years, agency) {
-    console.log(`Loading historical data for last ${years} years, agency: ${agency}`);
-
-    try {
-        // Load corrections over time data
-        const correctionsData = await loadData('/data/corrections_over_time.json');
-        if (!correctionsData || !correctionsData.years) {
-            console.error('Invalid corrections data format');
-            return;
-        }
-
-        // Store the data globally for other functions to access
-        window.correctionsOverTimeData = correctionsData;
-
-        // Get all years from the data and sort them
-        let yearKeys = Object.keys(correctionsData.years).sort();
-
-        // Filter to only include the specified number of years if requested
-        if (years !== 'all' && !isNaN(parseInt(years))) {
-            const numYears = parseInt(years);
-            yearKeys = yearKeys.slice(-numYears);
-        }
-
-        // Convert the data to the format expected by our charts
-        const formattedData = yearKeys.map(year => {
-            const yearData = correctionsData.years[year];
-            let total = 0;
-            let agencyTotal = 0;
-
-            // If filtering by agency, only count that agency's corrections
-            if (agency !== 'all') {
-                if (yearData.parent_agencies && yearData.parent_agencies[agency]) {
-                    agencyTotal = yearData.parent_agencies[agency];
-                } else if (yearData.child_agencies && yearData.child_agencies[agency]) {
-                    agencyTotal = yearData.child_agencies[agency];
-                }
-                total = agencyTotal;
-            } else {
-                total = yearData.total || 0;
-            }
-
-            return {
-                year: parseInt(year),
-                // We only have corrections data, so we'll use that for modifications
-                // and set others to 0
-                additions: 0,
-                deletions: 0,
-                modifications: total
-            };
-        });
-
-        // Update charts with the new data
-        createHistoricalChangesOverTimeChart(formattedData);
-        createChangeTypeBreakdownChart(formattedData);
-        updateHistoricalTable(formattedData, agency);
-
-    } catch (error) {
-        console.error('Error loading historical data:', error);
-    }
-}
-
-/**
- * Update the historical changes table
- * @param {Array} data - Historical changes data
- * @param {String} agency - Agency filter
- */
-function updateHistoricalTable(data, agency) {
-    const tableBody = document.getElementById('historical-changes-table');
-    if (!tableBody) return;
-
-    // Clear existing rows
-    tableBody.innerHTML = '';
-
-    // Create sample table data - recent changes
-    const sampleTableData = [];
-
-    // Generate 10 sample entries
-    for (let i = 0; i < 10; i++) {
-        const changeTypes = ['Addition', 'Deletion', 'Modification'];
-        const agencies = ['Department of Agriculture', 'Department of Defense', 'Department of Education',
-            'Environmental Protection Agency', 'Department of Health and Human Services'];
-        const titles = ['Title 7', 'Title 10', 'Title 34', 'Title 40', 'Title 42'];
-
-        sampleTableData.push({
-            date: `${new Date().getFullYear()}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
-            agency: agencies[Math.floor(Math.random() * agencies.length)],
-            title: titles[Math.floor(Math.random() * titles.length)],
-            changeType: changeTypes[Math.floor(Math.random() * changeTypes.length)],
-            description: `Sample change description ${i + 1}`,
-            wordCount: Math.floor(Math.random() * 1000) + 100
-        });
-    }
-
-    // Sort by date, newest first
-    sampleTableData.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    // Add rows to the table
-    sampleTableData.forEach(item => {
-        const row = document.createElement('tr');
-
-        // Apply color based on change type
-        let badgeClass = '';
-        switch (item.changeType) {
-            case 'Addition':
-                badgeClass = 'bg-success';
-                break;
-            case 'Deletion':
-                badgeClass = 'bg-danger';
-                break;
-            case 'Modification':
-                badgeClass = 'bg-warning';
-                break;
-        }
-
-        row.innerHTML = `
-            <td>${item.date}</td>
-            <td>${item.agency}</td>
-            <td>${item.title}</td>
-            <td><span class="badge ${badgeClass}">${item.changeType}</span></td>
-            <td>${item.description}</td>
-            <td>${item.wordCount.toLocaleString()}</td>
-        `;
-
-        tableBody.appendChild(row);
-    });
-
-    // Update pagination
-    document.getElementById('prev-page').disabled = true;
-    document.getElementById('page-indicator').textContent = 'Page 1';
-    document.getElementById('next-page').disabled = false;
 }
 
 /**
@@ -1383,4 +857,206 @@ function updateDashboardStats(wordCountData, correctionsData) {
  */
 function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/**
+ * Populate agency cards in the dashboard
+ * Combines data from multiple sources (word count, corrections, DEI, bureaucracy)
+ */
+function populateAgencyCards() {
+    const container = document.getElementById('agency-cards-container');
+    if (!container) return;
+
+    // Load all required data
+    Promise.all([
+        loadData('/data/word_count_by_agency.json'),
+        loadData('/data/corrections_by_agency.json'),
+        loadData('/data/dei_footprint.json'),
+        loadData('/data/bureaucracy_footprint.json'),
+        loadData('/data/agency_hierarchy_map.json')
+    ])
+        .then(([wordCountData, correctionsData, deiData, bureaucracyData, hierarchyData]) => {
+            // Clear loading indicator
+            container.innerHTML = '';
+
+            // Get parent agencies from the hierarchy
+            const parentAgencies = hierarchyData.agencies.filter(agency =>
+                agency.children && agency.children.length > 0);
+
+            // Add some key independent agencies too
+            const independentAgencies = hierarchyData.agencies.filter(agency =>
+                !agency.children || agency.children.length === 0);
+
+            const allAgencies = [...parentAgencies, ...independentAgencies];
+
+            // Combine and prepare data for all agencies
+            const allAgenciesData = allAgencies.map(agency => {
+                const agencySlug = agency.slug;
+                const agencyName = agency.name;
+                const childrenCount = agency.children ? agency.children.length : 0;
+
+                // Get metrics for this agency
+                const wordCount = wordCountData.agencies[agencySlug]?.total || 0;
+                const corrections = correctionsData.agencies[agencySlug]?.total || 0;
+                const deiCount = deiData.agencies[agencySlug]?.total || 0;
+                const bureaucracyCount = bureaucracyData.agencies[agencySlug]?.total || 0;
+
+                // Calculate bureaucracy/word ratio (per 1000 words)
+                const bureaucracyRatio = wordCount > 0
+                    ? ((bureaucracyCount / wordCount) * 1000).toFixed(2)
+                    : 0;
+
+                return {
+                    slug: agencySlug,
+                    name: agencyName,
+                    childrenCount: childrenCount,
+                    wordCount: wordCount,
+                    corrections: corrections,
+                    deiCount: deiCount,
+                    bureaucracyCount: bureaucracyCount,
+                    bureaucracyRatio: bureaucracyRatio,
+                    isParent: childrenCount > 0
+                };
+            });
+
+            // Sort agencies by word count
+            allAgenciesData.sort((a, b) => b.wordCount - a.wordCount);
+
+            // Create grid container
+            const gridContainer = document.createElement('div');
+            gridContainer.className = 'row g-3';
+            gridContainer.id = 'agency-cards-grid';
+            container.appendChild(gridContainer);
+
+            // How many to show initially and per load
+            const initialCount = 9;
+            const loadMoreCount = 9;
+            let currentlyShown = 0;
+
+            // Function to display a set of agencies
+            function displayAgencies(startIndex, count) {
+                const endIndex = Math.min(startIndex + count, allAgenciesData.length);
+
+                for (let i = startIndex; i < endIndex; i++) {
+                    const agency = allAgenciesData[i];
+
+                    // Create card column
+                    const cardCol = document.createElement('div');
+                    cardCol.className = 'col-md-6 col-lg-4';
+
+                    // Create card HTML
+                    cardCol.innerHTML = `
+                    <div class="card h-100 agency-card">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">${agency.name}</h5>
+                            ${agency.isParent ?
+                            `<span class="badge bg-info">${agency.childrenCount} Sub-Agencies</span>` :
+                            '<span class="badge bg-secondary">Independent Agency</span>'}
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-file-text me-2"></i> Word Count:</span>
+                                    <span class="badge bg-primary rounded-pill">${formatNumber(agency.wordCount)}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-pencil-square me-2"></i> Corrections:</span>
+                                    <span class="badge bg-warning rounded-pill">${formatNumber(agency.corrections)}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-people me-2"></i> DEI Keywords:</span>
+                                    <span class="badge bg-info rounded-pill">${formatNumber(agency.deiCount)}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-clipboard-check me-2"></i> Bureaucratic Score:</span>
+                                    <span class="badge bg-secondary rounded-pill">${agency.bureaucracyRatio}/1000 words</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/agency-detail.html?id=${agency.slug}" class="btn btn-primary w-100">View Details</a>
+                        </div>
+                    </div>
+                `;
+
+                    // Add card to grid
+                    gridContainer.appendChild(cardCol);
+                }
+
+                return endIndex;
+            }
+
+            // Display initial set of agencies
+            currentlyShown = displayAgencies(0, initialCount);
+
+            // Add load more button if we have more to show
+            if (currentlyShown < allAgenciesData.length) {
+                const loadMoreContainer = document.createElement('div');
+                loadMoreContainer.className = 'text-center mt-4';
+                loadMoreContainer.id = 'agency-buttons-container';
+                loadMoreContainer.innerHTML = `
+                <button id="load-more-agencies" class="btn btn-outline-primary me-2">
+                    Load More Agencies (${currentlyShown} of ${allAgenciesData.length})
+                </button>
+            `;
+                container.appendChild(loadMoreContainer);
+
+                // Add event listener to load more button
+                document.getElementById('load-more-agencies').addEventListener('click', function () {
+                    currentlyShown = displayAgencies(currentlyShown, loadMoreCount);
+
+                    // Update button text
+                    this.textContent = `Load More Agencies (${currentlyShown} of ${allAgenciesData.length})`;
+
+                    // Hide button if all agencies are shown
+                    if (currentlyShown >= allAgenciesData.length) {
+                        this.style.display = 'none';
+                    }
+
+                    // Add collapse button if not already present and we've loaded more than initial
+                    if (currentlyShown > initialCount && !document.getElementById('collapse-agencies')) {
+                        const collapseBtn = document.createElement('button');
+                        collapseBtn.id = 'collapse-agencies';
+                        collapseBtn.className = 'btn btn-outline-secondary ms-2';
+                        collapseBtn.innerHTML = '<i class="bi bi-chevron-up me-1"></i>Collapse';
+
+                        // Add event listener to collapse button
+                        collapseBtn.addEventListener('click', function () {
+                            // Remove all cards beyond the initial count
+                            const cards = document.querySelectorAll('#agency-cards-grid > div');
+                            for (let i = initialCount; i < cards.length; i++) {
+                                cards[i].remove();
+                            }
+
+                            // Reset current count
+                            currentlyShown = initialCount;
+
+                            // Update load more button
+                            const loadMoreBtn = document.getElementById('load-more-agencies');
+                            if (loadMoreBtn) {
+                                loadMoreBtn.style.display = '';
+                                loadMoreBtn.textContent = `Load More Agencies (${currentlyShown} of ${allAgenciesData.length})`;
+                            }
+
+                            // Remove collapse button
+                            this.remove();
+
+                            // Scroll back to the top of the agencies section
+                            container.scrollIntoView({ behavior: 'smooth' });
+                        });
+
+                        document.getElementById('agency-buttons-container').appendChild(collapseBtn);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error loading agency data:', error);
+            container.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                Error loading agency data. Please try again later.
+            </div>
+        `;
+        });
 }
