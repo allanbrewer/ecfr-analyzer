@@ -170,12 +170,12 @@ def load_corrections_over_time_data():
 
 def load_dei_footprint_data():
     """Load DEI footprint data from the analysis files."""
-    return load_data_file("DEI_footprint.json")
+    return load_data_file("dei_footprint.json")
 
 
 def load_bureaucracy_footprint_data():
     """Load bureaucracy footprint data from the analysis files."""
-    return load_data_file("Bureaucracy_footprint.json")
+    return load_data_file("bureaucracy_footprint.json")
 
 
 def load_agency_hierarchy_data():
@@ -185,13 +185,23 @@ def load_agency_hierarchy_data():
 
 def load_data_file(filename):
     """Load a data file from the analysis directory."""
+    # Get the absolute path to the project root directory
+    script_path = Path(__file__).resolve()
+    # server.py is in src/ecfr_analyzer/website, so go up 3 levels to reach project root
+    project_root = script_path.parent.parent.parent.parent
+    
+    # Use environment variable if set, otherwise use default path relative to project root
     data_dir = Path(
         os.environ.get(
-            "ECFR_DATA_DIR", Path.cwd().parent.parent.parent / "data" / "analysis"
+            "ECFR_DATA_DIR", project_root / "data" / "analysis"
         )
     )
+    
+    # Print debugging information
+    print(f"Looking for data in: {data_dir}")
+    
     file_path = data_dir / filename
-
+    
     if file_path.exists():
         try:
             with open(file_path, "r") as f:

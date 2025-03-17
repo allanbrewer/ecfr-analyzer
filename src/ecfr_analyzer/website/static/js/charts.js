@@ -9,10 +9,10 @@ async function initDashboardCharts() {
     try {
         // Load all necessary data
         const wordCountData = await loadData('data/word_count_by_agency.json');
-        const deiData = await loadData('data/DEI_footprint.json');
+        const deiData = await loadData('data/dei_footprint.json');
         const wasteData = await loadData('data/waste_footprint.json');
         const historicalData = await loadData('data/historical_changes.json');
-        const bureaucracyData = await loadData('data/Bureaucracy_footprint.json');
+        const bureaucracyData = await loadData('data/bureaucracy_footprint.json');
         const correctionsData = await loadData('data/corrections_by_agency.json');
         const correctionsOverTimeData = await loadData('data/corrections_over_time.json');
         const agencyHierarchyData = await loadData('data/agency_hierarchy_map.json');
