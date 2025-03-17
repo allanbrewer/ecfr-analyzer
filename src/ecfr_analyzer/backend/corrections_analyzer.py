@@ -12,6 +12,9 @@ from collections import defaultdict
 from ecfr_analyzer.backend.base_analyzer import BaseECFRAnalyzer
 
 # Configure logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 

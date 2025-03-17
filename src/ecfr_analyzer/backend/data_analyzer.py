@@ -265,7 +265,7 @@ class ECFRDataAnalyzer:
             self.footprint_analyzer = FootprintAnalyzer()
 
         # Run the analysis
-        result = self.footprint_analyzer.analyze_keyword_footprint(dei_keywords, "DEI")
+        result = self.footprint_analyzer.analyze_keyword_footprint(dei_keywords, "dei")
         self.analysis_results["dei_footprint"] = result
 
     def analyze_bureaucracy_footprint(self):
@@ -283,7 +283,7 @@ class ECFRDataAnalyzer:
 
         # Run the analysis
         result = self.footprint_analyzer.analyze_keyword_footprint(
-            bureaucracy_keywords, "Bureaucracy"
+            bureaucracy_keywords, "bureaucracy"
         )
         self.analysis_results["bureaucracy_footprint"] = result
 
@@ -323,6 +323,21 @@ class ECFRDataAnalyzer:
         self.analysis_results["corrections"] = result
         return result
 
+    def analyze_corrections_over_time(self):
+        """Analyze corrections over time for each agency.
+
+        Returns:
+            Dictionary with corrections data over time
+        """
+        # Initialize corrections analyzer if needed
+        if not self.corrections_analyzer:
+            self.corrections_analyzer = CorrectionsAnalyzer()
+
+        # Run the analysis
+        result = self.corrections_analyzer.analyze_corrections_over_time()
+        self.analysis_results["corrections_over_time"] = result
+        return result
+
     def run_all_analyses(self):
         """Run all analyses and compile results."""
         logger.info("Running all analyses...")
@@ -333,6 +348,7 @@ class ECFRDataAnalyzer:
         self.analyze_dei_footprint()
         self.analyze_bureaucracy_footprint()
         self.analyze_corrections()
+        self.analyze_corrections_over_time()
 
         # Compile summary
         self.summary = {
@@ -350,6 +366,9 @@ class ECFRDataAnalyzer:
                 "total_corrections": self.analysis_results.get("corrections", {}).get(
                     "total_corrections", 0
                 ),
+                "total_corrections_over_time": self.analysis_results.get(
+                    "corrections_over_time", {}
+                ).get("total_corrections", 0),
             },
         }
 
