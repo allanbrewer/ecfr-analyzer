@@ -27,6 +27,7 @@ from ecfr_analyzer.backend.footprint_analyzer import (
     DEI_WORDS,
     BUREAUCRACY_WORDS,
 )
+from ecfr_analyzer.backend.corrections_analyzer import CorrectionsAnalyzer
 
 # Paths
 ANALYSIS_DIR = Path("data") / "analysis"
@@ -58,6 +59,7 @@ class ECFRDataAnalyzer:
         self.base_analyzer = BaseECFRAnalyzer()
         self.word_count_analyzer = WordCountAnalyzer()
         self.footprint_analyzer = FootprintAnalyzer()
+        self.corrections_analyzer = CorrectionsAnalyzer()
 
         # Share the word count analyzer with the footprint analyzer for efficiency
         self.footprint_analyzer.word_count_analyzer = self.word_count_analyzer
@@ -256,7 +258,7 @@ class ECFRDataAnalyzer:
             Dictionary with DEI footprint data
         """
         # Get DEI keywords
-        dei_keywords = self.get_dei_keywords()
+        dei_keywords = DEI_WORDS
 
         # Initialize footprint analyzer if needed
         if not self.footprint_analyzer:
@@ -273,7 +275,7 @@ class ECFRDataAnalyzer:
             Dictionary with bureaucracy footprint data
         """
         # Get bureaucracy keywords
-        bureaucracy_keywords = self.get_bureaucracy_keywords()
+        bureaucracy_keywords = BUREAUCRACY_WORDS
 
         # Initialize footprint analyzer if needed
         if not self.footprint_analyzer:
@@ -306,6 +308,21 @@ class ECFRDataAnalyzer:
         self.analysis_results[footprint_name.lower() + "_footprint"] = result
         return result
 
+    def analyze_corrections(self):
+        """Analyze corrections made to regulations for each agency.
+
+        Returns:
+            Dictionary with corrections data by agency
+        """
+        # Initialize corrections analyzer if needed
+        if not self.corrections_analyzer:
+            self.corrections_analyzer = CorrectionsAnalyzer()
+
+        # Run the analysis
+        result = self.corrections_analyzer.analyze_corrections_by_agency()
+        self.analysis_results["corrections"] = result
+        return result
+
     def run_all_analyses(self):
         """Run all analyses and compile results."""
         logger.info("Running all analyses...")
@@ -315,6 +332,7 @@ class ECFRDataAnalyzer:
         self.analyze_word_count_by_agency()
         self.analyze_dei_footprint()
         self.analyze_bureaucracy_footprint()
+        self.analyze_corrections()
 
         # Compile summary
         self.summary = {
@@ -329,6 +347,9 @@ class ECFRDataAnalyzer:
                 "total_bureaucracy_matches": self.analysis_results.get(
                     "bureaucracy_footprint", {}
                 ).get("total_matches", 0),
+                "total_corrections": self.analysis_results.get("corrections", {}).get(
+                    "total_corrections", 0
+                ),
             },
         }
 
@@ -361,6 +382,9 @@ def main():
     logger.info(f"Total DEI matches: {summary['totals']['total_dei_matches']} matches")
     logger.info(
         f"Total bureaucracy matches: {summary['totals']['total_bureaucracy_matches']} matches"
+    )
+    logger.info(
+        f"Total corrections: {summary['totals']['total_corrections']} corrections"
     )
 
 

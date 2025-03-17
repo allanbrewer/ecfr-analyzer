@@ -478,10 +478,43 @@ class BaseECFRAnalyzer:
             analysis_type: Type of analysis for logging
         """
         output_file = self.analysis_dir / filename
+
+        # Convert any tuple keys to strings before serializing
+        results_json_safe = self._convert_for_json(results)
+
         with open(output_file, "w") as f:
-            json.dump(results, f, indent=2)
+            json.dump(results_json_safe, f, indent=2)
 
         logger.info(f"Saved {analysis_type} results to {output_file}")
+
+    def _convert_for_json(self, obj):
+        """Convert Python objects to JSON-serializable objects.
+
+        Specifically handles:
+        - Converting tuple keys in dictionaries to strings
+        - Converting sets to lists
+        - Converting tuples to lists
+
+        Args:
+            obj: The Python object to convert
+
+        Returns:
+            A JSON-serializable version of the object
+        """
+        if isinstance(obj, dict):
+            # Create a new dict with string keys
+            return {
+                str(k) if isinstance(k, tuple) else k: self._convert_for_json(v)
+                for k, v in obj.items()
+            }
+        elif isinstance(obj, list):
+            return [self._convert_for_json(item) for item in obj]
+        elif isinstance(obj, set):
+            return [self._convert_for_json(item) for item in obj]
+        elif isinstance(obj, tuple):
+            return [self._convert_for_json(item) for item in obj]
+        else:
+            return obj
 
     def _roll_up_agency_totals(
         self, agency_data, metric_key="total", ref_data_key=None
