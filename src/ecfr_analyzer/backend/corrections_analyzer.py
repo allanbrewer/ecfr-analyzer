@@ -19,13 +19,9 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
     """Analyzer for corrections made to agency regulations in the CFR."""
 
     def __init__(self, data_dir=None):
-        """Initialize the corrections analyzer.
+        """Initialize the corrections analyzer."""
 
-        Args:
-            data_dir: Root directory for data files
-        """
-        # Initialize base class to get agency data and utility functions
-        super().__init__(data_dir)
+        super().__init__()
 
         # Directory for correction data
         self.corrections_dir = self.raw_dir / "corrections"
@@ -83,25 +79,26 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
             self.corrections_cache[title_number] = []
             return []
 
-    def _matches_reference(self, correction_hierarchy, ref_key):
-        """Check if a correction hierarchy matches a reference key.
+    def _matches_reference(self, ref_key, correction_hierarchy, title_num):
+        """Check if a correction hierarchy entry matches our reference key.
+
+        Determines if a correction entry should be associated with an agency reference.
+        The matching logic needs to account for various levels of specificity in both
+        the ref_key and the correction hierarchy.
 
         Args:
-            correction_hierarchy: Hierarchy object from a correction entry
-            ref_key: Reference key tuple from agency references
+            ref_key: Tuple representation of a CFR reference (title, subtitle, chapter, subchapter, part)
+            correction_hierarchy: Dictionary with hierarchical info from the correction
+            title_num: The title number being processed
 
         Returns:
-            True if the correction applies to this reference, False otherwise
+            bool: True if the correction matches the reference, False otherwise
         """
-        # Extract elements from the reference key
-        # Typical ref_key format: (title, chapter, part, subpart, section)
-        if not ref_key or len(ref_key) < 1:
-            return False
-
-        title_num = ref_key[0]
-
-        # Extract elements from the correction hierarchy
-        corr_title = correction_hierarchy.get("title")
+        # Structure of ref_key from _create_ref_key:
+        # (title, subtitle, chapter, subchapter, part)
+        
+        # Extract title from correction hierarchy
+        corr_title = correction_hierarchy.get("title", "")
 
         # First, check if the titles match
         if corr_title != str(title_num):
@@ -110,39 +107,54 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
         # If ref_key only has title, then we have a match if titles match
         if len(ref_key) == 1:
             return True
+            
+        # Now check each hierarchy element in sequence, handling cases where
+        # the correction hierarchy might skip levels or use different naming
 
-        # Check other hierarchy elements if present
-        # For more specific matches, we need to compare additional elements
-
-        # Handle chapter comparison
+        # Check subtitle (ref_key[1])
         if len(ref_key) > 1 and ref_key[1]:
-            ref_chapter = ref_key[1]
+            ref_subtitle = ref_key[1]
+            corr_subtitle = correction_hierarchy.get("subtitle")
+            
+            # If correction has a subtitle and it doesn't match, no match
+            if corr_subtitle and corr_subtitle != ref_subtitle:
+                return False
+        
+        # Check chapter (ref_key[2])
+        if len(ref_key) > 2 and ref_key[2]:
+            ref_chapter = ref_key[2]
             corr_chapter = correction_hierarchy.get("chapter")
-
+            
             # If correction has a chapter and it doesn't match, no match
             if corr_chapter and corr_chapter != ref_chapter:
                 return False
-
-        # Handle part comparison
-        if len(ref_key) > 2 and ref_key[2]:
-            ref_part = ref_key[2]
+        
+        # Check subchapter (ref_key[3])
+        if len(ref_key) > 3 and ref_key[3]:
+            ref_subchapter = ref_key[3]
+            corr_subchapter = correction_hierarchy.get("subchapter")
+            
+            # If correction has a subchapter and it doesn't match, no match
+            if corr_subchapter and corr_subchapter != ref_subchapter:
+                return False
+        
+        # Check part (ref_key[4])
+        if len(ref_key) > 4 and ref_key[4]:
+            ref_part = ref_key[4]
             corr_part = correction_hierarchy.get("part")
-
+            
             # If correction has a part and it doesn't match, no match
             if corr_part and corr_part != ref_part:
                 return False
-
-        # Handle subpart/section if present in both
-        if len(ref_key) > 3 and ref_key[3]:
-            ref_section = ref_key[3]
-            corr_section = correction_hierarchy.get("section")
-
-            # If correction has a section and it doesn't match, no match
-            if corr_section and corr_section != ref_section:
-                return False
-
-        # If we get here, the correction is either at a higher level in the hierarchy
-        # or matches what we have in the ref_key, so it's relevant
+        
+        # Special case: If correction has section details but the ref_key doesn't go that deep,
+        # we should still consider it a match if all the higher-level elements match
+        
+        # If we get here, either:
+        # 1. All levels in both hierarchies match
+        # 2. The correction hierarchy is at a deeper level than ref_key but matches at all overlapping levels
+        # 3. The correction hierarchy is at a higher level than ref_key
+        # In all these cases, the correction is relevant to the reference
         return True
 
     def analyze_corrections_by_agency(self):
@@ -193,7 +205,7 @@ class CorrectionsAnalyzer(BaseECFRAnalyzer):
                             continue
 
                         # Check if this correction applies to this reference
-                        if self._matches_reference(cfr_ref["hierarchy"], ref_key):
+                        if self._matches_reference(ref_key, cfr_ref["hierarchy"], title_num):
                             # Add this correction to the agency's list for this reference
                             # Use a tuple of reference elements as the key
                             agency_corrections[agency_slug][ref_key].append(
