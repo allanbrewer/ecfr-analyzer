@@ -13,6 +13,8 @@ async function initDashboardCharts() {
         const wasteData = await loadData('data/waste_footprint.json');
         const historicalData = await loadData('data/historical_changes.json');
         const bureaucracyData = await loadData('data/bureaucratic_complexity.json');
+        const correctionsData = await loadData('data/corrections_by_agency.json');
+        const agencyHierarchyData = await loadData('data/agency_hierarchy_map.json');
 
         if (wordCountData) {
             createWordCountChart(wordCountData);
@@ -26,6 +28,10 @@ async function initDashboardCharts() {
             createHistoricalChangesChart(historicalData);
         }
 
+        if (correctionsData) {
+            createCorrectionsChart(correctionsData);
+        }
+
         if (bureaucracyData) {
             createBureaucraticComplexityChart(bureaucracyData);
         }
@@ -35,6 +41,60 @@ async function initDashboardCharts() {
     } catch (error) {
         console.error('Error initializing dashboard charts:', error);
     }
+}
+
+/**
+ * Create corrections over time chart
+ * @param {Object} data - Corrections data
+ */
+function createCorrectionsChart(data) {
+    const container = document.getElementById('corrections-chart');
+    if (!container || !data || !data.agencies) return;
+
+    // Get top agencies by corrections
+    const topAgencies = Object.entries(data.agencies)
+        .map(([key, value]) => ({ 
+            name: key.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), 
+            count: value.total 
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 15); // Get top 15 agencies
+
+    // Prepare plot data for corrections by agency
+    const plotData = {
+        x: topAgencies.map(a => a.name),
+        y: topAgencies.map(a => a.count),
+        type: 'bar',
+        marker: {
+            color: 'rgba(255, 193, 7, 0.8)',
+            line: {
+                color: 'rgba(255, 193, 7, 1.0)',
+                width: 1
+            }
+        }
+    };
+
+    // Layout configuration
+    const layout = {
+        title: 'Top Agencies by Number of Corrections',
+        xaxis: {
+            title: 'Agency',
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Number of Corrections'
+        },
+        margin: {
+            l: 50,
+            r: 20,
+            t: 50,
+            b: 150
+        },
+        height: 400
+    };
+
+    // Create the plot
+    Plotly.newPlot(container, [plotData], layout, {responsive: true});
 }
 
 /**

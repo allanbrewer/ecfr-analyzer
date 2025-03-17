@@ -2,6 +2,31 @@
 
 {% block content %}
 <div class="row">
+    <!-- Main Stats Card -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm main-card" id="main-stats-card">
+            <h2>eCFR Analysis Dashboard</h2>
+            <div class="main-card-stats">
+                <div class="main-stat">
+                    <div class="main-stat-value">{{ "{:,}".format(summary.total_word_count|default(0)) }}</div>
+                    <div class="main-stat-label">Total Words</div>
+                </div>
+                <div class="main-stat">
+                    <div class="main-stat-value">{{ "{:,}".format(summary.total_corrections|default(0)) }}</div>
+                    <div class="main-stat-label">Total Corrections</div>
+                </div>
+                <div class="main-stat">
+                    <div class="main-stat-value">{{ summary.total_parent_agencies|default(0) }}</div>
+                    <div class="main-stat-label">Parent Agencies</div>
+                </div>
+                <div class="main-stat">
+                    <div class="main-stat-value">{{ summary.total_child_agencies|default(0) }}</div>
+                    <div class="main-stat-label">Child Agencies</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Overview Stats -->
     <div class="col-12 mb-4">
         <div class="card shadow-sm">
@@ -17,8 +42,7 @@
                             </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Total Agencies</h6>
-                                <h4 id="total-agencies" class="mb-0">{{
-                                    summary.total_agencies_analyzed|default('Loading...') }}</h4>
+                                <h4 id="total-agencies" class="mb-0">{{ summary.total_agencies_analyzed|default('Loading...') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -29,8 +53,7 @@
                             </div>
                             <div>
                                 <h6 class="fw-normal text-muted mb-0">Word Count</h6>
-                                <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0))
-                                    }}</h4>
+                                <h4 id="total-words" class="mb-0">{{ "{:,}".format(summary.total_word_count|default(0)) }}</h4>
                             </div>
                         </div>
                     </div>
@@ -76,7 +99,7 @@
         </div>
     </div>
 
-    <!-- DEI and Waste Footprint -->
+    <!-- Keyword Analysis Overview -->
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white">
@@ -91,17 +114,17 @@
         </div>
     </div>
 
-    <!-- Historical Changes -->
+    <!-- Corrections Chart -->
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Historical Regulation Changes</h5>
+                <h5 class="card-title mb-0">Corrections by Agency</h5>
             </div>
             <div class="card-body">
-                <div id="historical-changes-chart" style="height: 400px;"></div>
+                <div id="corrections-chart" style="height: 400px;"></div>
             </div>
             <div class="card-footer bg-light">
-                <a href="historical.html" class="btn btn-sm btn-outline-primary">View Historical Data</a>
+                <a href="historical.html" class="btn btn-sm btn-outline-primary">View Corrections Data</a>
             </div>
         </div>
     </div>
@@ -116,8 +139,27 @@
                 <div id="bureaucratic-complexity-chart" style="height: 400px;"></div>
             </div>
             <div class="card-footer bg-light">
-                <a href="insights.html#bureaucratic" class="btn btn-sm btn-outline-primary">Explore Complexity
-                    Metrics</a>
+                <a href="insights.html#bureaucratic" class="btn btn-sm btn-outline-primary">Explore Complexity Metrics</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agency Cards Section -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Agency Analysis</h5>
+            </div>
+            <div class="card-body">
+                <div id="agency-cards-container">
+                    <!-- Will be populated by JavaScript -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading agency data...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -190,6 +232,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
 <script src="static/js/charts.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
