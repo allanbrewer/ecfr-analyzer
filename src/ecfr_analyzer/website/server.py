@@ -138,17 +138,30 @@ def load_summary_data():
     # Get agency hierarchy data to count parent and child agencies
     hierarchy = load_agency_hierarchy_data()
     if hierarchy:
-        parent_agencies = 0
-        child_agencies = 0
+        # There are two formats we need to handle:
+        # 1. Simple dict mapping child slugs to parent slugs
+        # 2. Structured hierarchy with "agencies" list
 
-        for agency_id, agency_data in hierarchy.items():
-            if agency_data.get("parent"):
-                child_agencies += 1
-            else:
-                parent_agencies += 1
+        if "agencies" in hierarchy:
+            # This is the structured hierarchy format
+            parent_agencies = len(hierarchy.get("agencies", []))
+            child_agencies = 0
 
-        summary["total_parent_agencies"] = parent_agencies
-        summary["total_child_agencies"] = child_agencies
+            for agency in hierarchy.get("agencies", []):
+                # Each agency entry has a childre list attribute, but some are empty lists
+                if agency.get("children"):
+                    child_agencies += len(agency.get("children", []))
+
+            summary["total_parent_agencies"] = parent_agencies
+            summary["total_child_agencies"] = child_agencies
+        else:
+            # This is the simple mapping format (child_slug -> parent_slug)
+            # Every key is a child agency, unique parent slugs are parent agencies
+            child_agencies = len(hierarchy)
+            parent_agencies = len(set(hierarchy.values()))
+
+            summary["total_parent_agencies"] = parent_agencies
+            summary["total_child_agencies"] = child_agencies
 
     return summary
 
@@ -189,19 +202,15 @@ def load_data_file(filename):
     script_path = Path(__file__).resolve()
     # server.py is in src/ecfr_analyzer/website, so go up 3 levels to reach project root
     project_root = script_path.parent.parent.parent.parent
-    
+
     # Use environment variable if set, otherwise use default path relative to project root
-    data_dir = Path(
-        os.environ.get(
-            "ECFR_DATA_DIR", project_root / "data" / "analysis"
-        )
-    )
-    
+    data_dir = Path(os.environ.get("ECFR_DATA_DIR", project_root / "data" / "analysis"))
+
     # Print debugging information
     print(f"Looking for data in: {data_dir}")
-    
+
     file_path = data_dir / filename
-    
+
     if file_path.exists():
         try:
             with open(file_path, "r") as f:
