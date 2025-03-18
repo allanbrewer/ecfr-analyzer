@@ -74,10 +74,10 @@ Download necessary eCFR data before running analyses:
 
 ```bash
 # Download administrative data (agencies, corrections)
-poetry run python -m ecfr_analyzer.backend.ecfr_api download_admin_data
+poetry run python -m ecfr_analyzer.process_data.ecfr_api download_admin_data
 
 # Download JSON bulk data for historical analysis
-poetry run python -m ecfr_analyzer.backend.ecfr_api download_json_bulk_data
+poetry run python -m ecfr_analyzer.process_data.ecfr_api download_bulk_data
 ```
 
 ### Run Analyses
@@ -85,20 +85,7 @@ poetry run python -m ecfr_analyzer.backend.ecfr_api download_json_bulk_data
 Run the full suite of analyses:
 
 ```bash
-poetry run python -m ecfr_analyzer.backend.data_analyzer run_all_analyses
-```
-
-Or run specific analyses:
-
-```bash
-# Word count analysis
-poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_word_count
-
-# Corrections analysis
-poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_corrections
-
-# Keyword analysis
-poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_keywords
+poetry run python -m ecfr_analyzer.process_data.data_analyzer
 ```
 
 ### Web Interface
@@ -106,7 +93,7 @@ poetry run python -m ecfr_analyzer.backend.data_analyzer analyze_keywords
 Start the web interface to view visualizations:
 
 ```bash
-poetry run python -m ecfr_analyzer.website.app
+poetry run python -m ecfr_analyzer.website.server
 ```
 
 Navigate to `http://localhost:8000` in your browser to access the dashboard.
@@ -123,18 +110,16 @@ Analysis results are stored in the `data/analysis` directory in JSON format. The
 
 ```
 ecfr-analyzer/
-├── data/                   # Data storage
-│   ├── raw/                # Raw data from APIs
-│   ├── processed/          # Processed intermediate data
-│   └── analysis/           # Analysis results
 ├── src/
-│   └── ecfr_analyzer/      # Source code
-│       ├── backend/        # Data processing and analysis
-│       │   ├── ecfr_api.py # API client for data retrieval
+│    └── ecfr_analyzer/          # Source code
+│       ├── process_data/       # Data processing and analysis
+│       │   ├── ecfr_api.py     # API client for data retrieval
 │       │   └── data_analyzer.py # Analysis algorithms
-│       ├── website/        # Web interface
-│       └── cli.py          # Command-line interface
-└── tests/                  # Test suite
+│       └── website/            # All files to host static website
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+└── README.md
 ```
 
 ## License
