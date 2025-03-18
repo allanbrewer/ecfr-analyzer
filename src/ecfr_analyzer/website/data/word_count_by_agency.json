@@ -1,0 +1,4171 @@
+{
+  "timestamp": "2025-03-17T23:45:04.082865",
+  "total_word_count": 103703555,
+  "title_totals": {
+    "1": 72427,
+    "2": 389348,
+    "5": 2148540,
+    "7": 14873243,
+    "48": 2082069,
+    "44": 189906,
+    "32": 1991907,
+    "40": 9441437,
+    "11": 138569,
+    "10": 2401310,
+    "41": 498417,
+    "12": 7112855,
+    "47": 1325380,
+    "45": 2553638,
+    "8": 438508,
+    "24": 1835532,
+    "22": 954154,
+    "28": 864299,
+    "31": 1377105,
+    "14": 1634569,
+    "36": 1510421,
+    "21": 1640336,
+    "13": 348668,
+    "20": 2607815,
+    "17": 2169160,
+    "38": 685311,
+    "3": 2099,
+    "4": 32227,
+    "16": 801128,
+    "34": 1716211,
+    "18": 724876,
+    "29": 7777938,
+    "39": 241330,
+    "6": 140780,
+    "9": 985333,
+    "15": 3058222,
+    "19": 977529,
+    "37": 541796,
+    "50": 4030490,
+    "23": 333544,
+    "49": 3695857,
+    "25": 725552,
+    "42": 4623985,
+    "26": 6253079,
+    "27": 601161,
+    "30": 1746301,
+    "33": 1056901,
+    "46": 1294410,
+    "43": 1057882
+  },
+  "agencies": {
+    "administrative-conference-of-the-united-states": {
+      "total": 6756,
+      "references": {
+        "(1, '', 'III', '', '')": {
+          "count": 6756,
+          "description": "Title 1, Chapter III"
+        }
+      }
+    },
+    "national-commission-for-employment-policy": {
+      "total": 1867,
+      "references": {
+        "(1, '', 'IV', '', '500')": {
+          "count": 1867,
+          "description": "Title 1, Chapter IV, Part 500"
+        }
+      }
+    },
+    "federal-register-administrative-committee": {
+      "total": 35842,
+      "references": {
+        "(1, '', 'I', '', '')": {
+          "count": 35842,
+          "description": "Title 1, Chapter I"
+        }
+      }
+    },
+    "national-commission-on-military-national-and-public-service": {
+      "total": 5346,
+      "references": {
+        "(1, '', 'IV', '', '426')": {
+          "count": 5346,
+          "description": "Title 1, Chapter IV, Part 426"
+        }
+      }
+    },
+    "federal-register-office": {
+      "total": 7351,
+      "references": {
+        "(1, '', 'II', '', '')": {
+          "count": 7351,
+          "description": "Title 1, Chapter II"
+        }
+      }
+    },
+    "national-capital-planning-commission": {
+      "total": 14503,
+      "references": {
+        "(1, '', 'IV', '', '457')": {
+          "count": 1870,
+          "description": "Title 1, Chapter IV, Part 457"
+        },
+        "(1, '', 'VI', '', '')": {
+          "count": 12633,
+          "description": "Title 1, Chapter VI"
+        }
+      }
+    },
+    "president's-commission-on-white-house-fellowships": {
+      "total": 762,
+      "references": {
+        "(1, '', 'IV', '', '425')": {
+          "count": 762,
+          "description": "Title 1, Chapter IV, Part 425"
+        }
+      }
+    },
+    "agriculture-department": {
+      "total": 16240693,
+      "references": {
+        "(2, '', 'IV', '', '')": {
+          "count": 20407,
+          "description": "Title 2, Chapter IV"
+        },
+        "(5, '', 'LXXIII', '', '')": {
+          "count": 2179,
+          "description": "Title 5, Chapter LXXIII"
+        },
+        "(7, '', 'XVI', '', '')": {
+          "count": 622484,
+          "description": "Title 7, Chapter XVI"
+        },
+        "(7, '', 'XX', '', '')": {
+          "count": 176300,
+          "description": "Title 7, Chapter XX"
+        },
+        "(48, '', '4', '', '')": {
+          "count": 56103,
+          "description": "Title 48, Chapter 4"
+        },
+        "(7, '', 'X', '', '')": {
+          "count": 1619958
+        },
+        "(7, '', 'I', '', '')": {
+          "count": 2746090
+        },
+        "(7, '', 'XI', '', '')": {
+          "count": 464293
+        },
+        "(9, '', 'II', '', '')": {
+          "count": 220618
+        },
+        "(7, '', 'IX', '', '')": {
+          "count": 206985
+        },
+        "(7, '', 'VIII', '', '')": {
+          "count": 313780
+        },
+        "(7, '', 'V', '', '')": {
+          "count": 1527837
+        },
+        "(7, '', 'III', '', '')": {
+          "count": 455888
+        },
+        "(9, '', 'I', '', '')": {
+          "count": 573173
+        },
+        "(7, '', 'XIV', '', '')": {
+          "count": 321732
+        },
+        "(7, '', 'XXXVII', '', '')": {
+          "count": 1597
+        },
+        "(7, '', 'VII', '', '')": {
+          "count": 834974
+        },
+        "(7, '', 'IV', '', '')": {
+          "count": 510711
+        },
+        "(7, '', 'II', '', '')": {
+          "count": 1537253
+        },
+        "(9, '', 'III', '', '')": {
+          "count": 191542
+        },
+        "(7, '', 'XV', '', '')": {
+          "count": 737055
+        },
+        "(36, '', 'II', '', '')": {
+          "count": 303428
+        },
+        "(7, '', 'XXXVI', '', '')": {
+          "count": 2953
+        },
+        "(7, '', 'XXXIV', '', '')": {
+          "count": 60808
+        },
+        "(7, '', 'VI', '', '')": {
+          "count": 894727
+        },
+        "(7, '', 'XXV', '', '')": {
+          "count": 100963
+        },
+        "(7, '', 'XXX', '', '')": {
+          "count": 159719
+        },
+        "(7, '', 'XXIX', '', '')": {
+          "count": 3752
+        },
+        "(7, '', 'XXXI', '', '')": {
+          "count": 67451
+        },
+        "(7, '', 'XXVII', '', '')": {
+          "count": 3577
+        },
+        "(7, '', 'XXVI', '', '')": {
+          "count": 6596
+        },
+        "(7, '', 'XXVIII', '', '')": {
+          "count": 1744
+        },
+        "(7, '', 'XXXII', '', '')": {
+          "count": 5366
+        },
+        "(7, 'A', '', '', '')": {
+          "count": 202038
+        },
+        "(7, '', 'XXXIII', '', '')": {
+          "count": 3537
+        },
+        "(7, '', 'XVIII', '', '')": {
+          "count": 258371
+        },
+        "(7, '', 'L', '', '')": {
+          "count": 177301
+        },
+        "(7, '', 'XLII', '', '')": {
+          "count": 135585
+        },
+        "(7, '', 'XXXV', '', '')": {
+          "count": 91960
+        },
+        "(7, '', 'XVII', '', '')": {
+          "count": 619462
+        },
+        "(7, '', 'XXXVIII', '', '')": {
+          "count": 396
+        }
+      }
+    },
+    "commerce-department": {
+      "total": 4013519,
+      "references": {
+        "(2, '', 'XIII', '', '')": {
+          "count": 2279,
+          "description": "Title 2, Chapter XIII"
+        },
+        "(44, '', 'IV', '', '')": {
+          "count": 921,
+          "description": "Title 44, Chapter IV"
+        },
+        "(48, '', '13', '', '')": {
+          "count": 26589,
+          "description": "Title 48, Chapter 13"
+        },
+        "(15, '', 'I', '', '')": {
+          "count": 775066
+        },
+        "(15, '', 'VIII', '', '')": {
+          "count": 3684
+        },
+        "(15, '', 'VII', '', '')": {
+          "count": 531619
+        },
+        "(13, '', 'III', '', '')": {
+          "count": 20918
+        },
+        "(15, '', 'IV', '', '')": {
+          "count": 9969
+        },
+        "(19, '', 'III', '', '')": {
+          "count": 66503
+        },
+        "(15, '', 'III', '', '')": {
+          "count": 20801
+        },
+        "(15, '', 'XIV', '', '')": {
+          "count": 661
+        },
+        "(37, '', 'IV', '', '')": {
+          "count": 8389
+        },
+        "(15, '', 'II', '', '')": {
+          "count": 585174
+        },
+        "(15, '', 'IX', '', '')": {
+          "count": 156088
+        },
+        "(50, '', 'IV', '', '')": {
+          "count": 21827
+        },
+        "(50, '', 'III', '', '')": {
+          "count": 74313
+        },
+        "(50, '', 'II', '', '')": {
+          "count": 401444
+        },
+        "(15, '', 'XI', '', '')": {
+          "count": 4412
+        },
+        "(47, '', 'IV', '', '')": {
+          "count": 1952
+        },
+        "(15, '', 'XXIII', '', '')": {
+          "count": 872877
+        },
+        "(47, '', 'III', '', '')": {
+          "count": 4428
+        },
+        "(15, 'A', '', '', '')": {
+          "count": 74523
+        },
+        "(15, '', 'XV', '', '')": {
+          "count": 4538
+        },
+        "(37, '', 'I', '', '')": {
+          "count": 344544
+        }
+      }
+    },
+    "defense-department": {
+      "total": 2504613,
+      "references": {
+        "(2, '', 'XI', '', '')": {
+          "count": 61949,
+          "description": "Title 2, Chapter XI"
+        },
+        "(5, '', 'XXVI', '', '')": {
+          "count": 5140,
+          "description": "Title 5, Chapter XXVI"
+        },
+        "(32, 'A', '', '', '')": {
+          "count": 937579,
+          "description": "Title 32, Subtitle A"
+        },
+        "(40, '', 'VII', '', '')": {
+          "count": 12485,
+          "description": "Title 40, Chapter VII"
+        },
+        "(33, '', 'II', '', '')": {
+          "count": 220219
+        },
+        "(36, '', 'III', '', '')": {
+          "count": 26882
+        },
+        "(48, '', '2', '', '')": {
+          "count": 363050
+        },
+        "(32, '', 'XII', '', '')": {
+          "count": 3297
+        },
+        "(48, '', '54', '', '')": {
+          "count": 696
+        },
+        "(48, '', '52', '', '')": {
+          "count": 426
+        },
+        "(32, '', 'I', '', '')": {
+          "count": 872890
+        }
+      }
+    },
+    "education-department": {
+      "total": 1731475,
+      "references": {
+        "(2, '', 'XXXIV', '', '')": {
+          "count": 2899,
+          "description": "Title 2, Chapter XXXIV"
+        },
+        "(5, '', 'LIII', '', '')": {
+          "count": 1709,
+          "description": "Title 5, Chapter LIII"
+        },
+        "(48, '', '34', '', '')": {
+          "count": 12525
+        },
+        "(34, '', 'I', '', '')": {
+          "count": 589802
+        },
+        "(34, '', 'IV', '', '')": {
+          "count": 20045
+        },
+        "(34, '', 'V', '', '')": {
+          "count": 346534
+        },
+        "(34, '', 'II', '', '')": {
+          "count": 201757
+        },
+        "(34, '', 'VI', '', '')": {
+          "count": 326479
+        },
+        "(34, 'A', '', '', '')": {
+          "count": 81357
+        },
+        "(34, '', 'III', '', '')": {
+          "count": 148368
+        }
+      }
+    },
+    "election-assistance-commission": {
+      "total": 11548,
+      "references": {
+        "(2, '', 'LVIII', '', '')": {
+          "count": 739,
+          "description": "Title 2, Chapter LVIII"
+        },
+        "(11, '', 'II', '', '')": {
+          "count": 10809,
+          "description": "Title 11, Chapter II"
+        }
+      }
+    },
+    "energy-department": {
+      "total": 1737746,
+      "references": {
+        "(2, '', 'IX', '', '')": {
+          "count": 21079,
+          "description": "Title 2, Chapter IX"
+        },
+        "(5, '', 'XXIII', '', '')": {
+          "count": 8572,
+          "description": "Title 5, Chapter XXIII"
+        },
+        "(10, '', 'II', '', '')": {
+          "count": 726059,
+          "description": "Title 10, Chapter II"
+        },
+        "(10, '', 'III', '', '')": {
+          "count": 155475,
+          "description": "Title 10, Chapter III"
+        },
+        "(10, '', 'X', '', '')": {
+          "count": 116778,
+          "description": "Title 10, Chapter X"
+        },
+        "(41, '', '109', '', '')": {
+          "count": 15261,
+          "description": "Title 41, Chapter 109"
+        },
+        "(48, '', '9', '', '')": {
+          "count": 157744,
+          "description": "Title 48, Chapter 9"
+        },
+        "(18, '', 'I', '', '')": {
+          "count": 530770
+        },
+        "(5, '', 'XXIV', '', '')": {
+          "count": 6008
+        }
+      }
+    },
+    "environmental-protection-agency": {
+      "total": 9411345,
+      "references": {
+        "(2, '', 'XV', '', '')": {
+          "count": 9428,
+          "description": "Title 2, Chapter XV"
+        },
+        "(5, '', 'LIV', '', '')": {
+          "count": 828,
+          "description": "Title 5, Chapter LIV"
+        },
+        "(40, '', 'I', '', '')": {
+          "count": 9347814,
+          "description": "Title 40, Chapter I"
+        },
+        "(40, '', 'IV', '', '')": {
+          "count": 1364,
+          "description": "Title 40, Chapter IV"
+        },
+        "(40, '', 'VII', '', '')": {
+          "count": 12485,
+          "description": "Title 40, Chapter VII"
+        },
+        "(41, '', '115', '', '')": {
+          "count": 249,
+          "description": "Title 41, Chapter 115"
+        },
+        "(48, '', '15', '', '')": {
+          "count": 39177,
+          "description": "Title 48, Chapter 15"
+        }
+      }
+    },
+    "export-import-bank": {
+      "total": 34516,
+      "references": {
+        "(2, '', 'XXXV', '', '')": {
+          "count": 707,
+          "description": "Title 2, Chapter XXXV"
+        },
+        "(5, '', 'LII', '', '')": {
+          "count": 3156,
+          "description": "Title 5, Chapter LII"
+        },
+        "(12, '', 'IV', '', '')": {
+          "count": 30653,
+          "description": "Title 12, Chapter IV"
+        }
+      }
+    },
+    "federal-communications-commission": {
+      "total": 1296942,
+      "references": {
+        "(2, '', 'LX', '', '')": {
+          "count": 44,
+          "description": "Title 2, Chapter LX"
+        },
+        "(5, '', 'XXIX', '', '')": {
+          "count": 473,
+          "description": "Title 5, Chapter XXIX"
+        },
+        "(47, '', 'I', '', '')": {
+          "count": 1296425,
+          "description": "Title 47, Chapter I"
+        }
+      }
+    },
+    "gulf-coast-ecosystem-restoration-council": {
+      "total": 6703,
+      "references": {
+        "(2, '', 'LIX', '', '')": {
+          "count": 49,
+          "description": "Title 2, Chapter LIX"
+        },
+        "(40, '', 'VIII', '', '')": {
+          "count": 6654,
+          "description": "Title 40, Chapter VIII"
+        }
+      }
+    },
+    "health-and-human-services-department": {
+      "total": 7892704,
+      "references": {
+        "(2, '', 'III', '', '')": {
+          "count": 6703,
+          "description": "Title 2, Chapter III"
+        },
+        "(5, '', 'XLV', '', '')": {
+          "count": 8517,
+          "description": "Title 5, Chapter XLV"
+        },
+        "(45, 'A', '', '', '')": {
+          "count": 563976,
+          "description": "Title 45, Subtitle A"
+        },
+        "(48, '', '3', '', '')": {
+          "count": 87693,
+          "description": "Title 48, Chapter 3"
+        },
+        "(45, '', 'XIII', '', '')": {
+          "count": 124704
+        },
+        "(42, '', 'IV', '', '')": {
+          "count": 1411654
+        },
+        "(21, '', 'I', '', '')": {
+          "count": 1533878
+        },
+        "(42, '', 'I', 'M', '')": {
+          "count": 28874
+        },
+        "(25, '', 'V', '', '')": {
+          "count": 71350
+        },
+        "(45, '', 'III', '', '')": {
+          "count": 174848
+        },
+        "(45, '', 'X', '', '')": {
+          "count": 362901
+        },
+        "(45, '', 'II', '', '')": {
+          "count": 285465
+        },
+        "(45, '', 'IV', '', '')": {
+          "count": 48684
+        },
+        "(42, '', 'V', '', '')": {
+          "count": 1454995
+        },
+        "(42, '', 'I', '', '')": {
+          "count": 1728462
+        }
+      }
+    },
+    "homeland-security-department": {
+      "total": 3484370,
+      "references": {
+        "(2, '', 'XXX', '', '')": {
+          "count": 7751,
+          "description": "Title 2, Chapter XXX"
+        },
+        "(5, '', 'XXXVI', '', '')": {
+          "count": 2505,
+          "description": "Title 5, Chapter XXXVI"
+        },
+        "(8, '', 'I', '', '')": {
+          "count": 321802,
+          "description": "Title 8, Chapter I"
+        },
+        "(49, '', 'IV', '', '')": {
+          "count": 3142
+        },
+        "(46, '', 'I', '', '')": {
+          "count": 1049326
+        },
+        "(33, '', 'I', '', '')": {
+          "count": 822701
+        },
+        "(46, '', 'III', '', '')": {
+          "count": 7800
+        },
+        "(48, '', '30', '', '')": {
+          "count": 24022
+        },
+        "(44, '', 'I', '', '')": {
+          "count": 188985
+        },
+        "(31, '', 'VII', '', '')": {
+          "count": 48442
+        },
+        "(5, '', 'XCVII', '', '')": {
+          "count": 24928
+        },
+        "(6, '', 'I', '', '')": {
+          "count": 134883
+        },
+        "(31, '', 'IV', '', '')": {
+          "count": 1871
+        },
+        "(49, '', 'XII', '', '')": {
+          "count": 73654
+        },
+        "(19, '', 'I', '', '')": {
+          "count": 772558
+        }
+      }
+    },
+    "housing-and-urban-development-department": {
+      "total": 1891936,
+      "references": {
+        "(2, '', 'XXIV', '', '')": {
+          "count": 5263,
+          "description": "Title 2, Chapter XXIV"
+        },
+        "(5, '', 'LXV', '', '')": {
+          "count": 1930,
+          "description": "Title 5, Chapter LXV"
+        },
+        "(24, '', 'XV', '', '')": {
+          "count": 2315,
+          "description": "Title 24, Chapter XV"
+        },
+        "(48, '', '24', '', '')": {
+          "count": 18059,
+          "description": "Title 48, Chapter 24"
+        },
+        "(24, '', 'III', '', '')": {
+          "count": 73669
+        },
+        "(24, '', 'V', '', '')": {
+          "count": 208250
+        },
+        "(24, '', 'I', '', '')": {
+          "count": 556479
+        },
+        "(24, '', 'XX', '', '')": {
+          "count": 86925
+        },
+        "(24, '', 'VIII', '', '')": {
+          "count": 69171
+        },
+        "(24, '', 'II', '', '')": {
+          "count": 288170
+        },
+        "(24, '', 'IX', '', '')": {
+          "count": 227351
+        },
+        "(12, '', 'XVII', '', '')": {
+          "count": 33458
+        },
+        "(24, '', 'IV', '', '')": {
+          "count": 9362
+        },
+        "(24, '', 'XII', '', '')": {
+          "count": 5115
+        },
+        "(24, 'A', '', '', '')": {
+          "count": 227183
+        },
+        "(24, '', 'VII', '', '')": {
+          "count": 79236
+        }
+      }
+    },
+    "interior-department": {
+      "total": 6204089,
+      "references": {
+        "(2, '', 'XIV', '', '')": {
+          "count": 11562,
+          "description": "Title 2, Chapter XIV"
+        },
+        "(5, '', 'XXV', '', '')": {
+          "count": 7254,
+          "description": "Title 5, Chapter XXV"
+        },
+        "(41, '', '114', '', '')": {
+          "count": 52,
+          "description": "Title 41, Chapter 114"
+        },
+        "(48, '', '14', '', '')": {
+          "count": 17886,
+          "description": "Title 48, Chapter 14"
+        },
+        "(25, '', 'I', '', '')": {
+          "count": 446581
+        },
+        "(25, '', 'V', '', '')": {
+          "count": 71350
+        },
+        "(43, '', 'II', '', '')": {
+          "count": 403837
+        },
+        "(30, '', 'V', '', '')": {
+          "count": 329671
+        },
+        "(43, '', 'I', '', '')": {
+          "count": 446525
+        },
+        "(30, '', 'II', '', '')": {
+          "count": 434344
+        },
+        "(30, '', 'IV', '', '')": {
+          "count": 2535
+        },
+        "(25, '', 'II', '', '')": {
+          "count": 79479
+        },
+        "(25, '', 'III', '', '')": {
+          "count": 72980
+        },
+        "(36, '', 'I', '', '')": {
+          "count": 587672
+        },
+        "(25, '', 'VI', '', '')": {
+          "count": 25314
+        },
+        "(30, '', 'XII', '', '')": {
+          "count": 81650
+        },
+        "(43, 'A', '', '', '')": {
+          "count": 194964
+        },
+        "(25, '', 'VII', '', '')": {
+          "count": 2500
+        },
+        "(30, '', 'VII', '', '')": {
+          "count": 229349
+        },
+        "(50, '', 'IV', '', '')": {
+          "count": 21827
+        },
+        "(50, '', 'I', '', '')": {
+          "count": 1968951
+        },
+        "(50, '', 'VI', '', '')": {
+          "count": 767806
+        }
+      }
+    },
+    "u-s-international-development-finance-corporation": {
+      "total": 25229,
+      "references": {
+        "(2, '', 'XVI', '', '')": {
+          "count": 3792,
+          "description": "Title 2, Chapter XVI"
+        },
+        "(5, '', 'XXXIII', '', '')": {
+          "count": 6039,
+          "description": "Title 5, Chapter XXXIII"
+        },
+        "(22, '', 'VII', '', '')": {
+          "count": 15398,
+          "description": "Title 22, Chapter VII"
+        }
+      }
+    },
+    "agency-for-international-development": {
+      "total": 211655,
+      "references": {
+        "(2, '', 'VII', '', '')": {
+          "count": 9755,
+          "description": "Title 2, Chapter VII"
+        },
+        "(22, '', 'II', '', '')": {
+          "count": 148227,
+          "description": "Title 22, Chapter II"
+        },
+        "(48, '', '7', '', '')": {
+          "count": 53673,
+          "description": "Title 48, Chapter 7"
+        }
+      }
+    },
+    "justice-department": {
+      "total": 1401154,
+      "references": {
+        "(2, '', 'XXVIII', '', '')": {
+          "count": 521,
+          "description": "Title 2, Chapter XXVIII"
+        },
+        "(5, '', 'XXVIII', '', '')": {
+          "count": 795,
+          "description": "Title 5, Chapter XXVIII"
+        },
+        "(28, '', 'I', '', '')": {
+          "count": 699852,
+          "description": "Title 28, Chapter I"
+        },
+        "(28, '', 'XI', '', '')": {
+          "count": 2035,
+          "description": "Title 28, Chapter XI"
+        },
+        "(31, '', 'IX', '', '')": {
+          "count": 5787,
+          "description": "Title 31, Chapter IX"
+        },
+        "(40, '', 'IV', '', '')": {
+          "count": 1364,
+          "description": "Title 40, Chapter IV"
+        },
+        "(41, '', '128', '', '')": {
+          "count": 3820,
+          "description": "Title 41, Chapter 128"
+        },
+        "(48, '', '28', '', '')": {
+          "count": 9032,
+          "description": "Title 48, Chapter 28"
+        },
+        "(27, '', 'II', '', '')": {
+          "count": 67466
+        },
+        "(28, '', 'V', '', '')": {
+          "count": 74363
+        },
+        "(21, '', 'II', '', '')": {
+          "count": 101253
+        },
+        "(8, '', 'V', '', '')": {
+          "count": 116706
+        },
+        "(28, '', 'III', '', '')": {
+          "count": 22099
+        },
+        "(45, '', 'V', '', '')": {
+          "count": 271673
+        },
+        "(28, '', 'VI', '', '')": {
+          "count": 24388
+        }
+      }
+    },
+    "labor-department": {
+      "total": 6511344,
+      "references": {
+        "(2, '', 'XXIX', '', '')": {
+          "count": 1673,
+          "description": "Title 2, Chapter XXIX"
+        },
+        "(5, '', 'XLII', '', '')": {
+          "count": 2232,
+          "description": "Title 5, Chapter XLII"
+        },
+        "(41, '', '50', '', '')": {
+          "count": 10119,
+          "description": "Title 41, Chapter 50"
+        },
+        "(48, '', '29', '', '')": {
+          "count": 5930,
+          "description": "Title 48, Chapter 29"
+        },
+        "(20, '', 'VII', '', '')": {
+          "count": 16987
+        },
+        "(29, '', 'XXV', '', '')": {
+          "count": 244893
+        },
+        "(20, '', 'IV', '', '')": {
+          "count": 2268
+        },
+        "(20, '', 'V', '', '')": {
+          "count": 432856
+        },
+        "(30, '', 'I', '', '')": {
+          "count": 668752
+        },
+        "(29, '', 'XVII', '', '')": {
+          "count": 983060
+        },
+        "(41, '', '61', '', '')": {
+          "count": 2012
+        },
+        "(20, '', 'IX', '', '')": {
+          "count": 18626
+        },
+        "(41, '', '60', '', '')": {
+          "count": 54242
+        },
+        "(29, '', 'II', '', '')": {
+          "count": 1023106
+        },
+        "(29, '', 'IV', '', '')": {
+          "count": 179067
+        },
+        "(29, 'A', '', '', '')": {
+          "count": 256448
+        },
+        "(20, '', 'I', '', '')": {
+          "count": 829985
+        },
+        "(20, '', 'VI', '', '')": {
+          "count": 82655
+        },
+        "(29, '', 'V', '', '')": {
+          "count": 1696433
+        }
+      }
+    },
+    "management-and-budget-office": {
+      "total": 189596,
+      "references": {
+        "(2, 'A', '', '', '')": {
+          "count": 73387,
+          "description": "Title 2, Subtitle A"
+        },
+        "(5, '', 'III', '', '')": {
+          "count": 60683,
+          "description": "Title 5, Chapter III"
+        },
+        "(5, '', 'LXXVII', '', '')": {
+          "count": 241,
+          "description": "Title 5, Chapter LXXVII"
+        },
+        "(48, '', '99', '', '')": {
+          "count": 55285,
+          "description": "Title 48, Chapter 99"
+        }
+      }
+    },
+    "national-aeronautics-and-space-administration": {
+      "total": 155632,
+      "references": {
+        "(2, '', 'XVIII', '', '')": {
+          "count": 1550,
+          "description": "Title 2, Chapter XVIII"
+        },
+        "(5, '', 'LIX', '', '')": {
+          "count": 1510,
+          "description": "Title 5, Chapter LIX"
+        },
+        "(14, '', 'V', '', '')": {
+          "count": 98329,
+          "description": "Title 14, Chapter V"
+        },
+        "(48, '', '18', '', '')": {
+          "count": 54243,
+          "description": "Title 48, Chapter 18"
+        }
+      }
+    },
+    "corporation-for-national-and-community-service": {
+      "total": 227246,
+      "references": {
+        "(2, '', 'XXII', '', '')": {
+          "count": 2984,
+          "description": "Title 2, Chapter XXII"
+        },
+        "(45, '', 'XII', '', '')": {
+          "count": 144587,
+          "description": "Title 45, Chapter XII"
+        },
+        "(45, '', 'XXV', '', '')": {
+          "count": 79675,
+          "description": "Title 45, Chapter XXV"
+        }
+      }
+    },
+    "national-archives-and-records-administration": {
+      "total": 141449,
+      "references": {
+        "(2, '', 'XXVI', '', '')": {
+          "count": 2204,
+          "description": "Title 2, Chapter XXVI"
+        },
+        "(5, '', 'LXVI', '', '')": {
+          "count": 935,
+          "description": "Title 5, Chapter LXVI"
+        },
+        "(36, '', 'XII', '', '')": {
+          "count": 85997,
+          "description": "Title 36, Chapter XII"
+        },
+        "(32, '', 'XX', '', '')": {
+          "count": 44962
+        },
+        "(1, '', 'II', '', '')": {
+          "count": 7351
+        }
+      }
+    },
+    "office-of-national-drug-control-policy": {
+      "total": 5566,
+      "references": {
+        "(2, '', 'XXXVI', '', '')": {
+          "count": 361,
+          "description": "Title 2, Chapter XXXVI"
+        },
+        "(21, '', 'III', '', '')": {
+          "count": 5205,
+          "description": "Title 21, Chapter III"
+        }
+      }
+    },
+    "institute-of-museum-and-library-services": {
+      "total": 6812,
+      "references": {
+        "(2, '', 'XXXI', '', '')": {
+          "count": 6100,
+          "description": "Title 2, Chapter XXXI"
+        },
+        "(5, '', 'LXVII', '', '')": {
+          "count": 712,
+          "description": "Title 5, Chapter LXVII"
+        }
+      }
+    },
+    "national-endowment-for-the-arts": {
+      "total": 12270,
+      "references": {
+        "(2, '', 'XXXII', '', '')": {
+          "count": 1467,
+          "description": "Title 2, Chapter XXXII"
+        },
+        "(5, '', 'LV', '', '')": {
+          "count": 10803,
+          "description": "Title 5, Chapter LV"
+        }
+      }
+    },
+    "national-endowment-for-the-humanities": {
+      "total": 5055,
+      "references": {
+        "(2, '', 'XXXIII', '', '')": {
+          "count": 725,
+          "description": "Title 2, Chapter XXXIII"
+        },
+        "(5, '', 'LVI', '', '')": {
+          "count": 4330,
+          "description": "Title 5, Chapter LVI"
+        }
+      }
+    },
+    "national-science-foundation": {
+      "total": 138717,
+      "references": {
+        "(2, '', 'XXV', '', '')": {
+          "count": 3006,
+          "description": "Title 2, Chapter XXV"
+        },
+        "(5, '', 'XLIII', '', '')": {
+          "count": 1011,
+          "description": "Title 5, Chapter XLIII"
+        },
+        "(45, '', 'VI', '', '')": {
+          "count": 133702,
+          "description": "Title 45, Chapter VI"
+        },
+        "(48, '', '25', '', '')": {
+          "count": 998,
+          "description": "Title 48, Chapter 25"
+        }
+      }
+    },
+    "nuclear-regulatory-commission": {
+      "total": 1413563,
+      "references": {
+        "(2, '', 'XX', '', '')": {
+          "count": 15898,
+          "description": "Title 2, Chapter XX"
+        },
+        "(5, '', 'XLVIII', '', '')": {
+          "count": 861,
+          "description": "Title 5, Chapter XLVIII"
+        },
+        "(10, '', 'I', '', '')": {
+          "count": 1382360,
+          "description": "Title 10, Chapter I"
+        },
+        "(48, '', '20', '', '')": {
+          "count": 14444,
+          "description": "Title 48, Chapter 20"
+        }
+      }
+    },
+    "peace-corps": {
+      "total": 30779,
+      "references": {
+        "(2, '', 'XXXVII', '', '')": {
+          "count": 298,
+          "description": "Title 2, Chapter XXXVII"
+        },
+        "(22, '', 'III', '', '')": {
+          "count": 30481,
+          "description": "Title 22, Chapter III"
+        }
+      }
+    },
+    "small-business-administration": {
+      "total": 307735,
+      "references": {
+        "(2, '', 'XXVII', '', '')": {
+          "count": 2022,
+          "description": "Title 2, Chapter XXVII"
+        },
+        "(13, '', 'I', '', '')": {
+          "count": 305713,
+          "description": "Title 13, Chapter I"
+        }
+      }
+    },
+    "social-security-administration": {
+      "total": 526194,
+      "references": {
+        "(2, '', 'XXIII', '', '')": {
+          "count": 1391,
+          "description": "Title 2, Chapter XXIII"
+        },
+        "(20, '', 'III', '', '')": {
+          "count": 524505,
+          "description": "Title 20, Chapter III"
+        },
+        "(48, '', '23', '', '')": {
+          "count": 298,
+          "description": "Title 48, Chapter 23"
+        }
+      }
+    },
+    "state-department": {
+      "total": 514002,
+      "references": {
+        "(2, '', 'VI', '', '')": {
+          "count": 11026,
+          "description": "Title 2, Chapter VI"
+        },
+        "(22, '', 'I', '', '')": {
+          "count": 449072,
+          "description": "Title 22, Chapter I"
+        },
+        "(28, '', 'XI', '', '')": {
+          "count": 2035,
+          "description": "Title 28, Chapter XI"
+        },
+        "(48, '', '6', '', '')": {
+          "count": 51869,
+          "description": "Title 48, Chapter 6"
+        }
+      }
+    },
+    "transportation-department": {
+      "total": 5401907,
+      "references": {
+        "(2, '', 'XII', '', '')": {
+          "count": 4729,
+          "description": "Title 2, Chapter XII"
+        },
+        "(5, '', 'L', '', '')": {
+          "count": 38529,
+          "description": "Title 5, Chapter L"
+        },
+        "(44, '', 'IV', '', '')": {
+          "count": 921,
+          "description": "Title 44, Chapter IV"
+        },
+        "(48, '', '12', '', '')": {
+          "count": 29737,
+          "description": "Title 48, Chapter 12"
+        },
+        "(14, '', 'I', '', '')": {
+          "count": 1113007
+        },
+        "(14, '', 'III', '', '')": {
+          "count": 128548
+        },
+        "(23, '', 'II', '', '')": {
+          "count": 47680
+        },
+        "(23, '', 'I', '', '')": {
+          "count": 260684
+        },
+        "(49, '', 'III', '', '')": {
+          "count": 273039
+        },
+        "(49, '', 'II', '', '')": {
+          "count": 800257
+        },
+        "(49, '', 'VI', '', '')": {
+          "count": 88489
+        },
+        "(33, '', 'IV', '', '')": {
+          "count": 13981
+        },
+        "(46, '', 'II', '', '')": {
+          "count": 143698
+        },
+        "(23, '', 'III', '', '')": {
+          "count": 25180
+        },
+        "(49, '', 'V', '', '')": {
+          "count": 534723
+        },
+        "(47, '', 'IV', '', '')": {
+          "count": 1952
+        },
+        "(14, '', 'II', '', '')": {
+          "count": 291373
+        },
+        "(49, 'A', '', '', '')": {
+          "count": 247174
+        },
+        "(49, '', 'I', '', '')": {
+          "count": 1358206
+        }
+      }
+    },
+    "treasury-department": {
+      "total": 10830459,
+      "references": {
+        "(2, '', 'X', '', '')": {
+          "count": 92129,
+          "description": "Title 2, Chapter X"
+        },
+        "(5, '', 'XXI', '', '')": {
+          "count": 20633,
+          "description": "Title 5, Chapter XXI"
+        },
+        "(12, '', 'XV', '', '')": {
+          "count": 43044,
+          "description": "Title 12, Chapter XV"
+        },
+        "(17, '', 'IV', '', '')": {
+          "count": 21020,
+          "description": "Title 17, Chapter IV"
+        },
+        "(31, '', 'IX', '', '')": {
+          "count": 5787,
+          "description": "Title 31, Chapter IX"
+        },
+        "(48, '', '10', '', '')": {
+          "count": 5099,
+          "description": "Title 48, Chapter 10"
+        },
+        "(27, '', 'I', '', '')": {
+          "count": 533695
+        },
+        "(31, '', 'VI', '', '')": {
+          "count": 49362
+        },
+        "(31, '', 'II', 'A', '')": {
+          "count": 179930
+        },
+        "(12, '', 'XVIII', '', '')": {
+          "count": 29386
+        },
+        "(12, '', 'I', '', '')": {
+          "count": 2468497
+        },
+        "(31, '', 'X', '', '')": {
+          "count": 60304
+        },
+        "(31, '', 'II', '', '')": {
+          "count": 228376
+        },
+        "(26, '', 'I', '', '')": {
+          "count": 6253079
+        },
+        "(31, '', 'I', '', '')": {
+          "count": 253090
+        },
+        "(12, '', 'XVI', '', '')": {
+          "count": 37085
+        },
+        "(31, '', 'V', '', '')": {
+          "count": 352127
+        },
+        "(31, '', 'VIII', '', '')": {
+          "count": 47934
+        },
+        "(31, 'A', '', '', '')": {
+          "count": 149882
+        }
+      }
+    },
+    "veterans-affairs-department": {
+      "total": 794708,
+      "references": {
+        "(2, '', 'VIII', '', '')": {
+          "count": 3471,
+          "description": "Title 2, Chapter VIII"
+        },
+        "(38, '', 'I', '', '')": {
+          "count": 682893,
+          "description": "Title 38, Chapter I"
+        },
+        "(48, '', '8', '', '')": {
+          "count": 108344,
+          "description": "Title 48, Chapter 8"
+        }
+      }
+    },
+    "executive-office-of-the-president": {
+      "total": 92442,
+      "references": {
+        "(3, '', 'I', '', '')": {
+          "count": 2099,
+          "description": "Title 3, Chapter I"
+        },
+        "(40, '', 'V', '', '')": {
+          "count": 46902
+        },
+        "(32, '', 'XXI', '', '')": {
+          "count": 10202
+        },
+        "(47, '', 'II', '', '')": {
+          "count": 19724
+        },
+        "(32, '', 'XXIV', '', '')": {
+          "count": 8081
+        },
+        "(5, '', 'CIV', '', '')": {
+          "count": 5434
+        }
+      }
+    },
+    "government-accountability-office": {
+      "total": 32227,
+      "references": {
+        "(4, '', 'I', '', '')": {
+          "count": 32227,
+          "description": "Title 4, Chapter I"
+        }
+      }
+    },
+    "special-inspector-general-for-afghanistan-reconstruction": {
+      "total": 5975,
+      "references": {
+        "(5, '', 'LXXXIII', '', '')": {
+          "count": 5975,
+          "description": "Title 5, Chapter LXXXIII"
+        }
+      }
+    },
+    "appalachian-regional-commission": {
+      "total": 4292,
+      "references": {
+        "(5, '', 'IX', '', '')": {
+          "count": 4292,
+          "description": "Title 5, Chapter IX"
+        }
+      }
+    },
+    "armed-forces-retirement-home": {
+      "total": 68327,
+      "references": {
+        "(5, '', 'XI', '', '')": {
+          "count": 65909,
+          "description": "Title 5, Chapter XI"
+        },
+        "(38, '', 'II', '', '')": {
+          "count": 2418,
+          "description": "Title 38, Chapter II"
+        }
+      }
+    },
+    "civil-rights-commission": {
+      "total": 29369,
+      "references": {
+        "(5, '', 'LXVIII', '', '')": {
+          "count": 377,
+          "description": "Title 5, Chapter LXVIII"
+        },
+        "(45, '', 'VII', '', '')": {
+          "count": 28992,
+          "description": "Title 45, Chapter VII"
+        }
+      }
+    },
+    "commodity-futures-trading-commission": {
+      "total": 1317294,
+      "references": {
+        "(5, '', 'XLI', '', '')": {
+          "count": 3511,
+          "description": "Title 5, Chapter XLI"
+        },
+        "(17, '', 'I', '', '')": {
+          "count": 1313783,
+          "description": "Title 17, Chapter I"
+        }
+      }
+    },
+    "consumer-financial-protection-bureau": {
+      "total": 958161,
+      "references": {
+        "(5, '', 'LXXXIV', '', '')": {
+          "count": 3192,
+          "description": "Title 5, Chapter LXXXIV"
+        },
+        "(12, '', 'X', '', '')": {
+          "count": 954969,
+          "description": "Title 12, Chapter X"
+        }
+      }
+    },
+    "consumer-product-safety-commission": {
+      "total": 287237,
+      "references": {
+        "(5, '', 'LXXI', '', '')": {
+          "count": 3078,
+          "description": "Title 5, Chapter LXXI"
+        },
+        "(16, '', 'II', '', '')": {
+          "count": 284159,
+          "description": "Title 16, Chapter II"
+        }
+      }
+    },
+    "council-of-the-inspectors-general-on-integrity-and-efficiency": {
+      "total": 7985,
+      "references": {
+        "(5, '', 'XCVIII', '', '')": {
+          "count": 7985,
+          "description": "Title 5, Chapter XCVIII"
+        }
+      }
+    },
+    "court-services-and-offender-supervision-agency-for-the-district-of-columbia": {
+      "total": 31135,
+      "references": {
+        "(5, '', 'LXX', '', '')": {
+          "count": 15324,
+          "description": "Title 5, Chapter LXX"
+        },
+        "(28, '', 'VIII', '', '')": {
+          "count": 15811,
+          "description": "Title 28, Chapter VIII"
+        }
+      }
+    },
+    "national-intelligence-office-of-the-national-director": {
+      "total": 81691,
+      "references": {
+        "(5, '', 'IV', '', '')": {
+          "count": 56552,
+          "description": "Title 5, Chapter IV"
+        },
+        "(32, '', 'XVII', '', '')": {
+          "count": 25139,
+          "description": "Title 32, Chapter XVII"
+        }
+      }
+    },
+    "national-council-on-disability": {
+      "total": 40580,
+      "references": {
+        "(5, '', 'C', '', '')": {
+          "count": 38711,
+          "description": "Title 5, Chapter C"
+        },
+        "(34, '', 'XII', '', '')": {
+          "count": 1869,
+          "description": "Title 34, Chapter XII"
+        }
+      }
+    },
+    "federal-energy-regulatory-commission": {
+      "total": 536778,
+      "references": {
+        "(5, '', 'XXIV', '', '')": {
+          "count": 6008,
+          "description": "Title 5, Chapter XXIV"
+        },
+        "(18, '', 'I', '', '')": {
+          "count": 530770,
+          "description": "Title 18, Chapter I"
+        }
+      }
+    },
+    "equal-employment-opportunity-commission": {
+      "total": 147553,
+      "references": {
+        "(5, '', 'LXII', '', '')": {
+          "count": 479,
+          "description": "Title 5, Chapter LXII"
+        },
+        "(29, '', 'XIV', '', '')": {
+          "count": 147074,
+          "description": "Title 29, Chapter XIV"
+        }
+      }
+    },
+    "office-of-the-intellectual-property-enforcement-coordinator": {
+      "total": 5434,
+      "references": {
+        "(5, '', 'CIV', '', '')": {
+          "count": 5434,
+          "description": "Title 5, Chapter CIV"
+        }
+      }
+    },
+    "farm-credit-administration": {
+      "total": 433447,
+      "references": {
+        "(5, '', 'XXXI', '', '')": {
+          "count": 11775,
+          "description": "Title 5, Chapter XXXI"
+        },
+        "(12, '', 'VI', '', '')": {
+          "count": 421672,
+          "description": "Title 12, Chapter VI"
+        }
+      }
+    },
+    "farm-credit-system-insurance-corporation": {
+      "total": 28868,
+      "references": {
+        "(5, '', 'XXX', '', '')": {
+          "count": 17405,
+          "description": "Title 5, Chapter XXX"
+        },
+        "(12, '', 'XIV', '', '')": {
+          "count": 11463,
+          "description": "Title 12, Chapter XIV"
+        }
+      }
+    },
+    "federal-deposit-insurance-corporation": {
+      "total": 479980,
+      "references": {
+        "(5, '', 'XXII', '', '')": {
+          "count": 10750,
+          "description": "Title 5, Chapter XXII"
+        },
+        "(12, '', 'III', '', '')": {
+          "count": 469230,
+          "description": "Title 12, Chapter III"
+        }
+      }
+    },
+    "federal-election-commission": {
+      "total": 128211,
+      "references": {
+        "(5, '', 'XXXVII', '', '')": {
+          "count": 451,
+          "description": "Title 5, Chapter XXXVII"
+        },
+        "(11, '', 'I', '', '')": {
+          "count": 127760,
+          "description": "Title 11, Chapter I"
+        }
+      }
+    },
+    "federal-housing-finance-agency": {
+      "total": 216772,
+      "references": {
+        "(5, '', 'LXXX', '', '')": {
+          "count": 11376,
+          "description": "Title 5, Chapter LXXX"
+        },
+        "(12, '', 'XII', '', '')": {
+          "count": 205396,
+          "description": "Title 12, Chapter XII"
+        }
+      }
+    },
+    "federal-labor-relations-authority": {
+      "total": 94165,
+      "references": {
+        "(5, '', 'XLIX', '', '')": {
+          "count": 837,
+          "description": "Title 5, Chapter XLIX"
+        },
+        "(22, '', 'XIV', '', '')": {
+          "count": 16373,
+          "description": "Title 22, Chapter XIV"
+        },
+        "(5, '', 'XIV', '', '')": {
+          "count": 48742
+        },
+        "(22, '', 'XIV', 'C', '')": {
+          "count": 10729
+        },
+        "(5, '', 'XIV', 'B', '')": {
+          "count": 17484
+        }
+      }
+    },
+    "federal-service-impasses-panel": {
+      "total": 48742,
+      "references": {
+        "(5, '', 'XIV', '', '')": {
+          "count": 48742,
+          "description": "Title 5, Chapter XIV"
+        }
+      }
+    },
+    "general-counsel-of-the-federal-labor-relations-authority": {
+      "total": 28213,
+      "references": {
+        "(5, '', 'XIV', 'B', '')": {
+          "count": 17484,
+          "description": "Title 5, Chapter XIV, Subchapter B"
+        },
+        "(22, '', 'XIV', 'C', '')": {
+          "count": 10729,
+          "description": "Title 22, Chapter XIV, Subchapter C"
+        }
+      }
+    },
+    "federal-mediation-and-conciliation-service": {
+      "total": 38396,
+      "references": {
+        "(5, '', 'CIII', '', '')": {
+          "count": 444,
+          "description": "Title 5, Chapter CIII"
+        },
+        "(29, '', 'XII', '', '')": {
+          "count": 37952,
+          "description": "Title 29, Chapter XII"
+        }
+      }
+    },
+    "federal-mine-safety-and-health-review-commission": {
+      "total": 17539,
+      "references": {
+        "(5, '', 'LXXIV', '', '')": {
+          "count": 606,
+          "description": "Title 5, Chapter LXXIV"
+        },
+        "(29, '', 'XXVII', '', '')": {
+          "count": 16933,
+          "description": "Title 29, Chapter XXVII"
+        }
+      }
+    },
+    "board-of-governors-of-the-federal-reserve-system": {
+      "total": 1999,
+      "references": {
+        "(5, '', 'LVIII', '', '')": {
+          "count": 1999,
+          "description": "Title 5, Chapter LVIII"
+        }
+      }
+    },
+    "federal-retirement-thrift-investment-board": {
+      "total": 180671,
+      "references": {
+        "(5, '', 'VI', '', '')": {
+          "count": 180205,
+          "description": "Title 5, Chapter VI"
+        },
+        "(5, '', 'LXXVI', '', '')": {
+          "count": 466,
+          "description": "Title 5, Chapter LXXVI"
+        }
+      }
+    },
+    "federal-trade-commission": {
+      "total": 518178,
+      "references": {
+        "(5, '', 'XLVII', '', '')": {
+          "count": 1209,
+          "description": "Title 5, Chapter XLVII"
+        },
+        "(16, '', 'I', '', '')": {
+          "count": 516969,
+          "description": "Title 16, Chapter I"
+        }
+      }
+    },
+    "general-services-administration": {
+      "total": 175246,
+      "references": {
+        "(5, '', 'LVII', '', '')": {
+          "count": 2977,
+          "description": "Title 5, Chapter LVII"
+        },
+        "(41, '', '105', '', '')": {
+          "count": 68551,
+          "description": "Title 41, Chapter 105"
+        },
+        "(48, '', '5', '', '')": {
+          "count": 95706,
+          "description": "Title 48, Chapter 5"
+        },
+        "(48, '', '61', '', '')": {
+          "count": 8012
+        }
+      }
+    },
+    "government-ethics-office": {
+      "total": 99173,
+      "references": {
+        "(5, '', 'XVI', '', '')": {
+          "count": 99173,
+          "description": "Title 5, Chapter XVI"
+        }
+      }
+    },
+    "human-resources-management-system-(homeland-security---office-of-personnel-management)": {
+      "total": 24928,
+      "references": {
+        "(5, '', 'XCVII', '', '')": {
+          "count": 24928,
+          "description": "Title 5, Chapter XCVII"
+        }
+      }
+    },
+    "inter-american-foundation": {
+      "total": 80902,
+      "references": {
+        "(5, '', 'LXIII', '', '')": {
+          "count": 126,
+          "description": "Title 5, Chapter LXIII"
+        },
+        "(22, '', 'X', '', '')": {
+          "count": 80776,
+          "description": "Title 22, Chapter X"
+        }
+      }
+    },
+    "international-organizations-employees-loyalty-board": {
+      "total": 247378,
+      "references": {
+        "(5, '', 'V', '', '')": {
+          "count": 247378,
+          "description": "Title 5, Chapter V"
+        }
+      }
+    },
+    "interstate-commerce-commission": {
+      "total": 12522,
+      "references": {
+        "(5, '', 'XL', '', '')": {
+          "count": 12522,
+          "description": "Title 5, Chapter XL"
+        }
+      }
+    },
+    "merit-systems-protection-board": {
+      "total": 120763,
+      "references": {
+        "(5, '', 'II', '', '')": {
+          "count": 120246,
+          "description": "Title 5, Chapter II"
+        },
+        "(5, '', 'LXIV', '', '')": {
+          "count": 517,
+          "description": "Title 5, Chapter LXIV"
+        }
+      }
+    },
+    "military-compensation-and-retirement-modernization-commission": {
+      "total": 2050,
+      "references": {
+        "(5, '', 'XCIX', '', '')": {
+          "count": 2050,
+          "description": "Title 5, Chapter XCIX"
+        }
+      }
+    },
+    "national-credit-union-administration": {
+      "total": 272396,
+      "references": {
+        "(5, '', 'LXXXVI', '', '')": {
+          "count": 599,
+          "description": "Title 5, Chapter LXXXVI"
+        },
+        "(12, '', 'VII', '', '')": {
+          "count": 271797,
+          "description": "Title 12, Chapter VII"
+        }
+      }
+    },
+    "national-labor-relations-board": {
+      "total": 1246952,
+      "references": {
+        "(5, '', 'LXI', '', '')": {
+          "count": 1550,
+          "description": "Title 5, Chapter LXI"
+        },
+        "(29, '', 'I', '', '')": {
+          "count": 1245402,
+          "description": "Title 29, Chapter I"
+        }
+      }
+    },
+    "national-mediation-board": {
+      "total": 1561312,
+      "references": {
+        "(5, '', 'CI', '', '')": {
+          "count": 8523,
+          "description": "Title 5, Chapter CI"
+        },
+        "(29, '', 'X', '', '')": {
+          "count": 1552789,
+          "description": "Title 29, Chapter X"
+        }
+      }
+    },
+    "personnel-management-office": {
+      "total": 961713,
+      "references": {
+        "(5, '', 'I', '', '')": {
+          "count": 864311,
+          "description": "Title 5, Chapter I"
+        },
+        "(5, '', 'IV', '', '')": {
+          "count": 56552,
+          "description": "Title 5, Chapter IV"
+        },
+        "(5, '', 'XXXV', '', '')": {
+          "count": 3056,
+          "description": "Title 5, Chapter XXXV"
+        },
+        "(45, '', 'VIII', '', '')": {
+          "count": 10884,
+          "description": "Title 45, Chapter VIII"
+        },
+        "(48, '', '16', '', '')": {
+          "count": 17318,
+          "description": "Title 48, Chapter 16"
+        },
+        "(48, '', '17', '', '')": {
+          "count": 275,
+          "description": "Title 48, Chapter 17"
+        },
+        "(48, '', '21', '', '')": {
+          "count": 9317,
+          "description": "Title 48, Chapter 21"
+        }
+      }
+    },
+    "postal-regulatory-commission": {
+      "total": 64417,
+      "references": {
+        "(5, '', 'XLVI', '', '')": {
+          "count": 2258,
+          "description": "Title 5, Chapter XLVI"
+        },
+        "(39, '', 'III', '', '')": {
+          "count": 62159,
+          "description": "Title 39, Chapter III"
+        }
+      }
+    },
+    "postal-service": {
+      "total": 200055,
+      "references": {
+        "(5, '', 'LX', '', '')": {
+          "count": 20884,
+          "description": "Title 5, Chapter LX"
+        },
+        "(39, '', 'I', '', '')": {
+          "count": 179171,
+          "description": "Title 39, Chapter I"
+        }
+      }
+    },
+    "securities-and-exchange-commission": {
+      "total": 839107,
+      "references": {
+        "(5, '', 'XXXIV', '', '')": {
+          "count": 4750,
+          "description": "Title 5, Chapter XXXIV"
+        },
+        "(17, '', 'II', '', '')": {
+          "count": 834357,
+          "description": "Title 17, Chapter II"
+        }
+      }
+    },
+    "special-counsel-office": {
+      "total": 20317,
+      "references": {
+        "(5, '', 'VIII', '', '')": {
+          "count": 19522,
+          "description": "Title 5, Chapter VIII"
+        },
+        "(5, '', 'CII', '', '')": {
+          "count": 795,
+          "description": "Title 5, Chapter CII"
+        }
+      }
+    },
+    "tennessee-valley-authority": {
+      "total": 58410,
+      "references": {
+        "(5, '', 'LXIX', '', '')": {
+          "count": 222,
+          "description": "Title 5, Chapter LXIX"
+        },
+        "(18, '', 'XIII', '', '')": {
+          "count": 58188,
+          "description": "Title 18, Chapter XIII"
+        }
+      }
+    },
+    "office-of-the-secretary-of-homeland-security": {
+      "total": 134883,
+      "references": {
+        "(6, '', 'I', '', '')": {
+          "count": 134883,
+          "description": "Title 6, Chapter I"
+        }
+      }
+    },
+    "privacy-and-civil-liberties-oversight-board": {
+      "total": 5897,
+      "references": {
+        "(6, '', 'X', '', '')": {
+          "count": 5897,
+          "description": "Title 6, Chapter X"
+        }
+      }
+    },
+    "agricultural-marketing-service": {
+      "total": 5571724,
+      "references": {
+        "(7, '', 'I', '', '')": {
+          "count": 2746090,
+          "description": "Title 7, Chapter I"
+        },
+        "(7, '', 'VIII', '', '')": {
+          "count": 313780,
+          "description": "Title 7, Chapter VIII"
+        },
+        "(7, '', 'IX', '', '')": {
+          "count": 206985,
+          "description": "Title 7, Chapter IX"
+        },
+        "(7, '', 'X', '', '')": {
+          "count": 1619958,
+          "description": "Title 7, Chapter X"
+        },
+        "(7, '', 'XI', '', '')": {
+          "count": 464293,
+          "description": "Title 7, Chapter XI"
+        },
+        "(9, '', 'II', '', '')": {
+          "count": 220618,
+          "description": "Title 9, Chapter II"
+        }
+      }
+    },
+    "agricultural-research-service": {
+      "total": 1527837,
+      "references": {
+        "(7, '', 'V', '', '')": {
+          "count": 1527837,
+          "description": "Title 7, Chapter V"
+        }
+      }
+    },
+    "animal-and-plant-health-inspection-service": {
+      "total": 1029061,
+      "references": {
+        "(7, '', 'III', '', '')": {
+          "count": 455888,
+          "description": "Title 7, Chapter III"
+        },
+        "(9, '', 'I', '', '')": {
+          "count": 573173,
+          "description": "Title 9, Chapter I"
+        }
+      }
+    },
+    "commodity-credit-corporation": {
+      "total": 321732,
+      "references": {
+        "(7, '', 'XIV', '', '')": {
+          "count": 321732,
+          "description": "Title 7, Chapter XIV"
+        }
+      }
+    },
+    "economic-research-service": {
+      "total": 1597,
+      "references": {
+        "(7, '', 'XXXVII', '', '')": {
+          "count": 1597,
+          "description": "Title 7, Chapter XXXVII"
+        }
+      }
+    },
+    "farm-service-agency": {
+      "total": 834974,
+      "references": {
+        "(7, '', 'VII', '', '')": {
+          "count": 834974,
+          "description": "Title 7, Chapter VII"
+        }
+      }
+    },
+    "federal-crop-insurance-corporation": {
+      "total": 510711,
+      "references": {
+        "(7, '', 'IV', '', '')": {
+          "count": 510711,
+          "description": "Title 7, Chapter IV"
+        }
+      }
+    },
+    "food-and-nutrition-service": {
+      "total": 1537253,
+      "references": {
+        "(7, '', 'II', '', '')": {
+          "count": 1537253,
+          "description": "Title 7, Chapter II"
+        }
+      }
+    },
+    "foreign-agricultural-service": {
+      "total": 737055,
+      "references": {
+        "(7, '', 'XV', '', '')": {
+          "count": 737055,
+          "description": "Title 7, Chapter XV"
+        }
+      }
+    },
+    "national-agricultural-statistics-service": {
+      "total": 2953,
+      "references": {
+        "(7, '', 'XXXVI', '', '')": {
+          "count": 2953,
+          "description": "Title 7, Chapter XXXVI"
+        }
+      }
+    },
+    "national-institute-of-food-and-agriculture": {
+      "total": 60808,
+      "references": {
+        "(7, '', 'XXXIV', '', '')": {
+          "count": 60808,
+          "description": "Title 7, Chapter XXXIV"
+        }
+      }
+    },
+    "natural-resources-conservation-service": {
+      "total": 894727,
+      "references": {
+        "(7, '', 'VI', '', '')": {
+          "count": 894727,
+          "description": "Title 7, Chapter VI"
+        }
+      }
+    },
+    "advocacy-and-outreach-office": {
+      "total": 100963,
+      "references": {
+        "(7, '', 'XXV', '', '')": {
+          "count": 100963,
+          "description": "Title 7, Chapter XXV"
+        }
+      }
+    },
+    "office-of-the-chief-financial-officer-agriculture-department": {
+      "total": 159719,
+      "references": {
+        "(7, '', 'XXX', '', '')": {
+          "count": 159719,
+          "description": "Title 7, Chapter XXX"
+        }
+      }
+    },
+    "energy-policy-and-new-uses-office": {
+      "total": 3752,
+      "references": {
+        "(7, '', 'XXIX', '', '')": {
+          "count": 3752,
+          "description": "Title 7, Chapter XXIX"
+        }
+      }
+    },
+    "office-of-environmental-quality": {
+      "total": 67451,
+      "references": {
+        "(7, '', 'XXXI', '', '')": {
+          "count": 67451,
+          "description": "Title 7, Chapter XXXI"
+        }
+      }
+    },
+    "office-of-information-resources-management": {
+      "total": 3577,
+      "references": {
+        "(7, '', 'XXVII', '', '')": {
+          "count": 3577,
+          "description": "Title 7, Chapter XXVII"
+        }
+      }
+    },
+    "inspector-general-office-agriculture-department": {
+      "total": 6596,
+      "references": {
+        "(7, '', 'XXVI', '', '')": {
+          "count": 6596,
+          "description": "Title 7, Chapter XXVI"
+        }
+      }
+    },
+    "office-of-operations": {
+      "total": 1744,
+      "references": {
+        "(7, '', 'XXVIII', '', '')": {
+          "count": 1744,
+          "description": "Title 7, Chapter XXVIII"
+        }
+      }
+    },
+    "procurement-and-property-management-office-of": {
+      "total": 5366,
+      "references": {
+        "(7, '', 'XXXII', '', '')": {
+          "count": 5366,
+          "description": "Title 7, Chapter XXXII"
+        }
+      }
+    },
+    "office-of-secretary-of-agriculture": {
+      "total": 202038,
+      "references": {
+        "(7, 'A', '', '', '')": {
+          "count": 202038,
+          "description": "Title 7, Subtitle A"
+        }
+      }
+    },
+    "transportation-office": {
+      "total": 3537,
+      "references": {
+        "(7, '', 'XXXIII', '', '')": {
+          "count": 3537,
+          "description": "Title 7, Chapter XXXIII"
+        }
+      }
+    },
+    "rural-business-cooperative-service": {
+      "total": 571257,
+      "references": {
+        "(7, '', 'XVIII', '', '')": {
+          "count": 258371,
+          "description": "Title 7, Chapter XVIII"
+        },
+        "(7, '', 'XLII', '', '')": {
+          "count": 135585,
+          "description": "Title 7, Chapter XLII"
+        },
+        "(7, '', 'L', '', '')": {
+          "count": 177301,
+          "description": "Title 7, Chapter L"
+        }
+      }
+    },
+    "rural-housing-service": {
+      "total": 527632,
+      "references": {
+        "(7, '', 'XVIII', '', '')": {
+          "count": 258371,
+          "description": "Title 7, Chapter XVIII"
+        },
+        "(7, '', 'XXXV', '', '')": {
+          "count": 91960,
+          "description": "Title 7, Chapter XXXV"
+        },
+        "(7, '', 'L', '', '')": {
+          "count": 177301,
+          "description": "Title 7, Chapter L"
+        }
+      }
+    },
+    "rural-utilities-service": {
+      "total": 1190719,
+      "references": {
+        "(7, '', 'XVII', '', '')": {
+          "count": 619462,
+          "description": "Title 7, Chapter XVII"
+        },
+        "(7, '', 'XVIII', '', '')": {
+          "count": 258371,
+          "description": "Title 7, Chapter XVIII"
+        },
+        "(7, '', 'XLII', '', '')": {
+          "count": 135585,
+          "description": "Title 7, Chapter XLII"
+        },
+        "(7, '', 'L', '', '')": {
+          "count": 177301,
+          "description": "Title 7, Chapter L"
+        }
+      }
+    },
+    "world-agricultural-outlook-board": {
+      "total": 396,
+      "references": {
+        "(7, '', 'XXXVIII', '', '')": {
+          "count": 396,
+          "description": "Title 7, Chapter XXXVIII"
+        }
+      }
+    },
+    "executive-office-for-immigration-review": {
+      "total": 116706,
+      "references": {
+        "(8, '', 'V', '', '')": {
+          "count": 116706,
+          "description": "Title 8, Chapter V"
+        }
+      }
+    },
+    "food-safety-and-inspection-service": {
+      "total": 191542,
+      "references": {
+        "(9, '', 'III', '', '')": {
+          "count": 191542,
+          "description": "Title 9, Chapter III"
+        }
+      }
+    },
+    "defense-nuclear-facilities-safety-board": {
+      "total": 14674,
+      "references": {
+        "(10, '', 'XVII', '', '')": {
+          "count": 14674,
+          "description": "Title 10, Chapter XVII"
+        }
+      }
+    },
+    "northeast-interstate-low-level-radioactive-waste-commission": {
+      "total": 982,
+      "references": {
+        "(10, '', 'XVIII', '', '')": {
+          "count": 982,
+          "description": "Title 10, Chapter XVIII"
+        }
+      }
+    },
+    "nuclear-waste-technical-review-board": {
+      "total": 4982,
+      "references": {
+        "(10, '', 'XIII', '', '')": {
+          "count": 4982,
+          "description": "Title 10, Chapter XIII"
+        }
+      }
+    },
+    "federal-financial-institutions-examination-council": {
+      "total": 229888,
+      "references": {
+        "(12, '', 'XI', '', '')": {
+          "count": 229888,
+          "description": "Title 12, Chapter XI"
+        }
+      }
+    },
+    "federal-financing-bank": {
+      "total": 30867,
+      "references": {
+        "(12, '', 'VIII', '', '')": {
+          "count": 30867,
+          "description": "Title 12, Chapter VIII"
+        }
+      }
+    },
+    "federal-reserve-system": {
+      "total": 1865455,
+      "references": {
+        "(12, '', 'II', '', '')": {
+          "count": 1863456,
+          "description": "Title 12, Chapter II"
+        },
+        "(5, '', 'LVIII', '', '')": {
+          "count": 1999
+        }
+      }
+    },
+    "financial-stability-oversight-council": {
+      "total": 11994,
+      "references": {
+        "(12, '', 'XIII', '', '')": {
+          "count": 11994,
+          "description": "Title 12, Chapter XIII"
+        }
+      }
+    },
+    "office-of-federal-housing-enterprise-oversight": {
+      "total": 33458,
+      "references": {
+        "(12, '', 'XVII', '', '')": {
+          "count": 33458,
+          "description": "Title 12, Chapter XVII"
+        }
+      }
+    },
+    "community-development-financial-institutions-fund": {
+      "total": 29386,
+      "references": {
+        "(12, '', 'XVIII', '', '')": {
+          "count": 29386,
+          "description": "Title 12, Chapter XVIII"
+        }
+      }
+    },
+    "comptroller-of-the-currency": {
+      "total": 2468497,
+      "references": {
+        "(12, '', 'I', '', '')": {
+          "count": 2468497,
+          "description": "Title 12, Chapter I"
+        }
+      }
+    },
+    "office-of-financial-research": {
+      "total": 37085,
+      "references": {
+        "(12, '', 'XVI', '', '')": {
+          "count": 37085,
+          "description": "Title 12, Chapter XVI"
+        }
+      }
+    },
+    "economic-development-administration": {
+      "total": 20918,
+      "references": {
+        "(13, '', 'III', '', '')": {
+          "count": 20918,
+          "description": "Title 13, Chapter III"
+        }
+      }
+    },
+    "emergency-oil-and-gas-guaranteed-loan-board": {
+      "total": 14750,
+      "references": {
+        "(13, '', 'V', '', '')": {
+          "count": 14750,
+          "description": "Title 13, Chapter V"
+        }
+      }
+    },
+    "emergency-steel-guarantee-loan-board": {
+      "total": 7287,
+      "references": {
+        "(13, '', 'IV', '', '')": {
+          "count": 7287,
+          "description": "Title 13, Chapter IV"
+        }
+      }
+    },
+    "air-transportation-stabilization-board": {
+      "total": 3312,
+      "references": {
+        "(14, '', 'VI', '', '')": {
+          "count": 3312,
+          "description": "Title 14, Chapter VI"
+        }
+      }
+    },
+    "federal-aviation-administration": {
+      "total": 1113007,
+      "references": {
+        "(14, '', 'I', '', '')": {
+          "count": 1113007,
+          "description": "Title 14, Chapter I"
+        }
+      }
+    },
+    "commercial-space-transportation-office": {
+      "total": 128548,
+      "references": {
+        "(14, '', 'III', '', '')": {
+          "count": 128548,
+          "description": "Title 14, Chapter III"
+        }
+      }
+    },
+    "office-of-secretary-(aviation-proceedings)": {
+      "total": 291373,
+      "references": {
+        "(14, '', 'II', '', '')": {
+          "count": 291373,
+          "description": "Title 14, Chapter II"
+        }
+      }
+    },
+    "census-bureau": {
+      "total": 775066,
+      "references": {
+        "(15, '', 'I', '', '')": {
+          "count": 775066,
+          "description": "Title 15, Chapter I"
+        }
+      }
+    },
+    "economic-analysis-bureau": {
+      "total": 3684,
+      "references": {
+        "(15, '', 'VIII', '', '')": {
+          "count": 3684,
+          "description": "Title 15, Chapter VIII"
+        }
+      }
+    },
+    "industry-and-security-bureau": {
+      "total": 531619,
+      "references": {
+        "(15, '', 'VII', '', '')": {
+          "count": 531619,
+          "description": "Title 15, Chapter VII"
+        }
+      }
+    },
+    "foreign-trade-zones-board": {
+      "total": 9969,
+      "references": {
+        "(15, '', 'IV', '', '')": {
+          "count": 9969,
+          "description": "Title 15, Chapter IV"
+        }
+      }
+    },
+    "international-trade-administration": {
+      "total": 87304,
+      "references": {
+        "(15, '', 'III', '', '')": {
+          "count": 20801,
+          "description": "Title 15, Chapter III"
+        },
+        "(19, '', 'III', '', '')": {
+          "count": 66503,
+          "description": "Title 19, Chapter III"
+        }
+      }
+    },
+    "minority-business-development-agency": {
+      "total": 661,
+      "references": {
+        "(15, '', 'XIV', '', '')": {
+          "count": 661,
+          "description": "Title 15, Chapter XIV"
+        }
+      }
+    },
+    "national-institute-of-standards-and-technology": {
+      "total": 593563,
+      "references": {
+        "(15, '', 'II', '', '')": {
+          "count": 585174,
+          "description": "Title 15, Chapter II"
+        },
+        "(37, '', 'IV', '', '')": {
+          "count": 8389,
+          "description": "Title 37, Chapter IV"
+        }
+      }
+    },
+    "national-oceanic-and-atmospheric-administration": {
+      "total": 252228,
+      "references": {
+        "(15, '', 'IX', '', '')": {
+          "count": 156088,
+          "description": "Title 15, Chapter IX"
+        },
+        "(50, '', 'III', '', '')": {
+          "count": 74313,
+          "description": "Title 50, Chapter III"
+        },
+        "(50, '', 'IV', '', '')": {
+          "count": 21827,
+          "description": "Title 50, Chapter IV"
+        }
+      }
+    },
+    "national-technical-information-service": {
+      "total": 4412,
+      "references": {
+        "(15, '', 'XI', '', '')": {
+          "count": 4412,
+          "description": "Title 15, Chapter XI"
+        }
+      }
+    },
+    "national-telecommunications-and-information-administration": {
+      "total": 879257,
+      "references": {
+        "(15, '', 'XXIII', '', '')": {
+          "count": 872877,
+          "description": "Title 15"
+        },
+        "(47, '', 'III', '', '')": {
+          "count": 4428,
+          "description": "Title 47, Chapter III"
+        },
+        "(47, '', 'IV', '', '')": {
+          "count": 1952,
+          "description": "Title 47, Chapter IV"
+        }
+      }
+    },
+    "office-of-secretary-of-commerce": {
+      "total": 74523,
+      "references": {
+        "(15, 'A', '', '', '')": {
+          "count": 74523,
+          "description": "Title 15, Subtitle A"
+        }
+      }
+    },
+    "under-secretary-for-economic-affairs": {
+      "total": 4538,
+      "references": {
+        "(15, '', 'XV', '', '')": {
+          "count": 4538,
+          "description": "Title 15, Chapter XV"
+        }
+      }
+    },
+    "east-west-foreign-trade-board": {
+      "total": 78,
+      "references": {
+        "(15, '', 'XIII', '', '')": {
+          "count": 78,
+          "description": "Title 15, Chapter XIII"
+        }
+      }
+    },
+    "trade-representative-office-of-united-states": {
+      "total": 18732,
+      "references": {
+        "(15, '', 'XX', '', '')": {
+          "count": 18732,
+          "description": "Title 15, Chapter XX"
+        }
+      }
+    },
+    "delaware-river-basin-commission": {
+      "total": 90014,
+      "references": {
+        "(18, '', 'III', '', '')": {
+          "count": 90014,
+          "description": "Title 18, Chapter III"
+        }
+      }
+    },
+    "susquehanna-river-basin-commission": {
+      "total": 15064,
+      "references": {
+        "(18, '', 'VIII', '', '')": {
+          "count": 15064,
+          "description": "Title 18, Chapter VIII"
+        }
+      }
+    },
+    "water-resources-council": {
+      "total": 30840,
+      "references": {
+        "(18, '', 'VI', '', '')": {
+          "count": 30840,
+          "description": "Title 18, Chapter VI"
+        }
+      }
+    },
+    "u-s-customs-and-border-protection": {
+      "total": 772558,
+      "references": {
+        "(19, '', 'I', '', '')": {
+          "count": 772558,
+          "description": "Title 19, Chapter I"
+        }
+      }
+    },
+    "international-trade-commission": {
+      "total": 138468,
+      "references": {
+        "(19, '', 'II', '', '')": {
+          "count": 138468,
+          "description": "Title 19, Chapter II"
+        }
+      }
+    },
+    "joint-board-for-enrollment-of-actuaries": {
+      "total": 11419,
+      "references": {
+        "(20, '', 'VIII', '', '')": {
+          "count": 11419,
+          "description": "Title 20, Chapter VIII"
+        }
+      }
+    },
+    "benefits-review-board": {
+      "total": 16987,
+      "references": {
+        "(20, '', 'VII', '', '')": {
+          "count": 16987,
+          "description": "Title 20, Chapter VII"
+        }
+      }
+    },
+    "employees-compensation-appeals-board": {
+      "total": 2268,
+      "references": {
+        "(20, '', 'IV', '', '')": {
+          "count": 2268,
+          "description": "Title 20, Chapter IV"
+        }
+      }
+    },
+    "employment-and-training-administration": {
+      "total": 432856,
+      "references": {
+        "(20, '', 'V', '', '')": {
+          "count": 432856,
+          "description": "Title 20, Chapter V"
+        }
+      }
+    },
+    "office-of-assistant-secretary-for-veterans'-employment-and-training-service": {
+      "total": 20638,
+      "references": {
+        "(20, '', 'IX', '', '')": {
+          "count": 18626,
+          "description": "Title 20, Chapter IX"
+        },
+        "(41, '', '61', '', '')": {
+          "count": 2012,
+          "description": "Title 41, Chapter 61"
+        }
+      }
+    },
+    "workers-compensation-programs-office": {
+      "total": 912640,
+      "references": {
+        "(20, '', 'I', '', '')": {
+          "count": 829985,
+          "description": "Title 20, Chapter I"
+        },
+        "(20, '', 'VI', '', '')": {
+          "count": 82655,
+          "description": "Title 20, Chapter VI"
+        }
+      }
+    },
+    "railroad-retirement-board": {
+      "total": 688514,
+      "references": {
+        "(20, '', 'II', '', '')": {
+          "count": 688514,
+          "description": "Title 20, Chapter II"
+        }
+      }
+    },
+    "food-and-drug-administration": {
+      "total": 1533878,
+      "references": {
+        "(21, '', 'I', '', '')": {
+          "count": 1533878,
+          "description": "Title 21, Chapter I"
+        }
+      }
+    },
+    "drug-enforcement-administration": {
+      "total": 101253,
+      "references": {
+        "(21, '', 'II', '', '')": {
+          "count": 101253,
+          "description": "Title 21, Chapter II"
+        }
+      }
+    },
+    "african-development-foundation": {
+      "total": 21962,
+      "references": {
+        "(22, '', 'XV', '', '')": {
+          "count": 21838,
+          "description": "Title 22, Chapter XV"
+        },
+        "(48, '', '57', '', '')": {
+          "count": 124,
+          "description": "Title 48, Chapter 57"
+        }
+      }
+    },
+    "united-states-agency-for-global-media": {
+      "total": 89713,
+      "references": {
+        "(22, '', 'V', '', '')": {
+          "count": 87421,
+          "description": "Title 22, Chapter V"
+        },
+        "(48, '', '19', '', '')": {
+          "count": 2292,
+          "description": "Title 48, Chapter 19"
+        }
+      }
+    },
+    "foreign-service-grievance-board": {
+      "total": 3583,
+      "references": {
+        "(22, '', 'IX', '', '')": {
+          "count": 3583,
+          "description": "Title 22, Chapter IX"
+        }
+      }
+    },
+    "foreign-service-impasse-disputes-panel": {
+      "total": 4629,
+      "references": {
+        "(22, '', 'XIV', 'B', '')": {
+          "count": 3735,
+          "description": "Title 22, Chapter XIV, Subchapter B"
+        },
+        "(22, '', 'XIV', 'D', '')": {
+          "count": 894,
+          "description": "Title 22, Chapter XIV, Subchapter D"
+        }
+      }
+    },
+    "foreign-service-labor-relations-board": {
+      "total": 14464,
+      "references": {
+        "(22, '', 'XIV', 'B', '')": {
+          "count": 3735,
+          "description": "Title 22, Chapter XIV, Subchapter B"
+        },
+        "(22, '', 'XIV', 'C', '')": {
+          "count": 10729,
+          "description": "Title 22, Chapter XIV, Subchapter C"
+        }
+      }
+    },
+    "united-states-institute-of-peace": {
+      "total": 1895,
+      "references": {
+        "(22, '', 'XVII', '', '')": {
+          "count": 1895,
+          "description": "Title 22, Chapter XVII"
+        }
+      }
+    },
+    "international-boundary-and-water-commission-united-states-and-mexico": {
+      "total": 41065,
+      "references": {
+        "(22, '', 'XI', '', '')": {
+          "count": 41065,
+          "description": "Title 22, Chapter XI"
+        }
+      }
+    },
+    "united-states-international-development-cooperation-agency": {
+      "total": 12740,
+      "references": {
+        "(22, '', 'XII', '', '')": {
+          "count": 12740,
+          "description": "Title 22, Chapter XII"
+        }
+      }
+    },
+    "international-joint-commission-united-states-and-canada": {
+      "total": 18692,
+      "references": {
+        "(22, '', 'IV', '', '')": {
+          "count": 18692,
+          "description": "Title 22, Chapter IV"
+        }
+      }
+    },
+    "japan-united-states-friendship-commission": {
+      "total": 3767,
+      "references": {
+        "(22, '', 'XVI', '', '')": {
+          "count": 3767,
+          "description": "Title 22, Chapter XVI"
+        }
+      }
+    },
+    "millennium-challenge-corporation": {
+      "total": 7468,
+      "references": {
+        "(22, '', 'XIII', '', '')": {
+          "count": 7468,
+          "description": "Title 22, Chapter XIII"
+        }
+      }
+    },
+    "federal-highway-administration": {
+      "total": 308364,
+      "references": {
+        "(23, '', 'I', '', '')": {
+          "count": 260684,
+          "description": "Title 23, Chapter I"
+        },
+        "(23, '', 'II', '', '')": {
+          "count": 47680,
+          "description": "Title 23, Chapter II"
+        }
+      }
+    },
+    "national-highway-traffic-safety-administration": {
+      "total": 609535,
+      "references": {
+        "(23, '', 'II', '', '')": {
+          "count": 47680,
+          "description": "Title 23, Chapter II"
+        },
+        "(23, '', 'III', '', '')": {
+          "count": 25180,
+          "description": "Title 23, Chapter III"
+        },
+        "(47, '', 'IV', '', '')": {
+          "count": 1952,
+          "description": "Title 47, Chapter IV"
+        },
+        "(49, '', 'V', '', '')": {
+          "count": 534723,
+          "description": "Title 49, Chapter V"
+        }
+      }
+    },
+    "government-national-mortgage-association": {
+      "total": 73669,
+      "references": {
+        "(24, '', 'III', '', '')": {
+          "count": 73669,
+          "description": "Title 24, Chapter III"
+        }
+      }
+    },
+    "office-of-assistant-secretary-for-community-planning-and-development": {
+      "total": 208250,
+      "references": {
+        "(24, '', 'V', '', '')": {
+          "count": 208250,
+          "description": "Title 24, Chapter V"
+        }
+      }
+    },
+    "office-of-assistant-secretary-for-equal-opportunity": {
+      "total": 556479,
+      "references": {
+        "(24, '', 'I', '', '')": {
+          "count": 556479,
+          "description": "Title 24, Chapter I"
+        }
+      }
+    },
+    "office-of-assistant-secretary-for-housing---federal-housing-commissioner": {
+      "total": 444266,
+      "references": {
+        "(24, '', 'II', '', '')": {
+          "count": 288170,
+          "description": "Title 24, Chapter II"
+        },
+        "(24, '', 'VIII', '', '')": {
+          "count": 69171,
+          "description": "Title 24, Chapter VIII"
+        },
+        "(24, '', 'XX', '', '')": {
+          "count": 86925,
+          "description": "Title 24, Chapter XX"
+        }
+      }
+    },
+    "office-of-assistant-secretary-for-public-and-indian-housing": {
+      "total": 227351,
+      "references": {
+        "(24, '', 'IX', '', '')": {
+          "count": 227351,
+          "description": "Title 24, Chapter IX"
+        }
+      }
+    },
+    "office-of-housing-and-multifamily-housing-assistance-restructuring": {
+      "total": 9362,
+      "references": {
+        "(24, '', 'IV', '', '')": {
+          "count": 9362,
+          "description": "Title 24, Chapter IV"
+        }
+      }
+    },
+    "office-of-inspector-general,-housing-and-urban-development": {
+      "total": 5115,
+      "references": {
+        "(24, '', 'XII', '', '')": {
+          "count": 5115,
+          "description": "Title 24, Chapter XII"
+        }
+      }
+    },
+    "office-of-secretary": {
+      "total": 227183,
+      "references": {
+        "(24, 'A', '', '', '')": {
+          "count": 227183,
+          "description": "Title 24, Subtitle A"
+        }
+      }
+    },
+    "office-of-secretary-(housing-assistance-programs-and-public-and-indian-housing-programs)": {
+      "total": 79236,
+      "references": {
+        "(24, '', 'VII', '', '')": {
+          "count": 79236,
+          "description": "Title 24, Chapter VII"
+        }
+      }
+    },
+    "neighborhood-reinvestment-corporation": {
+      "total": 2306,
+      "references": {
+        "(24, '', 'XXV', '', '')": {
+          "count": 2306,
+          "description": "Title 24, Chapter XXV"
+        }
+      }
+    },
+    "indian-health-service": {
+      "total": 100224,
+      "references": {
+        "(25, '', 'V', '', '')": {
+          "count": 71350,
+          "description": "Title 25, Chapter V"
+        },
+        "(42, '', 'I', 'M', '')": {
+          "count": 28874,
+          "description": "Title 42, Chapter I, Subchapter M"
+        }
+      }
+    },
+    "indian-affairs-bureau": {
+      "total": 517931,
+      "references": {
+        "(25, '', 'I', '', '')": {
+          "count": 446581,
+          "description": "Title 25, Chapter I"
+        },
+        "(25, '', 'V', '', '')": {
+          "count": 71350,
+          "description": "Title 25, Chapter V"
+        }
+      }
+    },
+    "indian-arts-and-crafts-board": {
+      "total": 79479,
+      "references": {
+        "(25, '', 'II', '', '')": {
+          "count": 79479,
+          "description": "Title 25, Chapter II"
+        }
+      }
+    },
+    "national-indian-gaming-commission": {
+      "total": 72980,
+      "references": {
+        "(25, '', 'III', '', '')": {
+          "count": 72980,
+          "description": "Title 25, Chapter III"
+        }
+      }
+    },
+    "office-of-indian-affairs-assistant-secretary": {
+      "total": 25314,
+      "references": {
+        "(25, '', 'VI', '', '')": {
+          "count": 25314,
+          "description": "Title 25, Chapter VI"
+        }
+      }
+    },
+    "special-trustee-for-american-indians-office": {
+      "total": 2500,
+      "references": {
+        "(25, '', 'VII', '', '')": {
+          "count": 2500,
+          "description": "Title 25, Chapter VII"
+        }
+      }
+    },
+    "navajo-and-hopi-indian-relocation-office": {
+      "total": 27348,
+      "references": {
+        "(25, '', 'IV', '', '')": {
+          "count": 27348,
+          "description": "Title 25, Chapter IV"
+        }
+      }
+    },
+    "internal-revenue-service": {
+      "total": 6253079,
+      "references": {
+        "(26, '', 'I', '', '')": {
+          "count": 6253079,
+          "description": "Title 26, Chapter I"
+        }
+      }
+    },
+    "alcohol-tobacco-firearms-and-explosives-bureau": {
+      "total": 67466,
+      "references": {
+        "(27, '', 'II', '', '')": {
+          "count": 67466,
+          "description": "Title 27, Chapter II"
+        }
+      }
+    },
+    "alcohol-and-tobacco-tax-and-trade-bureau": {
+      "total": 533695,
+      "references": {
+        "(27, '', 'I', '', '')": {
+          "count": 533695,
+          "description": "Title 27, Chapter I"
+        }
+      }
+    },
+    "office-of-independent-counsel": {
+      "total": 22605,
+      "references": {
+        "(28, '', 'VII', '', '')": {
+          "count": 22605,
+          "description": "Title 28, Chapter VII"
+        }
+      }
+    },
+    "prisons-bureau": {
+      "total": 74363,
+      "references": {
+        "(28, '', 'V', '', '')": {
+          "count": 74363,
+          "description": "Title 28, Chapter V"
+        }
+      }
+    },
+    "federal-prison-industries": {
+      "total": 22099,
+      "references": {
+        "(28, '', 'III', '', '')": {
+          "count": 22099,
+          "description": "Title 28, Chapter III"
+        }
+      }
+    },
+    "offices-of-independent-counsel": {
+      "total": 24388,
+      "references": {
+        "(28, '', 'VI', '', '')": {
+          "count": 24388,
+          "description": "Title 28, Chapter VI"
+        }
+      }
+    },
+    "national-crime-prevention-and-privacy-compact-council": {
+      "total": 3146,
+      "references": {
+        "(28, '', 'IX', '', '')": {
+          "count": 3146,
+          "description": "Title 28, Chapter IX"
+        }
+      }
+    },
+    "construction-industry-collective-bargaining-commission": {
+      "total": 453,
+      "references": {
+        "(29, '', 'IX', '', '')": {
+          "count": 453,
+          "description": "Title 29, Chapter IX"
+        }
+      }
+    },
+    "employee-benefits-security-administration": {
+      "total": 244893,
+      "references": {
+        "(29, '', 'XXV', '', '')": {
+          "count": 244893,
+          "description": "Title 29, Chapter XXV"
+        }
+      }
+    },
+    "occupational-safety-and-health-administration": {
+      "total": 983060,
+      "references": {
+        "(29, '', 'XVII', '', '')": {
+          "count": 983060,
+          "description": "Title 29, Chapter XVII"
+        }
+      }
+    },
+    "labor-management-standards-office": {
+      "total": 1202173,
+      "references": {
+        "(29, '', 'II', '', '')": {
+          "count": 1023106,
+          "description": "Title 29, Chapter II"
+        },
+        "(29, '', 'IV', '', '')": {
+          "count": 179067,
+          "description": "Title 29, Chapter IV"
+        }
+      }
+    },
+    "office-of-secretary-of-labor": {
+      "total": 256448,
+      "references": {
+        "(29, 'A', '', '', '')": {
+          "count": 256448,
+          "description": "Title 29, Subtitle A"
+        }
+      }
+    },
+    "wage-and-hour-division": {
+      "total": 1696433,
+      "references": {
+        "(29, '', 'V', '', '')": {
+          "count": 1696433,
+          "description": "Title 29, Chapter V"
+        }
+      }
+    },
+    "national-railroad-adjustment-board": {
+      "total": 696,
+      "references": {
+        "(29, '', 'III', '', '')": {
+          "count": 696,
+          "description": "Title 29, Chapter III"
+        }
+      }
+    },
+    "occupational-safety-and-health-review-commission": {
+      "total": 268505,
+      "references": {
+        "(29, '', 'XX', '', '')": {
+          "count": 268505,
+          "description": "Title 29, Chapter XX"
+        }
+      }
+    },
+    "pension-benefit-guaranty-corporation": {
+      "total": 125127,
+      "references": {
+        "(29, '', 'XL', '', '')": {
+          "count": 125127,
+          "description": "Title 29, Chapter XL"
+        }
+      }
+    },
+    "ocean-energy-management-bureau": {
+      "total": 329671,
+      "references": {
+        "(30, '', 'V', '', '')": {
+          "count": 329671,
+          "description": "Title 30, Chapter V"
+        }
+      }
+    },
+    "safety-and-environmental-enforcement-bureau": {
+      "total": 434344,
+      "references": {
+        "(30, '', 'II', '', '')": {
+          "count": 434344,
+          "description": "Title 30, Chapter II"
+        }
+      }
+    },
+    "geological-survey": {
+      "total": 2535,
+      "references": {
+        "(30, '', 'IV', '', '')": {
+          "count": 2535,
+          "description": "Title 30, Chapter IV"
+        }
+      }
+    },
+    "natural-resources-revenue-office": {
+      "total": 81650,
+      "references": {
+        "(30, '', 'XII', '', '')": {
+          "count": 81650,
+          "description": "Title 30, Chapter XII"
+        }
+      }
+    },
+    "surface-mining-reclamation-and-enforcement-office": {
+      "total": 229349,
+      "references": {
+        "(30, '', 'VII', '', '')": {
+          "count": 229349,
+          "description": "Title 30, Chapter VII"
+        }
+      }
+    },
+    "mine-safety-and-health-administration": {
+      "total": 668752,
+      "references": {
+        "(30, '', 'I', '', '')": {
+          "count": 668752,
+          "description": "Title 30, Chapter I"
+        }
+      }
+    },
+    "federal-law-enforcement-training-center": {
+      "total": 48442,
+      "references": {
+        "(31, '', 'VII', '', '')": {
+          "count": 48442,
+          "description": "Title 31, Chapter VII"
+        }
+      }
+    },
+    "secret-service": {
+      "total": 1871,
+      "references": {
+        "(31, '', 'IV', '', '')": {
+          "count": 1871,
+          "description": "Title 31, Chapter IV"
+        }
+      }
+    },
+    "engraving-and-printing-bureau": {
+      "total": 49362,
+      "references": {
+        "(31, '', 'VI', '', '')": {
+          "count": 49362,
+          "description": "Title 31, Chapter VI"
+        }
+      }
+    },
+    "bureau-of-the-fiscal-service": {
+      "total": 179930,
+      "references": {
+        "(31, '', 'II', 'A', '')": {
+          "count": 179930,
+          "description": "Title 31, Chapter II, Subchapter A"
+        }
+      }
+    },
+    "financial-crimes-enforcement-network": {
+      "total": 60304,
+      "references": {
+        "(31, '', 'X', '', '')": {
+          "count": 60304,
+          "description": "Title 31, Chapter X"
+        }
+      }
+    },
+    "fiscal-service": {
+      "total": 228376,
+      "references": {
+        "(31, '', 'II', '', '')": {
+          "count": 228376,
+          "description": "Title 31, Chapter II"
+        }
+      }
+    },
+    "monetary-offices": {
+      "total": 253090,
+      "references": {
+        "(31, '', 'I', '', '')": {
+          "count": 253090,
+          "description": "Title 31, Chapter I"
+        }
+      }
+    },
+    "foreign-assets-control-office": {
+      "total": 352127,
+      "references": {
+        "(31, '', 'V', '', '')": {
+          "count": 352127,
+          "description": "Title 31, Chapter V"
+        }
+      }
+    },
+    "investment-security-office": {
+      "total": 47934,
+      "references": {
+        "(31, '', 'VIII', '', '')": {
+          "count": 47934,
+          "description": "Title 31, Chapter VIII"
+        }
+      }
+    },
+    "office-of-secretary-of-the-treasury": {
+      "total": 149882,
+      "references": {
+        "(31, 'A', '', '', '')": {
+          "count": 149882,
+          "description": "Title 31, Subtitle A"
+        }
+      }
+    },
+    "central-intelligence-agency": {
+      "total": 16731,
+      "references": {
+        "(32, '', 'XIX', '', '')": {
+          "count": 16731,
+          "description": "Title 32, Chapter XIX"
+        }
+      }
+    },
+    "defense-logistics-agency": {
+      "total": 3993,
+      "references": {
+        "(32, '', 'XII', '', '')": {
+          "count": 3297,
+          "description": "Title 32, Chapter XII"
+        },
+        "(48, '', '54', '', '')": {
+          "count": 696,
+          "description": "Title 48, Chapter 54"
+        }
+      }
+    },
+    "office-of-the-secretary": {
+      "total": 872890,
+      "references": {
+        "(32, '', 'I', '', '')": {
+          "count": 872890,
+          "description": "Title 32, Chapter I"
+        }
+      }
+    },
+    "national-security-council": {
+      "total": 29926,
+      "references": {
+        "(32, '', 'XXI', '', '')": {
+          "count": 10202,
+          "description": "Title 32, Chapter XXI"
+        },
+        "(47, '', 'II', '', '')": {
+          "count": 19724,
+          "description": "Title 47, Chapter II"
+        }
+      }
+    },
+    "science-and-technology-policy-office": {
+      "total": 27805,
+      "references": {
+        "(32, '', 'XXIV', '', '')": {
+          "count": 8081,
+          "description": "Title 32, Chapter XXIV"
+        },
+        "(47, '', 'II', '', '')": {
+          "count": 19724,
+          "description": "Title 47, Chapter II"
+        }
+      }
+    },
+    "office-for-micronesian-status-negotiations": {
+      "total": 3758,
+      "references": {
+        "(32, '', 'XXVII', '', '')": {
+          "count": 3758,
+          "description": "Title 32, Chapter XXVII"
+        }
+      }
+    },
+    "information-security-oversight-office": {
+      "total": 44962,
+      "references": {
+        "(32, '', 'XX', '', '')": {
+          "count": 44962,
+          "description": "Title 32, Chapter XX"
+        }
+      }
+    },
+    "national-counterintelligence-center": {
+      "total": 13151,
+      "references": {
+        "(32, '', 'XVIII', '', '')": {
+          "count": 13151,
+          "description": "Title 32, Chapter XVIII"
+        }
+      }
+    },
+    "selective-service-system": {
+      "total": 54291,
+      "references": {
+        "(32, '', 'XVI', '', '')": {
+          "count": 54291,
+          "description": "Title 32, Chapter XVI"
+        }
+      }
+    },
+    "office-of-vice-president-of-the-united-states": {
+      "total": 1826,
+      "references": {
+        "(32, '', 'XXVIII', '', '')": {
+          "count": 1826,
+          "description": "Title 32, Chapter XXVIII"
+        }
+      }
+    },
+    "engineers-corps": {
+      "total": 247101,
+      "references": {
+        "(33, '', 'II', '', '')": {
+          "count": 220219,
+          "description": "Title 33, Chapter II"
+        },
+        "(36, '', 'III', '', '')": {
+          "count": 26882,
+          "description": "Title 36, Chapter III"
+        }
+      }
+    },
+    "coast-guard": {
+      "total": 1875169,
+      "references": {
+        "(33, '', 'I', '', '')": {
+          "count": 822701,
+          "description": "Title 33, Chapter I"
+        },
+        "(46, '', 'I', '', '')": {
+          "count": 1049326,
+          "description": "Title 46, Chapter I"
+        },
+        "(49, '', 'IV', '', '')": {
+          "count": 3142,
+          "description": "Title 49, Chapter IV"
+        }
+      }
+    },
+    "great-lakes-st-lawrence-seaway-development-corporation": {
+      "total": 13981,
+      "references": {
+        "(33, '', 'IV', '', '')": {
+          "count": 13981,
+          "description": "Title 33, Chapter IV"
+        }
+      }
+    },
+    "office-for-civil-rights": {
+      "total": 589802,
+      "references": {
+        "(34, '', 'I', '', '')": {
+          "count": 589802,
+          "description": "Title 34, Chapter I"
+        }
+      }
+    },
+    "office-of-and-adult-education-technical-career": {
+      "total": 20045,
+      "references": {
+        "(34, '', 'IV', '', '')": {
+          "count": 20045,
+          "description": "Title 34, Chapter IV"
+        }
+      }
+    },
+    "office-of-bilingual-education-and-minority-languages-affairs": {
+      "total": 346534,
+      "references": {
+        "(34, '', 'V', '', '')": {
+          "count": 346534,
+          "description": "Title 34, Chapter V"
+        }
+      }
+    },
+    "office-of-elementary-and-secondary-education": {
+      "total": 201757,
+      "references": {
+        "(34, '', 'II', '', '')": {
+          "count": 201757,
+          "description": "Title 34, Chapter II"
+        }
+      }
+    },
+    "office-of-postsecondary-education": {
+      "total": 326479,
+      "references": {
+        "(34, '', 'VI', '', '')": {
+          "count": 326479,
+          "description": "Title 34, Chapter VI"
+        }
+      }
+    },
+    "office-of-secretary-of-education": {
+      "total": 81357,
+      "references": {
+        "(34, 'A', '', '', '')": {
+          "count": 81357,
+          "description": "Title 34, Subtitle A"
+        }
+      }
+    },
+    "office-of-special-education-and-rehabilitative-services": {
+      "total": 148368,
+      "references": {
+        "(34, '', 'III', '', '')": {
+          "count": 148368,
+          "description": "Title 34, Chapter III"
+        }
+      }
+    },
+    "advisory-council-on-historic-preservation": {
+      "total": 16383,
+      "references": {
+        "(36, '', 'VIII', '', '')": {
+          "count": 16383,
+          "description": "Title 36, Chapter VIII"
+        }
+      }
+    },
+    "forest-service": {
+      "total": 303428,
+      "references": {
+        "(36, '', 'II', '', '')": {
+          "count": 303428,
+          "description": "Title 36, Chapter II"
+        }
+      }
+    },
+    "american-battle-monuments-commission": {
+      "total": 6896,
+      "references": {
+        "(36, '', 'IV', '', '')": {
+          "count": 6896,
+          "description": "Title 36, Chapter IV"
+        }
+      }
+    },
+    "architectural-and-transportation-barriers-compliance-board": {
+      "total": 172010,
+      "references": {
+        "(36, '', 'XI', '', '')": {
+          "count": 172010,
+          "description": "Title 36, Chapter XI"
+        }
+      }
+    },
+    "national-park-service": {
+      "total": 587672,
+      "references": {
+        "(36, '', 'I', '', '')": {
+          "count": 587672,
+          "description": "Title 36, Chapter I"
+        }
+      }
+    },
+    "library-of-congress": {
+      "total": 212071,
+      "references": {
+        "(36, '', 'VII', '', '')": {
+          "count": 23208,
+          "description": "Title 36, Chapter VII"
+        },
+        "(37, '', 'III', '', '')": {
+          "count": 37823
+        },
+        "(37, '', 'II', '', '')": {
+          "count": 151040
+        }
+      }
+    },
+    "morris-k-udall-and-stewart-l-udall-foundation": {
+      "total": 4748,
+      "references": {
+        "(36, '', 'XVI', '', '')": {
+          "count": 4748,
+          "description": "Title 36, Chapter XVI"
+        }
+      }
+    },
+    "oklahoma-city-national-memorial-trust": {
+      "total": 5029,
+      "references": {
+        "(36, '', 'XV', '', '')": {
+          "count": 5029,
+          "description": "Title 36, Chapter XV"
+        }
+      }
+    },
+    "pennsylvania-avenue-development-corporation": {
+      "total": 19738,
+      "references": {
+        "(36, '', 'IX', '', '')": {
+          "count": 19738,
+          "description": "Title 36, Chapter IX"
+        }
+      }
+    },
+    "presidio-trust": {
+      "total": 221760,
+      "references": {
+        "(36, '', 'X', '', '')": {
+          "count": 221760,
+          "description": "Title 36, Chapter X"
+        }
+      }
+    },
+    "smithsonian-institution": {
+      "total": 36670,
+      "references": {
+        "(36, '', 'V', '', '')": {
+          "count": 36670,
+          "description": "Title 36, Chapter V"
+        }
+      }
+    },
+    "patent-and-trademark-office": {
+      "total": 344544,
+      "references": {
+        "(37, '', 'I', '', '')": {
+          "count": 344544,
+          "description": "Title 37, Chapter I"
+        }
+      }
+    },
+    "copyright-royalty-board": {
+      "total": 37823,
+      "references": {
+        "(37, '', 'III', '', '')": {
+          "count": 37823,
+          "description": "Title 37, Chapter III"
+        }
+      }
+    },
+    "copyright-office-library-of-congress": {
+      "total": 151040,
+      "references": {
+        "(37, '', 'II', '', '')": {
+          "count": 151040,
+          "description": "Title 37, Chapter II"
+        }
+      }
+    },
+    "chemical-safety-and-hazard-investigation-board": {
+      "total": 26141,
+      "references": {
+        "(40, '', 'VI', '', '')": {
+          "count": 26141,
+          "description": "Title 40, Chapter VI"
+        }
+      }
+    },
+    "council-on-environmental-quality": {
+      "total": 46902,
+      "references": {
+        "(40, '', 'V', '', '')": {
+          "count": 46902,
+          "description": "Title 40, Chapter V"
+        }
+      }
+    },
+    "federal-permitting-improvement-steering-council": {
+      "total": 77,
+      "references": {
+        "(40, '', 'IX', '', '')": {
+          "count": 77,
+          "description": "Title 40, Chapter IX"
+        }
+      }
+    },
+    "committee-for-purchase-from-people-who-are-blind-or-severely-disabled": {
+      "total": 18318,
+      "references": {
+        "(41, '', '51', '', '')": {
+          "count": 18318,
+          "description": "Title 41, Chapter 51"
+        }
+      }
+    },
+    "federal-acqusition-supply-chain-security": {
+      "total": 3084,
+      "references": {
+        "(41, 'D', '201', '', '')": {
+          "count": 3084,
+          "description": "Title 41, Subtitle D, Chapter 201"
+        }
+      }
+    },
+    "federal-procurement-regulations-system": {
+      "total": 4,
+      "references": {
+        "(41, 'A', '', '', '')": {
+          "count": 4,
+          "description": "Title 41, Subtitle A"
+        }
+      }
+    },
+    "federal-property-management-regulations-system": {
+      "total": 253434,
+      "references": {
+        "(41, 'C', '', '', '')": {
+          "count": 253434,
+          "description": "Title 41, Subtitle C"
+        }
+      }
+    },
+    "federal-travel-regulation-system": {
+      "total": 69271,
+      "references": {
+        "(41, 'F', '', '', '')": {
+          "count": 69271,
+          "description": "Title 41, Subtitle F"
+        }
+      }
+    },
+    "federal-contract-compliance-programs-office": {
+      "total": 54242,
+      "references": {
+        "(41, '', '60', '', '')": {
+          "count": 54242,
+          "description": "Title 41, Chapter 60"
+        }
+      }
+    },
+    "centers-for-medicare-medicaid-services": {
+      "total": 1411654,
+      "references": {
+        "(42, '', 'IV', '', '')": {
+          "count": 1411654,
+          "description": "Title 42, Chapter IV"
+        }
+      }
+    },
+    "office-of-inspector-general-health-care": {
+      "total": 1454995,
+      "references": {
+        "(42, '', 'V', '', '')": {
+          "count": 1454995,
+          "description": "Title 42, Chapter V"
+        }
+      }
+    },
+    "public-health-service": {
+      "total": 1728462,
+      "references": {
+        "(42, '', 'I', '', '')": {
+          "count": 1728462,
+          "description": "Title 42, Chapter I"
+        }
+      }
+    },
+    "land-management-bureau": {
+      "total": 403837,
+      "references": {
+        "(43, '', 'II', '', '')": {
+          "count": 403837,
+          "description": "Title 43, Chapter II"
+        }
+      }
+    },
+    "reclamation-bureau": {
+      "total": 446525,
+      "references": {
+        "(43, '', 'I', '', '')": {
+          "count": 446525,
+          "description": "Title 43, Chapter I"
+        }
+      }
+    },
+    "office-of-secretary-of-the-interior": {
+      "total": 194964,
+      "references": {
+        "(43, 'A', '', '', '')": {
+          "count": 194964,
+          "description": "Title 43, Subtitle A"
+        }
+      }
+    },
+    "utah-reclamation-mitigation-and-conservation-commission": {
+      "total": 12556,
+      "references": {
+        "(43, '', 'III', '', '')": {
+          "count": 12556,
+          "description": "Title 43, Chapter III"
+        }
+      }
+    },
+    "federal-emergency-management-agency": {
+      "total": 188985,
+      "references": {
+        "(44, '', 'I', '', '')": {
+          "count": 188985,
+          "description": "Title 44, Chapter I"
+        }
+      }
+    },
+    "arctic-research-commission": {
+      "total": 1880,
+      "references": {
+        "(45, '', 'XXIII', '', '')": {
+          "count": 1880,
+          "description": "Title 45, Chapter XXIII"
+        }
+      }
+    },
+    "denali-commission": {
+      "total": 3085,
+      "references": {
+        "(45, '', 'IX', '', '')": {
+          "count": 3085,
+          "description": "Title 45, Chapter IX"
+        }
+      }
+    },
+    "commission-of-fine-arts": {
+      "total": 19572,
+      "references": {
+        "(45, '', 'XXI', '', '')": {
+          "count": 19572,
+          "description": "Title 45, Chapter XXI"
+        }
+      }
+    },
+    "harry-s-truman-scholarship-foundation": {
+      "total": 5127,
+      "references": {
+        "(45, '', 'XVIII', '', '')": {
+          "count": 5127,
+          "description": "Title 45, Chapter XVIII"
+        }
+      }
+    },
+    "children-and-families-administration": {
+      "total": 124704,
+      "references": {
+        "(45, '', 'XIII', '', '')": {
+          "count": 124704,
+          "description": "Title 45, Chapter XIII"
+        }
+      }
+    },
+    "office-of-administration-for-children-and-families-child-support-enforcement-(child-support-enforcement-program)": {
+      "total": 174848,
+      "references": {
+        "(45, '', 'III', '', '')": {
+          "count": 174848,
+          "description": "Title 45, Chapter III"
+        }
+      }
+    },
+    "office-of-administration-for-children-and-families-community-services": {
+      "total": 362901,
+      "references": {
+        "(45, '', 'X', '', '')": {
+          "count": 362901,
+          "description": "Title 45, Chapter X"
+        }
+      }
+    },
+    "office-of-administration-for-children-and-families-family-assistance-(assistance-programs)": {
+      "total": 285465,
+      "references": {
+        "(45, '', 'II', '', '')": {
+          "count": 285465,
+          "description": "Title 45, Chapter II"
+        }
+      }
+    },
+    "refugee-resettlement-office": {
+      "total": 48684,
+      "references": {
+        "(45, '', 'IV', '', '')": {
+          "count": 48684,
+          "description": "Title 45, Chapter IV"
+        }
+      }
+    },
+    "james-madison-memorial-fellowship-foundation": {
+      "total": 5477,
+      "references": {
+        "(45, '', 'XXIV', '', '')": {
+          "count": 5477,
+          "description": "Title 45, Chapter XXIV"
+        }
+      }
+    },
+    "foreign-claims-settlement-commission": {
+      "total": 271673,
+      "references": {
+        "(45, '', 'V', '', '')": {
+          "count": 271673,
+          "description": "Title 45, Chapter V"
+        }
+      }
+    },
+    "legal-services-corporation": {
+      "total": 47508,
+      "references": {
+        "(45, '', 'XVI', '', '')": {
+          "count": 47508,
+          "description": "Title 45, Chapter XVI"
+        }
+      }
+    },
+    "national-commission-on-libraries-and-information-science": {
+      "total": 10186,
+      "references": {
+        "(45, '', 'XVII', '', '')": {
+          "count": 10186,
+          "description": "Title 45, Chapter XVII"
+        }
+      }
+    },
+    "national-foundation-on-the-arts-and-the-humanities": {
+      "total": 254849,
+      "references": {
+        "(45, '', 'XI', '', '')": {
+          "count": 230712,
+          "description": "Title 45, Chapter XI"
+        },
+        "(2, '', 'XXXI', '', '')": {
+          "count": 6100
+        },
+        "(5, '', 'LXVII', '', '')": {
+          "count": 712
+        },
+        "(2, '', 'XXXII', '', '')": {
+          "count": 1467
+        },
+        "(5, '', 'LV', '', '')": {
+          "count": 10803
+        },
+        "(5, '', 'LVI', '', '')": {
+          "count": 4330
+        },
+        "(2, '', 'XXXIII', '', '')": {
+          "count": 725
+        }
+      }
+    },
+    "federal-maritime-commission": {
+      "total": 93586,
+      "references": {
+        "(46, '', 'IV', '', '')": {
+          "count": 93586,
+          "description": "Title 46, Chapter IV"
+        }
+      }
+    },
+    "coast-guard-(great-lakes-pilotage)": {
+      "total": 7800,
+      "references": {
+        "(46, '', 'III', '', '')": {
+          "count": 7800,
+          "description": "Title 46, Chapter III"
+        }
+      }
+    },
+    "maritime-administration": {
+      "total": 143698,
+      "references": {
+        "(46, '', 'II', '', '')": {
+          "count": 143698,
+          "description": "Title 46, Chapter II"
+        }
+      }
+    },
+    "first-responder-network-authority": {
+      "total": 2851,
+      "references": {
+        "(47, '', 'V', '', '')": {
+          "count": 2851,
+          "description": "Title 47, Chapter V"
+        }
+      }
+    },
+    "defense-acquisition-regulations-system": {
+      "total": 363050,
+      "references": {
+        "(48, '', '2', '', '')": {
+          "count": 363050,
+          "description": "Title 48, Chapter 2"
+        }
+      }
+    },
+    "department-of-navy-acquisition-regulations": {
+      "total": 426,
+      "references": {
+        "(48, '', '52', '', '')": {
+          "count": 426,
+          "description": "Title 48, Chapter 52"
+        }
+      }
+    },
+    "department-of-education-acquisition-regulation": {
+      "total": 12525,
+      "references": {
+        "(48, '', '34', '', '')": {
+          "count": 12525,
+          "description": "Title 48, Chapter 34"
+        }
+      }
+    },
+    "federal-acquisition-regulation": {
+      "total": 756103,
+      "references": {
+        "(48, '', '1', '', '')": {
+          "count": 756103,
+          "description": "Title 48, Chapter 1"
+        }
+      }
+    },
+    "civilian-board-of-contract-appeals": {
+      "total": 8012,
+      "references": {
+        "(48, '', '61', '', '')": {
+          "count": 8012,
+          "description": "Title 48, Chapter 61"
+        }
+      }
+    },
+    "department-of-homeland-security-acquisition-regulation": {
+      "total": 24022,
+      "references": {
+        "(48, '', '30', '', '')": {
+          "count": 24022,
+          "description": "Title 48, Chapter 30"
+        }
+      }
+    },
+    "federal-procurement-policy-office": {
+      "total": 55285,
+      "references": {
+        "(48, '', '99', '', '')": {
+          "count": 55285,
+          "description": "Title 48, Chapter 99"
+        }
+      }
+    },
+    "transportation-security-administration": {
+      "total": 73654,
+      "references": {
+        "(49, '', 'XII', '', '')": {
+          "count": 73654,
+          "description": "Title 49, Chapter XII"
+        }
+      }
+    },
+    "national-railroad-passenger-corporation": {
+      "total": 35448,
+      "references": {
+        "(49, '', 'VII', '', '')": {
+          "count": 35448,
+          "description": "Title 49, Chapter VII"
+        }
+      }
+    },
+    "national-transportation-safety-board": {
+      "total": 30238,
+      "references": {
+        "(49, '', 'VIII', '', '')": {
+          "count": 30238,
+          "description": "Title 49, Chapter VIII"
+        }
+      }
+    },
+    "surface-transportation-board": {
+      "total": 251487,
+      "references": {
+        "(49, '', 'X', '', '')": {
+          "count": 251487,
+          "description": "Title 49, Chapter X"
+        }
+      }
+    },
+    "federal-motor-carrier-safety-administration": {
+      "total": 273039,
+      "references": {
+        "(49, '', 'III', '', '')": {
+          "count": 273039,
+          "description": "Title 49, Chapter III"
+        }
+      }
+    },
+    "federal-railroad-administration": {
+      "total": 800257,
+      "references": {
+        "(49, '', 'II', '', '')": {
+          "count": 800257,
+          "description": "Title 49, Chapter II"
+        }
+      }
+    },
+    "federal-transit-administration": {
+      "total": 88489,
+      "references": {
+        "(49, '', 'VI', '', '')": {
+          "count": 88489,
+          "description": "Title 49, Chapter VI"
+        }
+      }
+    },
+    "office-of-secretary-of-transportation": {
+      "total": 247174,
+      "references": {
+        "(49, 'A', '', '', '')": {
+          "count": 247174,
+          "description": "Title 49, Subtitle A"
+        }
+      }
+    },
+    "pipeline-and-hazardous-materials-safety-administration": {
+      "total": 1358206,
+      "references": {
+        "(49, '', 'I', '', '')": {
+          "count": 1358206,
+          "description": "Title 49, Chapter I"
+        }
+      }
+    },
+    "national-oceanic-and-atmospheric-administration-national-marine-fisheries-service": {
+      "total": 401444,
+      "references": {
+        "(50, '', 'II', '', '')": {
+          "count": 401444,
+          "description": "Title 50, Chapter II"
+        }
+      }
+    },
+    "fish-and-wildlife-service": {
+      "total": 2758584,
+      "references": {
+        "(50, '', 'I', '', '')": {
+          "count": 1968951,
+          "description": "Title 50, Chapter I"
+        },
+        "(50, '', 'IV', '', '')": {
+          "count": 21827,
+          "description": "Title 50, Chapter IV"
+        },
+        "(50, '', 'VI', '', '')": {
+          "count": 767806,
+          "description": "Title 50, Chapter VI"
+        }
+      }
+    },
+    "marine-mammal-commission": {
+      "total": 796149,
+      "references": {
+        "(50, '', 'V', '', '')": {
+          "count": 796149,
+          "description": "Title 50, Chapter V"
+        }
+      }
+    }
+  }
+}
