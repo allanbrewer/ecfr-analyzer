@@ -1,21 +1,17 @@
-import Link from 'next/link';
+'use client';
+
+import OverviewCard from '@/components/OverviewCard';
+import AgencyCardsContainer from '@/components/AgencyCardsContainer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8">
-      <div className="max-w-2xl text-center">
-        <div className="relative mb-8">
-          <h1 className="text-4xl font-bold text-blue-900 mb-2">ECFR Analyzer</h1>
-          <div className="h-1 w-32 bg-red-600 rounded-full mx-auto"></div>
-        </div>
-        <p className="text-xl mb-8 text-gray-700">Analysis of Electronic Code of Federal Regulations</p>
-        <Link
-          href="/dashboard"
-          className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors inline-block shadow-md hover:shadow-lg"
-        >
-          View Dashboard
-        </Link>
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold text-blue-900">ECFR Analysis Dashboard</h1>
+        <div className="h-1 w-24 bg-red-600 rounded-full"></div>
       </div>
+      <OverviewCard />
+      <AgencyCardsContainer />
     </div>
   );
 }

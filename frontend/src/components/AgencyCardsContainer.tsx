@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, type ChangeEvent } from 'react';
 import { Agency, WordCountData, CorrectionsByAgencyData, DEIFootprintData, BureaucracyData, Correction } from '@/types/data';
 import { fetchWordCountData, fetchCorrectionsData, fetchDEIFootprintData, fetchBureaucracyData, fetchAgencyHierarchyData } from '@/utils/data';
 import AgencyCard from './AgencyCard';
@@ -49,6 +49,9 @@ export default function AgencyCardsContainer() {
                 if (!hierarchy || !hierarchy.agencies) {
                     throw new Error('Invalid agency hierarchy data received');
                 }
+
+                console.log('Agency hierarchy data:', hierarchy);
+                console.log('Agriculture department:', hierarchy.agencies.find(a => a.slug === 'agriculture-department'));
 
                 setWordCountData(wordCount);
                 setCorrectionsData(corrections);
@@ -144,7 +147,7 @@ export default function AgencyCardsContainer() {
     );
 
     const handleShowMore = () => {
-        setVisibleCards(prev => Math.min(prev + CARDS_PER_PAGE, filteredAgencies.length));
+        setVisibleCards((prev: number) => Math.min(prev + CARDS_PER_PAGE, filteredAgencies.length));
     };
 
     const handleShowLess = () => {
@@ -264,7 +267,7 @@ export default function AgencyCardsContainer() {
                             type="text"
                             placeholder="Search agencies..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

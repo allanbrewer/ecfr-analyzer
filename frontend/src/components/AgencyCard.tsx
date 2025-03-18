@@ -2,8 +2,10 @@
 
 import { Agency } from '@/types/data';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface AgencyCardProps {
+    key?: string;
     agency: Agency;
     wordCount: number;
     corrections: number;
@@ -22,65 +24,63 @@ export default function AgencyCard({
         ? ((bureaucracyMentions / wordCount) * 1000).toFixed(1)
         : '0.0';
 
-    const isIndependent = agency.children.length === 0;
+    const isIndependent = !agency.children || agency.children.length === 0;
+    const subAgencyCount = agency.children?.length || 0;
     const subAgencyText = isIndependent
         ? "Independent"
-        : `${agency.children.length} Sub-agencies`;
+        : `${subAgencyCount} Sub-agencies`;
     const subAgencyStyle = isIndependent
         ? "bg-indigo-50 text-indigo-700"
         : "bg-blue-50 text-blue-700";
 
     return (
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-            <div className="bg-gray-50 rounded-t-lg p-5 border-b border-gray-100 h-[110px] flex flex-col">
-                <div className="flex-grow">
-                    <h3 className="text-base font-semibold text-blue-900 line-clamp-2 leading-tight break-words">{agency.name}</h3>
-                </div>
-                <div className={`text-xs font-medium px-2 py-1 rounded-full inline-block mt-2 ${subAgencyStyle}`}>
-                    {subAgencyText}
-                </div>
-            </div>
-            <div className="p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Image src="/icons/document.svg" alt="Word count" width={14} height={14} />
-                        <span className="text-xs text-gray-600">Word Count</span>
-                    </div>
-                    <div className="bg-blue-50 rounded-lg px-3 py-1">
-                        <span className="font-medium text-blue-900 text-sm">{wordCount.toLocaleString()} words</span>
+        <Link href={`/agency/${agency.slug}`} className="block">
+            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div className="bg-gray-50 rounded-t-lg -mx-6 -mt-6 p-4 mb-4 h-[110px]">
+                    <h3 className="text-lg font-semibold text-blue-900">{agency.name}</h3>
+                    <div className={`text-xs ${subAgencyStyle} px-2 py-1 rounded-full inline-block mt-1`}>
+                        {subAgencyText}
                     </div>
                 </div>
-                <div className="border-t border-gray-100"></div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Image src="/icons/correction.svg" alt="Corrections" width={14} height={14} />
-                        <span className="text-xs text-gray-600">Corrections</span>
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                        <div className="flex items-center space-x-2">
+                            <Image src="/icons/document.svg" alt="Word count" width={16} height={16} />
+                            <span className="text-sm text-gray-600">Word Count</span>
+                        </div>
+                        <div className="bg-blue-50 text-blue-900 px-3 py-1 rounded whitespace-nowrap">
+                            {wordCount.toLocaleString()} words
+                        </div>
                     </div>
-                    <div className="bg-red-50 rounded-lg px-3 py-1">
-                        <span className="font-medium text-red-900 text-sm">{corrections.toLocaleString()} corrections</span>
+                    <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                        <div className="flex items-center space-x-2">
+                            <Image src="/icons/correction.svg" alt="Corrections" width={16} height={16} />
+                            <span className="text-sm text-gray-600">Corrections</span>
+                        </div>
+                        <div className="bg-red-50 text-red-900 px-3 py-1 rounded whitespace-nowrap">
+                            {corrections.toLocaleString()} corrections
+                        </div>
                     </div>
-                </div>
-                <div className="border-t border-gray-100"></div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Image src="/icons/diversity.svg" alt="DEI Mentions" width={14} height={14} />
-                        <span className="text-xs text-gray-600">DEI Mentions</span>
+                    <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                        <div className="flex items-center space-x-2">
+                            <Image src="/icons/dei.svg" alt="DEI mentions" width={16} height={16} />
+                            <span className="text-sm text-gray-600">DEI Mentions</span>
+                        </div>
+                        <div className="bg-green-50 text-green-900 px-3 py-1 rounded whitespace-nowrap">
+                            {deiMentions.toLocaleString()} mentions
+                        </div>
                     </div>
-                    <div className="bg-green-50 rounded-lg px-3 py-1">
-                        <span className="font-medium text-green-900 text-sm">{deiMentions.toLocaleString()} mentions</span>
-                    </div>
-                </div>
-                <div className="border-t border-gray-100"></div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Image src="/icons/bureaucracy.svg" alt="Bureaucratic Score" width={14} height={14} />
-                        <span className="text-xs text-gray-600">Bureaucratic Score</span>
-                    </div>
-                    <div className="bg-purple-50 rounded-lg px-3 py-1">
-                        <span className="font-medium text-purple-900 text-sm">{complexityScore}/1,000 words</span>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                            <Image src="/icons/bureaucracy.svg" alt="Bureaucratic score" width={16} height={16} />
+                            <span className="text-sm text-gray-600">Bureaucratic Score</span>
+                        </div>
+                        <div className="bg-purple-50 text-purple-900 px-3 py-1 rounded whitespace-nowrap">
+                            {complexityScore}/1,000 words
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 } 

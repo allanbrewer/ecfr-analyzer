@@ -2,7 +2,7 @@ export interface WordCountData {
     timestamp: string;
     total_word_count: number;
     title_totals: Record<string, number>;
-    agencies: Record<string, AgencyData>;
+    agencies: { [key: string]: AgencyData };
 }
 
 export interface FootprintData {
@@ -11,7 +11,7 @@ export interface FootprintData {
     keywords: string[];
     total_matches: number;
     title_totals: Record<string, number>;
-    agencies: Record<string, AgencyData>;
+    agencies: { [key: string]: AgencyData };
 }
 
 export type DEIFootprintData = FootprintData;
@@ -21,13 +21,13 @@ export interface CorrectionsData {
     timestamp: string;
     total_corrections: number;
     title_totals: Record<string, number>;
-    agencies: Record<string, AgencyCorrectionData>;
+    agencies: { [key: string]: AgencyCorrectionData };
 }
 
 export interface Agency {
     name: string;
     slug: string;
-    children: Agency[];
+    children?: Agency[];
 }
 
 export interface AgencyHierarchyData {
@@ -42,32 +42,29 @@ export interface AgencyReference {
 
 export interface AgencyData {
     total: number;
+    titles: { [key: string]: number };
     references: Record<string, AgencyReference>;
 }
 
 export interface Correction {
-    id: number;
-    corrective_action: string;
-    error_corrected: string;
-    error_occurred: string;
+    id: string;
     year: number;
+    corrective_action: string;
     fr_citation: string;
-    cfr_reference: string;
     hierarchy: {
         title: string;
         section?: string;
-        part?: string;
     };
 }
 
 export interface CorrectionReference {
-    count: number;
+    cfr_reference: string;
     corrections: Correction[];
 }
 
 export interface AgencyCorrectionData {
     total: number;
-    references: Record<string, CorrectionReference>;
+    references: { [key: string]: CorrectionReference };
 }
 
 // Data for corrections by agency
@@ -75,7 +72,7 @@ export interface CorrectionsByAgencyData {
     timestamp: string;
     total_corrections: number;
     title_totals: Record<string, number>;
-    agencies: Record<string, AgencyCorrectionData>;
+    agencies: { [key: string]: AgencyCorrectionData };
 }
 
 // Data for corrections over time

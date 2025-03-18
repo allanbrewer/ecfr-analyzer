@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-03-17T01:37:20.300413",
+  "timestamp": "2025-03-18T00:25:50.362723",
   "years": {
     "2005": {
       "total": 74,
@@ -2954,7 +2954,7 @@
       }
     },
     "2025": {
-      "total": 47,
+      "total": 49,
       "parent_agencies": {
         "agriculture-department": 1,
         "commerce-department": 1,
@@ -2994,6 +2994,7 @@
         "coast-guard": 7,
         "department-of-homeland-security-acquisition-regulation": 1,
         "office-of-assistant-secretary-for-housing---federal-housing-commissioner": 1,
+        "fish-and-wildlife-service": 1,
         "drug-enforcement-administration": 1,
         "federal-procurement-policy-office": 1,
         "national-highway-traffic-safety-administration": 2,
@@ -3029,7 +3030,7 @@
         "national-security-council": 2,
         "science-and-technology-policy-office": 2,
         "federal-acquisition-regulation": 10,
-        "federal-communications-commission": 2,
+        "federal-communications-commission": 3,
         "federal-election-commission": 5,
         "federal-retirement-thrift-investment-board": 1,
         "first-responder-network-authority": 2,
@@ -3042,6 +3043,7 @@
         "housing-and-urban-development-department": 1,
         "office-of-assistant-secretary-for-housing---federal-housing-commissioner": 1,
         "interior-department": 1,
+        "fish-and-wildlife-service": 1,
         "agency-for-international-development": 1,
         "justice-department": 1,
         "drug-enforcement-administration": 1,
@@ -4019,9 +4021,9 @@
   "top_agencies": {
     "all": {
       "environmental-protection-agency": 672,
-      "fish-and-wildlife-service": 169,
+      "fish-and-wildlife-service": 170,
       "federal-acquisition-regulation": 148,
-      "federal-communications-commission": 136,
+      "federal-communications-commission": 137,
       "internal-revenue-service": 124,
       "coast-guard": 117,
       "centers-for-medicare-medicaid-services": 113,
@@ -4062,7 +4064,7 @@
       "library-of-congress": 1
     },
     "children": {
-      "fish-and-wildlife-service": 169,
+      "fish-and-wildlife-service": 170,
       "internal-revenue-service": 124,
       "coast-guard": 117,
       "centers-for-medicare-medicaid-services": 113,

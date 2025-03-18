@@ -1,31 +1,31 @@
 {
-  "timestamp": "2025-03-17T01:34:39.332941",
+  "timestamp": "2025-03-18T00:23:10.155591",
   "footprint_name": "dei",
   "keywords": [
     "harassment",
-    "gender equity",
-    "accessibility",
     "underserved",
-    "equality",
-    "equity",
-    "underrepresented",
-    "environment",
-    "disadvantaged",
     "diversity",
-    "social justice",
-    "discrimination",
-    "inclusion",
     "ethnic",
-    "minority",
-    "gender identity",
-    "racial",
+    "social justice",
+    "accessibility",
+    "equity",
+    "disadvantaged",
     "sexual orientation",
     "race",
-    "marginalized",
-    "minorities",
-    "inclusive",
+    "environment",
+    "minority",
     "multicultural",
-    "ethnicity"
+    "gender equity",
+    "inclusion",
+    "discrimination",
+    "underrepresented",
+    "gender identity",
+    "marginalized",
+    "ethnicity",
+    "minorities",
+    "equality",
+    "racial",
+    "inclusive"
   ],
   "total_matches": 92998,
   "title_totals": {
@@ -233,32 +233,32 @@
           },
           "description": "Title 48, Chapter 4"
         },
+        "(7, '', 'X', '', '')": {
+          "total_matches": 1560
+        },
         "(7, '', 'I', '', '')": {
           "total_matches": 2113
-        },
-        "(7, '', 'VIII', '', '')": {
-          "total_matches": 347
         },
         "(7, '', 'XI', '', '')": {
           "total_matches": 338
         },
-        "(7, '', 'X', '', '')": {
-          "total_matches": 1560
+        "(9, '', 'II', '', '')": {
+          "total_matches": 44
         },
         "(7, '', 'IX', '', '')": {
           "total_matches": 69
         },
-        "(9, '', 'II', '', '')": {
-          "total_matches": 44
+        "(7, '', 'VIII', '', '')": {
+          "total_matches": 347
         },
         "(7, '', 'V', '', '')": {
           "total_matches": 1450
         },
-        "(9, '', 'I', '', '')": {
-          "total_matches": 105
-        },
         "(7, '', 'III', '', '')": {
           "total_matches": 398
+        },
+        "(9, '', 'I', '', '')": {
+          "total_matches": 105
         },
         "(7, '', 'XIV', '', '')": {
           "total_matches": 305
@@ -317,11 +317,11 @@
         "(7, 'A', '', '', '')": {
           "total_matches": 465
         },
-        "(7, '', 'L', '', '')": {
-          "total_matches": 408
-        },
         "(7, '', 'XVIII', '', '')": {
           "total_matches": 328
+        },
+        "(7, '', 'L', '', '')": {
+          "total_matches": 408
         },
         "(7, '', 'XLII', '', '')": {
           "total_matches": 302
@@ -391,11 +391,11 @@
           },
           "description": "Title 40, Chapter VII"
         },
-        "(36, '', 'III', '', '')": {
-          "total_matches": 53
-        },
         "(33, '', 'II', '', '')": {
           "total_matches": 140
+        },
+        "(36, '', 'III', '', '')": {
+          "total_matches": 53
         },
         "(48, '', '2', '', '')": {
           "total_matches": 178
@@ -549,11 +549,11 @@
           },
           "description": "Title 48, Chapter 9"
         },
-        "(5, '', 'XXIV', '', '')": {
-          "total_matches": 13
-        },
         "(18, '', 'I', '', '')": {
           "total_matches": 520
+        },
+        "(5, '', 'XXIV', '', '')": {
+          "total_matches": 13
         }
       }
     },
@@ -686,11 +686,11 @@
         "(21, '', 'I', '', '')": {
           "total_matches": 374
         },
-        "(25, '', 'V', '', '')": {
-          "total_matches": 76
-        },
         "(42, '', 'I', 'M', '')": {
           "total_matches": 19
+        },
+        "(25, '', 'V', '', '')": {
+          "total_matches": 76
         },
         "(45, '', 'III', '', '')": {
           "total_matches": 468
@@ -744,14 +744,14 @@
           },
           "description": "Title 8, Chapter I"
         },
-        "(33, '', 'I', '', '')": {
-          "total_matches": 582
-        },
         "(49, '', 'IV', '', '')": {
           "total_matches": 1
         },
         "(46, '', 'I', '', '')": {
           "total_matches": 326
+        },
+        "(33, '', 'I', '', '')": {
+          "total_matches": 582
         },
         "(46, '', 'III', '', '')": {
           "total_matches": 3
@@ -819,11 +819,11 @@
         "(24, '', 'I', '', '')": {
           "total_matches": 871
         },
-        "(24, '', 'VIII', '', '')": {
-          "total_matches": 133
-        },
         "(24, '', 'XX', '', '')": {
           "total_matches": 13
+        },
+        "(24, '', 'VIII', '', '')": {
+          "total_matches": 133
         },
         "(24, '', 'II', '', '')": {
           "total_matches": 427
@@ -924,14 +924,14 @@
         "(30, '', 'VII', '', '')": {
           "total_matches": 102
         },
-        "(50, '', 'VI', '', '')": {
-          "total_matches": 103
-        },
         "(50, '', 'IV', '', '')": {
           "total_matches": 11
         },
         "(50, '', 'I', '', '')": {
           "total_matches": 954
+        },
+        "(50, '', 'VI', '', '')": {
+          "total_matches": 103
         }
       }
     },
@@ -1504,11 +1504,11 @@
         "(40, '', 'V', '', '')": {
           "total_matches": 62
         },
-        "(47, '', 'II', '', '')": {
-          "total_matches": 17
-        },
         "(32, '', 'XXI', '', '')": {
           "total_matches": 2
+        },
+        "(47, '', 'II', '', '')": {
+          "total_matches": 17
         },
         "(32, '', 'XXIV', '', '')": {
           "total_matches": 2
@@ -2504,11 +2504,11 @@
         "(46, '', 'II', '', '')": {
           "total_matches": 99
         },
-        "(49, '', 'V', '', '')": {
-          "total_matches": 245
-        },
         "(23, '', 'III', '', '')": {
           "total_matches": 63
+        },
+        "(49, '', 'V', '', '')": {
+          "total_matches": 245
         },
         "(14, '', 'II', '', '')": {
           "total_matches": 361
@@ -4436,11 +4436,11 @@
         "(5, '', 'XIV', '', '')": {
           "total_matches": 43
         },
-        "(5, '', 'XIV', 'B', '')": {
-          "total_matches": 30
-        },
         "(22, '', 'XIV', 'C', '')": {
           "total_matches": 1
+        },
+        "(5, '', 'XIV', 'B', '')": {
+          "total_matches": 30
         }
       }
     },
@@ -6550,20 +6550,20 @@
         "(29, '', 'XVII', '', '')": {
           "total_matches": 331
         },
-        "(20, '', 'IX', '', '')": {
-          "total_matches": 20
-        },
         "(41, '', '61', '', '')": {
           "total_matches": 2
+        },
+        "(20, '', 'IX', '', '')": {
+          "total_matches": 20
         },
         "(41, '', '60', '', '')": {
           "total_matches": 373
         },
-        "(29, '', 'IV', '', '')": {
-          "total_matches": 738
-        },
         "(29, '', 'II', '', '')": {
           "total_matches": 350
+        },
+        "(29, '', 'IV', '', '')": {
+          "total_matches": 738
         },
         "(29, 'A', '', '', '')": {
           "total_matches": 600
@@ -7291,11 +7291,11 @@
         "(15, '', 'IV', '', '')": {
           "total_matches": 30
         },
-        "(15, '', 'III', '', '')": {
-          "total_matches": 7
-        },
         "(19, '', 'III', '', '')": {
           "total_matches": 43
+        },
+        "(15, '', 'III', '', '')": {
+          "total_matches": 7
         },
         "(15, '', 'XIV', '', '')": {
           "total_matches": 29
@@ -7303,13 +7303,13 @@
         "(15, '', 'II', '', '')": {
           "total_matches": 135
         },
-        "(50, '', 'III', '', '')": {
-          "total_matches": 11
-        },
         "(15, '', 'IX', '', '')": {
           "total_matches": 137
         },
         "(50, '', 'IV', '', '')": {
+          "total_matches": 11
+        },
+        "(50, '', 'III', '', '')": {
           "total_matches": 11
         },
         "(50, '', 'II', '', '')": {

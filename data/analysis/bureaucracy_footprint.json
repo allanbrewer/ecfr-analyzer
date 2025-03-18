@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-03-17T01:37:19.784931",
+  "timestamp": "2025-03-18T00:25:49.877548",
   "footprint_name": "bureaucracy",
   "keywords": [
-    "paperwork",
-    "mandates",
-    "procedures",
-    "certify",
+    "mandate",
+    "requirement",
+    "documentation",
+    "regulatory",
+    "reporting",
+    "procedure",
     "request",
     "compliance",
     "submit",
-    "approvals",
-    "documentation",
-    "authorization",
+    "approval",
     "deadline",
-    "regulations",
+    "filing",
+    "process",
     "report",
     "mandated",
-    "approval",
+    "authorization",
     "requirements",
-    "reporting",
-    "form",
-    "regulatory",
+    "paperwork",
     "regulation",
-    "mandate",
-    "process",
+    "regulations",
+    "certify",
+    "form",
     "processes",
-    "procedure",
-    "filing",
-    "requirement"
+    "procedures",
+    "approvals",
+    "mandates"
   ],
-  "total_matches": 1983634,
+  "total_matches": 1983639,
   "title_totals": {
     "1": 2524,
     "2": 12224,
@@ -38,12 +38,12 @@
     "48": 41195,
     "44": 3820,
     "32": 39238,
-    "40": 255851,
+    "40": 255837,
     "11": 2699,
     "10": 48397,
     "41": 10888,
     "12": 133764,
-    "47": 24412,
+    "47": 24431,
     "45": 54236,
     "8": 11693,
     "24": 35791,
@@ -415,32 +415,32 @@
           },
           "description": "Title 48, Chapter 4"
         },
+        "(7, '', 'X', '', '')": {
+          "total_matches": 31002
+        },
         "(7, '', 'I', '', '')": {
           "total_matches": 50910
-        },
-        "(7, '', 'VIII', '', '')": {
-          "total_matches": 6298
         },
         "(7, '', 'XI', '', '')": {
           "total_matches": 8170
         },
-        "(7, '', 'X', '', '')": {
-          "total_matches": 31002
+        "(9, '', 'II', '', '')": {
+          "total_matches": 3737
         },
         "(7, '', 'IX', '', '')": {
           "total_matches": 4977
         },
-        "(9, '', 'II', '', '')": {
-          "total_matches": 3737
+        "(7, '', 'VIII', '', '')": {
+          "total_matches": 6298
         },
         "(7, '', 'V', '', '')": {
           "total_matches": 26475
         },
-        "(9, '', 'I', '', '')": {
-          "total_matches": 8448
-        },
         "(7, '', 'III', '', '')": {
           "total_matches": 8721
+        },
+        "(9, '', 'I', '', '')": {
+          "total_matches": 8448
         },
         "(7, '', 'XIV', '', '')": {
           "total_matches": 5122
@@ -505,11 +505,11 @@
         "(7, '', 'XXXIII', '', '')": {
           "total_matches": 110
         },
-        "(7, '', 'L', '', '')": {
-          "total_matches": 3795
-        },
         "(7, '', 'XVIII', '', '')": {
           "total_matches": 5115
+        },
+        "(7, '', 'L', '', '')": {
+          "total_matches": 3795
         },
         "(7, '', 'XLII', '', '')": {
           "total_matches": 2982
@@ -595,11 +595,11 @@
         "(15, '', 'IV', '', '')": {
           "total_matches": 298
         },
-        "(15, '', 'III', '', '')": {
-          "total_matches": 556
-        },
         "(19, '', 'III', '', '')": {
           "total_matches": 1060
+        },
+        "(15, '', 'III', '', '')": {
+          "total_matches": 556
         },
         "(15, '', 'XIV', '', '')": {
           "total_matches": 18
@@ -610,14 +610,14 @@
         "(15, '', 'II', '', '')": {
           "total_matches": 8353
         },
-        "(50, '', 'III', '', '')": {
-          "total_matches": 1776
-        },
         "(15, '', 'IX', '', '')": {
           "total_matches": 3016
         },
         "(50, '', 'IV', '', '')": {
           "total_matches": 493
+        },
+        "(50, '', 'III', '', '')": {
+          "total_matches": 1776
         },
         "(50, '', 'II', '', '')": {
           "total_matches": 6923
@@ -625,14 +625,14 @@
         "(15, '', 'XI', '', '')": {
           "total_matches": 126
         },
-        "(47, '', 'III', '', '')": {
-          "total_matches": 151
+        "(47, '', 'IV', '', '')": {
+          "total_matches": 56
         },
         "(15, '', 'XXIII', '', '')": {
           "total_matches": 14737
         },
-        "(47, '', 'IV', '', '')": {
-          "total_matches": 56
+        "(47, '', 'III', '', '')": {
+          "total_matches": 151
         },
         "(15, 'A', '', '', '')": {
           "total_matches": 1697
@@ -753,20 +753,20 @@
           },
           "description": "Title 40, Chapter VII"
         },
-        "(36, '', 'III', '', '')": {
-          "total_matches": 634
-        },
         "(33, '', 'II', '', '')": {
           "total_matches": 3739
+        },
+        "(36, '', 'III', '', '')": {
+          "total_matches": 634
         },
         "(48, '', '2', '', '')": {
           "total_matches": 7516
         },
-        "(48, '', '54', '', '')": {
-          "total_matches": 9
-        },
         "(32, '', 'XII', '', '')": {
           "total_matches": 110
+        },
+        "(48, '', '54', '', '')": {
+          "total_matches": 9
         },
         "(48, '', '52', '', '')": {
           "total_matches": 8
@@ -1088,16 +1088,16 @@
           },
           "description": "Title 48, Chapter 9"
         },
-        "(5, '', 'XXIV', '', '')": {
-          "total_matches": 141
-        },
         "(18, '', 'I', '', '')": {
           "total_matches": 10705
+        },
+        "(5, '', 'XXIV', '', '')": {
+          "total_matches": 141
         }
       }
     },
     "environmental-protection-agency": {
-      "total": 254768,
+      "total": 254754,
       "references": {
         "(2, '', 'XV', '', '')": {
           "total_matches": 312,
@@ -1137,14 +1137,14 @@
           "description": "Title 5, Chapter LIV"
         },
         "(40, '', 'I', '', '')": {
-          "total_matches": 253331,
+          "total_matches": 253317,
           "keyword_matches": {
             "procedures": 20196,
             "regulations": 7355,
             "processes": 2948,
             "compliance": 34736,
             "request": 8615,
-            "requirements": 63881,
+            "requirements": 63880,
             "process": 27416,
             "filing": 627,
             "regulatory": 2478,
@@ -1154,10 +1154,10 @@
             "approval": 10532,
             "documentation": 3248,
             "report": 16871,
-            "submit": 11609,
+            "submit": 11610,
             "form": 3314,
-            "deadline": 1820,
-            "reporting": 16716,
+            "deadline": 1813,
+            "reporting": 16709,
             "requirement": 7112,
             "procedure": 6766,
             "authorization": 825,
@@ -1307,7 +1307,7 @@
       }
     },
     "federal-communications-commission": {
-      "total": 23736,
+      "total": 23755,
       "references": {
         "(2, '', 'LX', '', '')": {
           "total_matches": 4,
@@ -1334,7 +1334,7 @@
           "description": "Title 5, Chapter XXIX"
         },
         "(47, '', 'I', '', '')": {
-          "total_matches": 23689,
+          "total_matches": 23708,
           "keyword_matches": {
             "approval": 740,
             "compliance": 1554,
@@ -1343,20 +1343,20 @@
             "authorization": 1868,
             "procedures": 1751,
             "regulations": 794,
-            "filing": 2344,
+            "filing": 2347,
             "process": 768,
-            "reporting": 365,
+            "reporting": 372,
             "processes": 88,
             "mandated": 21,
-            "report": 903,
+            "report": 906,
             "regulation": 415,
             "submit": 953,
             "request": 2497,
             "form": 1715,
             "paperwork": 14,
             "procedure": 395,
-            "deadline": 368,
-            "certify": 439,
+            "deadline": 372,
+            "certify": 441,
             "requirement": 851,
             "documentation": 383,
             "mandates": 3,
@@ -1519,11 +1519,11 @@
         "(21, '', 'I', '', '')": {
           "total_matches": 26609
         },
-        "(25, '', 'V', '', '')": {
-          "total_matches": 1553
-        },
         "(42, '', 'I', 'M', '')": {
           "total_matches": 542
+        },
+        "(25, '', 'V', '', '')": {
+          "total_matches": 1553
         },
         "(45, '', 'III', '', '')": {
           "total_matches": 3828
@@ -1612,14 +1612,14 @@
           },
           "description": "Title 8, Chapter I"
         },
-        "(33, '', 'I', '', '')": {
-          "total_matches": 12124
-        },
         "(49, '', 'IV', '', '')": {
           "total_matches": 145
         },
         "(46, '', 'I', '', '')": {
           "total_matches": 18482
+        },
+        "(33, '', 'I', '', '')": {
+          "total_matches": 12124
         },
         "(46, '', 'III', '', '')": {
           "total_matches": 173
@@ -1735,11 +1735,11 @@
         "(24, '', 'I', '', '')": {
           "total_matches": 10991
         },
-        "(24, '', 'VIII', '', '')": {
-          "total_matches": 1215
-        },
         "(24, '', 'XX', '', '')": {
           "total_matches": 1476
+        },
+        "(24, '', 'VIII', '', '')": {
+          "total_matches": 1215
         },
         "(24, '', 'II', '', '')": {
           "total_matches": 5744
@@ -1889,14 +1889,14 @@
         "(30, '', 'VII', '', '')": {
           "total_matches": 7384
         },
-        "(50, '', 'VI', '', '')": {
-          "total_matches": 12437
-        },
         "(50, '', 'IV', '', '')": {
           "total_matches": 493
         },
         "(50, '', 'I', '', '')": {
           "total_matches": 25602
+        },
+        "(50, '', 'VI', '', '')": {
+          "total_matches": 12437
         }
       }
     },
@@ -2348,20 +2348,20 @@
         "(29, '', 'XVII', '', '')": {
           "total_matches": 11587
         },
-        "(20, '', 'IX', '', '')": {
-          "total_matches": 250
-        },
         "(41, '', '61', '', '')": {
           "total_matches": 92
+        },
+        "(20, '', 'IX', '', '')": {
+          "total_matches": 250
         },
         "(41, '', '60', '', '')": {
           "total_matches": 1465
         },
-        "(29, '', 'IV', '', '')": {
-          "total_matches": 3743
-        },
         "(29, '', 'II', '', '')": {
           "total_matches": 12571
+        },
+        "(29, '', 'IV', '', '')": {
+          "total_matches": 3743
         },
         "(29, 'A', '', '', '')": {
           "total_matches": 5305
@@ -3443,11 +3443,11 @@
         "(46, '', 'II', '', '')": {
           "total_matches": 2819
         },
-        "(49, '', 'V', '', '')": {
-          "total_matches": 9430
-        },
         "(23, '', 'III', '', '')": {
           "total_matches": 575
+        },
+        "(49, '', 'V', '', '')": {
+          "total_matches": 9430
         },
         "(47, '', 'IV', '', '')": {
           "total_matches": 56
@@ -3768,11 +3768,11 @@
         "(40, '', 'V', '', '')": {
           "total_matches": 1283
         },
-        "(47, '', 'II', '', '')": {
-          "total_matches": 429
-        },
         "(32, '', 'XXI', '', '')": {
           "total_matches": 283
+        },
+        "(47, '', 'II', '', '')": {
+          "total_matches": 429
         },
         "(32, '', 'XXIV', '', '')": {
           "total_matches": 214
@@ -4800,11 +4800,11 @@
         "(5, '', 'XIV', '', '')": {
           "total_matches": 1352
         },
-        "(5, '', 'XIV', 'B', '')": {
-          "total_matches": 556
-        },
         "(22, '', 'XIV', 'C', '')": {
           "total_matches": 223
+        },
+        "(5, '', 'XIV', 'B', '')": {
+          "total_matches": 556
         }
       }
     },
@@ -13511,11 +13511,11 @@
           },
           "description": "Title 45, Chapter XI"
         },
-        "(5, '', 'LXVII', '', '')": {
-          "total_matches": 33
-        },
         "(2, '', 'XXXI', '', '')": {
           "total_matches": 194
+        },
+        "(5, '', 'LXVII', '', '')": {
+          "total_matches": 33
         },
         "(2, '', 'XXXII', '', '')": {
           "total_matches": 66
@@ -13523,11 +13523,11 @@
         "(5, '', 'LV', '', '')": {
           "total_matches": 297
         },
-        "(2, '', 'XXXIII', '', '')": {
-          "total_matches": 33
-        },
         "(5, '', 'LVI', '', '')": {
           "total_matches": 108
+        },
+        "(2, '', 'XXXIII', '', '')": {
+          "total_matches": 33
         }
       }
     },
