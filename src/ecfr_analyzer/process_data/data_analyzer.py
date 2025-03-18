@@ -19,15 +19,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Import the eCFR API client and new analyzer modules
-from ecfr_analyzer.backend.ecfr_api import ECFRApiClient
-from ecfr_analyzer.backend.base_analyzer import BaseECFRAnalyzer
-from ecfr_analyzer.backend.word_count_analyzer import WordCountAnalyzer
-from ecfr_analyzer.backend.footprint_analyzer import (
+from ecfr_analyzer.process_data.ecfr_api import ECFRApiClient
+from ecfr_analyzer.process_data.base_analyzer import BaseECFRAnalyzer
+from ecfr_analyzer.process_data.word_count_analyzer import WordCountAnalyzer
+from ecfr_analyzer.process_data.footprint_analyzer import (
     FootprintAnalyzer,
     DEI_WORDS,
     BUREAUCRACY_WORDS,
 )
-from ecfr_analyzer.backend.corrections_analyzer import CorrectionsAnalyzer
+from ecfr_analyzer.process_data.corrections_analyzer import CorrectionsAnalyzer
 
 # Paths
 ANALYSIS_DIR = Path("data") / "analysis"

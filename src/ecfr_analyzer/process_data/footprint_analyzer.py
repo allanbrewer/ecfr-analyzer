@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 from collections import defaultdict, Counter
 
-from ecfr_analyzer.backend.base_analyzer import BaseECFRAnalyzer
+from ecfr_analyzer.process_data.base_analyzer import BaseECFRAnalyzer
 
 # Configure logging
 logger = logging.getLogger(__name__)
