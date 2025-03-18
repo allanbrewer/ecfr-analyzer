@@ -32,7 +32,8 @@
             <div class="col-md-4 mb-4 mb-md-0">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h3 class="stat-value">{{ "{:,}".format(word_count.word_count|default(0)) }}</h3>
+                        <h3 class="stat-value" id="agency-word-count">{{ "{:,}".format(word_count.word_count|default(0))
+                            }}</h3>
                         <p class="stat-label">Total Words</p>
                     </div>
                 </div>
@@ -40,7 +41,8 @@
             <div class="col-md-4 mb-4 mb-md-0">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h3 class="stat-value">{{ "{:,}".format(corrections.total_corrections|default(0)) }}</h3>
+                        <h3 class="stat-value" id="agency-corrections">{{
+                            "{:,}".format(corrections.total_corrections|default(0)) }}</h3>
                         <p class="stat-label">Total Corrections</p>
                     </div>
                 </div>
@@ -171,103 +173,131 @@
 
 {% block scripts %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Process data passed from Flask with proper validation
-    
-    // Agency data
-    var agencyData = {};
-    try {
-        agencyData = JSON.parse('{{ agency_json|safe }}');
-    } catch (error) {
-        console.error('Error parsing agency data:', error);
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("Agency detail page loaded");
 
-    // Word count data
-    var wordCountData = [];
-    {% if word_count_json %}
-    try {
-        wordCountData = JSON.parse('{{ word_count_json|safe }}');
-    } catch (error) {
-        console.error('Error parsing word count data:', error);
-    }
-    {% endif %}
+        // Process data passed from Flask with proper validation
 
-    // Corrections data
-    var correctionsData = [];
-    {% if corrections_json %}
-    try {
-        correctionsData = JSON.parse('{{ corrections_json|safe }}');
-    } catch (error) {
-        console.error('Error parsing corrections data:', error);
-    }
-    {% endif %}
-    
-    // Init charts if external function exists
-    if (typeof initAgencyDetailCharts === 'function') {
-        initAgencyDetailCharts(agencyData.slug);
-    } else {
-        // Fallback implementation for word count chart
-        if (wordCountData.length > 0 && typeof Plotly !== 'undefined') {
-            // Sort by word count (descending)
-            wordCountData.sort((a, b) => b.wordCount - a.wordCount);
+        // Agency data
+        var agencyData = {};
+        try {
+            agencyData = JSON.parse('{{ agency_json|safe }}');
+            console.log("Parsed agency data:", agencyData);
+        } catch (error) {
+            console.error('Error parsing agency data:', error);
+        }
 
-            // Get top 10 titles
-            var top10Titles = wordCountData.slice(0, 10);
+        // Word count data
+        var wordCountData = [];
+        {% if word_count_json %}
+        try {
+            wordCountData = JSON.parse('{{ word_count_json|safe }}');
+            console.log("Parsed word count data:", wordCountData);
+        } catch (error) {
+            console.error('Error parsing word count data:', error);
+        }
+        {% endif %}
 
-            var titleLabels = top10Titles.map(item => item.title);
-            var titleValues = top10Titles.map(item => item.wordCount);
+        // Corrections data
+        var correctionsData = [];
+        {% if corrections_json %}
+        try {
+            correctionsData = JSON.parse('{{ corrections_json|safe }}');
+            console.log("Parsed corrections data:", correctionsData);
+        } catch (error) {
+            console.error('Error parsing corrections data:', error);
+        }
+        {% endif %}
 
-            var titleWordCountChart = document.getElementById('title-word-count-chart');
-            if (titleWordCountChart) {
-                Plotly.newPlot(titleWordCountChart, [{
-                    x: titleLabels,
-                    y: titleValues,
-                    type: 'bar',
+        // Update metrics display directly
+        const wordCountElement = document.getElementById('agency-word-count');
+        const correctionsElement = document.getElementById('agency-corrections');
+
+        if (wordCountElement && wordCountData.length > 0) {
+            const total = wordCountData.reduce((sum, item) => sum + item.wordCount, 0);
+            console.log("Total word count calculated:", total);
+            wordCountElement.textContent = formatNumber(total);
+        } else if (wordCountElement) {
+            console.warn("Word count element found but no data available");
+        }
+
+        if (correctionsElement && correctionsData.length > 0) {
+            const total = correctionsData.reduce((sum, item) => sum + item.count, 0);
+            console.log("Total corrections calculated:", total);
+            correctionsElement.textContent = formatNumber(total);
+        } else if (correctionsElement) {
+            console.warn("Corrections element found but no data available");
+        }
+
+        // Init charts if external function exists
+        if (typeof initAgencyDetailCharts === 'function') {
+            console.log("Calling initAgencyDetailCharts with:", agencyData.slug);
+            initAgencyDetailCharts(agencyData.slug);
+        } else {
+            console.warn("initAgencyDetailCharts function not found, using fallback implementation");
+
+            // Fallback implementation for word count chart
+            if (wordCountData.length > 0 && typeof Plotly !== 'undefined') {
+                // Sort by word count (descending)
+                wordCountData.sort((a, b) => b.wordCount - a.wordCount);
+
+                // Get top 10 titles
+                var top10Titles = wordCountData.slice(0, 10);
+
+                var titleLabels = top10Titles.map(item => item.title);
+                var titleValues = top10Titles.map(item => item.wordCount);
+
+                var titleWordCountChart = document.getElementById('title-word-count-chart');
+                if (titleWordCountChart) {
+                    Plotly.newPlot(titleWordCountChart, [{
+                        x: titleLabels,
+                        y: titleValues,
+                        type: 'bar',
+                        marker: {
+                            color: '#0b3d91'
+                        }
+                    }], {
+                        margin: { t: 10, r: 10, b: 50, l: 50 },
+                        yaxis: {
+                            title: 'Word Count'
+                        }
+                    });
+                }
+            }
+
+            // Fallback implementation for corrections over time chart
+            var correctionsOverTimeChart = document.getElementById('corrections-over-time-chart');
+            if (correctionsData.length > 0 && correctionsOverTimeChart && typeof Plotly !== 'undefined') {
+                // Sort corrections by year
+                correctionsData.sort((a, b) => a.year - b.year);
+
+                var years = correctionsData.map(item => item.year);
+                var counts = correctionsData.map(item => item.count);
+
+                Plotly.newPlot(correctionsOverTimeChart, [{
+                    x: years,
+                    y: counts,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {
+                        color: '#0b3d91',
+                        width: 3
+                    },
                     marker: {
+                        size: 8,
                         color: '#0b3d91'
                     }
                 }], {
                     margin: { t: 10, r: 10, b: 50, l: 50 },
                     yaxis: {
-                        title: 'Word Count'
+                        title: 'Corrections'
+                    },
+                    xaxis: {
+                        title: 'Year'
                     }
                 });
             }
         }
-
-        // Fallback implementation for corrections over time chart
-        var correctionsOverTimeChart = document.getElementById('corrections-over-time-chart');
-        if (correctionsData.length > 0 && correctionsOverTimeChart && typeof Plotly !== 'undefined') {
-            // Sort corrections by year
-            correctionsData.sort((a, b) => a.year - b.year);
-
-            var years = correctionsData.map(item => item.year);
-            var counts = correctionsData.map(item => item.count);
-
-            Plotly.newPlot(correctionsOverTimeChart, [{
-                x: years,
-                y: counts,
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: {
-                    color: '#0b3d91',
-                    width: 3
-                },
-                marker: {
-                    size: 8,
-                    color: '#0b3d91'
-                }
-            }], {
-                margin: { t: 10, r: 10, b: 50, l: 50 },
-                yaxis: {
-                    title: 'Corrections'
-                },
-                xaxis: {
-                    title: 'Year'
-                }
-            });
-        }
-    }
-});
+    });
 </script>
 {% endblock %}

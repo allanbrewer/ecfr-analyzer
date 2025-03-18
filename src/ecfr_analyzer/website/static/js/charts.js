@@ -163,6 +163,225 @@ async function initAgencyCharts() {
 }
 
 /**
+ * Initialize agency detail page charts and components from the detail page
+ * This function is specifically called from the agency-detail.html page
+ * @param {string} agencySlug - The agency slug to display
+ */
+async function initAgencyDetailCharts(agencySlug) {
+    try {
+        console.log("Initializing agency detail charts for:", agencySlug);
+
+        // Check if we already have data from the HTML template
+        const hasLocalData =
+            typeof wordCountData !== 'undefined' &&
+            wordCountData.length > 0 &&
+            typeof correctionsData !== 'undefined' &&
+            correctionsData.length > 0;
+
+        if (hasLocalData) {
+            console.log("Using data passed from template");
+
+            // Update title word count chart
+            const titleWordCountChart = document.getElementById('title-word-count-chart');
+            if (titleWordCountChart && wordCountData.length > 0) {
+                // The data is already processed in the template
+                updateTitleWordCountChart(wordCountData);
+            }
+
+            // Update corrections chart
+            const correctionsOverTimeChart = document.getElementById('corrections-over-time-chart');
+            if (correctionsOverTimeChart && correctionsData.length > 0) {
+                updateCorrectionsOverTimeChart(correctionsData);
+            }
+
+            // Update metrics display
+            updateMetricsDisplay(agencySlug);
+
+            // Populate CFR title details table if it exists
+            populateCfrTitleDetailsTable();
+
+            return;
+        }
+
+        // If we don't have data from the template, load it via AJAX
+        console.log("Loading data via AJAX");
+
+        // Load all necessary data for the agency page
+        const wordCountData = await loadData('/data/analysis/word_count_by_agency.json');
+        const deiData = await loadData('/data/analysis/dei_footprint.json');
+        const bureaucracyData = await loadData('/data/analysis/bureaucracy_footprint.json');
+        const correctionsData = await loadData('/data/analysis/corrections_by_agency.json');
+        const correctionsOverTimeData = await loadData('/data/analysis/corrections_over_time.json');
+        const agencyHierarchyData = await loadData('/data/analysis/agency_hierarchy_map.json');
+
+        // Store data globally for use in agency functions
+        window.agencyData = {
+            wordCount: wordCountData,
+            dei: deiData,
+            bureaucracy: bureaucracyData,
+            corrections: correctionsData,
+            correctionsOverTime: correctionsOverTimeData,
+            hierarchy: agencyHierarchyData
+        };
+
+        // Update agency overview with the loaded data
+        updateAgencyOverview(agencySlug);
+
+        // Populate CFR title details table
+        populateCfrTitleDetailsTable();
+    } catch (error) {
+        console.error('Error initializing agency detail charts:', error);
+    }
+}
+
+/**
+ * Update the title word count chart with preformatted data
+ * @param {Array} wordCountData - Array of title word count data objects
+ */
+function updateTitleWordCountChart(wordCountData) {
+    const chartElement = document.getElementById('title-word-count-chart');
+    if (!chartElement) {
+        console.warn("Title word count chart element not found");
+        return;
+    }
+
+    if (!wordCountData || !wordCountData.length) {
+        console.warn("No word count data available");
+        chartElement.innerHTML = '<div class="text-center p-4"><p class="text-muted">No word count data available</p></div>';
+        return;
+    }
+
+    console.log("Updating title word count chart with data:", wordCountData);
+
+    // Sort by word count (descending)
+    wordCountData.sort((a, b) => b.wordCount - a.wordCount);
+
+    // Get top 10 titles
+    const top10Titles = wordCountData.slice(0, 10);
+
+    const titleLabels = top10Titles.map(item => item.title);
+    const titleValues = top10Titles.map(item => item.wordCount);
+
+    const data = [{
+        x: titleLabels,
+        y: titleValues,
+        type: 'bar',
+        marker: {
+            color: '#0b3d91'
+        }
+    }];
+
+    const layout = {
+        margin: { t: 10, r: 10, b: 50, l: 60 },
+        yaxis: {
+            title: 'Word Count'
+        },
+        height: 400
+    };
+
+    Plotly.newPlot(chartElement, data, layout, { responsive: true });
+}
+
+/**
+ * Update the corrections over time chart with preformatted data
+ * @param {Array} correctionsData - Array of corrections over time data objects
+ */
+function updateCorrectionsOverTimeChart(correctionsData) {
+    const chartElement = document.getElementById('corrections-over-time-chart');
+    if (!chartElement || !correctionsData.length) return;
+
+    // Sort corrections by year
+    correctionsData.sort((a, b) => a.year - b.year);
+
+    const years = correctionsData.map(item => item.year);
+    const counts = correctionsData.map(item => item.count);
+
+    const data = [{
+        x: years,
+        y: counts,
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {
+            color: '#0b3d91',
+            width: 3
+        },
+        marker: {
+            size: 8,
+            color: '#0b3d91'
+        }
+    }];
+
+    const layout = {
+        margin: { t: 10, r: 10, b: 50, l: 60 },
+        yaxis: {
+            title: 'Corrections'
+        },
+        xaxis: {
+            title: 'Year'
+        },
+        height: 400
+    };
+
+    Plotly.newPlot(chartElement, data, layout, { responsive: true });
+}
+
+/**
+ * Update metrics display with values from agency data
+ * @param {string} agencySlug - The agency slug
+ */
+function updateMetricsDisplay(agencySlug) {
+    console.log("Updating metrics display for:", agencySlug);
+
+    // Try to get metrics from preloaded template data if available
+    const wordCountElement = document.getElementById('agency-word-count');
+    const correctionsElement = document.getElementById('agency-corrections');
+
+    // Check if we have global agencyData from the template
+    if (typeof agencyData === 'object') {
+        console.log("Using agencyData from template:", agencyData);
+
+        // Update word count
+        if (wordCountElement) {
+            if (typeof wordCountData !== 'undefined' && wordCountData.length > 0) {
+                // Calculate total word count from all titles
+                const total = wordCountData.reduce((sum, item) => sum + item.wordCount, 0);
+                console.log("Total word count from wordCountData:", total);
+                wordCountElement.textContent = formatNumber(total);
+            }
+        }
+
+        // Update corrections
+        if (correctionsElement) {
+            if (typeof correctionsData !== 'undefined' && correctionsData.length > 0) {
+                // Calculate total corrections from all years
+                const total = correctionsData.reduce((sum, item) => sum + item.count, 0);
+                console.log("Total corrections from correctionsData:", total);
+                correctionsElement.textContent = formatNumber(total);
+            }
+        }
+
+        return;
+    }
+
+    // If we don't have template data, try to get it from the window.agencyData
+    if (window.agencyData && wordCountElement) {
+        const wordCountData = window.agencyData.wordCount;
+        if (wordCountData && wordCountData.agencies && wordCountData.agencies[agencySlug]) {
+            const count = wordCountData.agencies[agencySlug].word_count || 0;
+            wordCountElement.textContent = formatNumber(count);
+        }
+    }
+
+    if (window.agencyData && correctionsElement) {
+        const correctionsData = window.agencyData.corrections;
+        if (correctionsData && correctionsData.agencies && correctionsData.agencies[agencySlug]) {
+            const count = correctionsData.agencies[agencySlug].total_corrections || 0;
+            correctionsElement.textContent = formatNumber(count);
+        }
+    }
+}
+
+/**
  * Initialize search page functionality
  */
 function initSearchPage() {
@@ -1579,7 +1798,7 @@ async function loadData(url) {
 
 /**
  * Update the agency overview card with data for the selected agency
- * @param {string} agencySlug - The agency slug to get data for
+ * @param {string} agencySlug - The agency slug to show data for
  */
 function updateAgencyOverview(agencySlug) {
     console.log(`Updating agency overview for: ${agencySlug}`);
@@ -1591,34 +1810,40 @@ function updateAgencyOverview(agencySlug) {
 
     const { wordCount, corrections, dei, bureaucracy, hierarchy } = window.agencyData;
 
-    if (!wordCount || !wordCount.agencies || !corrections || !corrections.agencies ||
-        !dei || !dei.agencies || !bureaucracy || !bureaucracy.agencies) {
-        console.error("Missing required agency data");
+    if (!wordCount || !wordCount.agencies || !agencySlug || !hierarchy) {
+        console.error("Missing required data for updating agency overview");
+        console.log("Available data:", { wordCount, corrections, dei, bureaucracy, hierarchy });
         return;
     }
 
-    console.log("Data available for update:", {
-        wordCountAgencies: Object.keys(wordCount.agencies).length,
-        correctionsAgencies: Object.keys(corrections.agencies).length,
-        deiAgencies: Object.keys(dei.agencies).length,
-        bureaucracyAgencies: Object.keys(bureaucracy.agencies).length
-    });
-
-    // Check if this agency exists in our data
-    if (!wordCount.agencies[agencySlug]) {
-        console.error(`Agency ${agencySlug} not found in word count data`);
-        return;
-    }
-
-    // Get agency data from each dataset
+    // Get agency word count data
     const agencyWordCount = wordCount.agencies[agencySlug];
+    if (!agencyWordCount) {
+        console.error(`No word count data found for agency: ${agencySlug}`);
+        return;
+    }
+
+    // Get agency corrections data
     const agencyCorrections = corrections?.agencies?.[agencySlug];
+    if (!agencyCorrections) {
+        console.log(`No corrections data found for agency: ${agencySlug}`);
+    }
+
+    // Get agency DEI data
     const agencyDei = dei?.agencies?.[agencySlug];
+    if (!agencyDei) {
+        console.log(`No DEI data found for agency: ${agencySlug}`);
+    }
+
+    // Get agency bureaucracy data
     const agencyBureaucracy = bureaucracy?.agencies?.[agencySlug];
+    if (!agencyBureaucracy) {
+        console.log(`No bureaucracy data found for agency: ${agencySlug}`);
+    }
 
     // Calculate metrics
-    const count = agencyWordCount.total || 0;
-    const correctionsCount = agencyCorrections?.total || 0;
+    const count = agencyWordCount?.word_count || 0;
+    const correctionsCount = agencyCorrections?.total_corrections || 0;
     const deiCount = agencyDei?.total || 0;
     const bureaucracyCount = agencyBureaucracy?.total || 0;
 
@@ -1864,3 +2089,101 @@ function updateAgencyKeywordsChart(deiData, bureaucracyData) {
 
     Plotly.newPlot(chartElement, data, layout, { responsive: true });
 }
+
+/**
+ * Populate the CFR title details table with data from the template
+ * This function uses the global wordCountData and correctionsData variables
+ * that are populated by the template
+ */
+function populateCfrTitleDetailsTable() {
+    const titleDetailsTable = document.getElementById('cfr-title-details-table');
+    if (!titleDetailsTable) return;
+
+    const tableBody = titleDetailsTable.querySelector('tbody');
+    if (!tableBody) return;
+
+    // If the table already has content (from server-side rendering), don't replace it
+    if (tableBody.querySelector('tr:not(.empty-message)')) {
+        console.log("CFR title details table already populated");
+        return;
+    }
+
+    // Clear any existing "no data" message
+    tableBody.innerHTML = '';
+
+    // Check if we have title data to display
+    if (!wordCountData || !wordCountData.length) {
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No title data available</td></tr>';
+        return;
+    }
+
+    // Create map from title number to title data for easier lookup
+    const titleDataMap = {};
+    wordCountData.forEach(item => {
+        const titleNum = item.title.replace('Title ', '');
+        titleDataMap[titleNum] = {
+            title: item.title,
+            wordCount: item.wordCount
+        };
+    });
+
+    // Create a map for corrections data if available
+    const correctionsMap = {};
+    if (correctionsData && correctionsData.length) {
+        // This would need to be structured differently based on how corrections are organized
+        // For now, we'll just leave it empty
+    }
+
+    // Add rows for each title
+    Object.keys(titleDataMap).forEach(titleNum => {
+        const data = titleDataMap[titleNum];
+        const row = document.createElement('tr');
+
+        // Title number
+        const titleCell = document.createElement('td');
+        titleCell.textContent = data.title;
+        row.appendChild(titleCell);
+
+        // Title name (might not be available)
+        const nameCell = document.createElement('td');
+        nameCell.textContent = data.name || '-';
+        row.appendChild(nameCell);
+
+        // Word count
+        const wordCountCell = document.createElement('td');
+        wordCountCell.textContent = formatNumber(data.wordCount);
+        row.appendChild(wordCountCell);
+
+        // Corrections
+        const correctionsCell = document.createElement('td');
+        const corrections = correctionsMap[titleNum] || 0;
+        correctionsCell.textContent = formatNumber(corrections);
+        row.appendChild(correctionsCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Initialize the appropriate page when document is ready
+document.addEventListener('DOMContentLoaded', function () {
+    // Determine what page we're on
+    const pageUrl = window.location.pathname;
+
+    if (pageUrl.includes('index.html') || pageUrl === '/' || pageUrl === '') {
+        // Dashboard page
+        console.log('Initializing dashboard page');
+        initDashboardCharts();
+    }
+    else if (pageUrl.includes('agency.html')) {
+        // Agency overview page
+        console.log('Initializing agency overview page');
+        initAgencyCharts();
+    }
+    else if (pageUrl.includes('search.html')) {
+        // Search page
+        console.log('Initializing search page');
+        initSearchPage();
+    }
+    // Note: agency-detail.html page is initialized directly in the template
+    // via the initAgencyDetailCharts function
+});

@@ -2,6 +2,7 @@
 /data/admin
 /data/cache
 /data/raw
+/data/analysis_cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
