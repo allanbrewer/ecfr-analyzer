@@ -1,6 +1,6 @@
-# eCFR Analyzer
+# ECFR Analyzer
 
-A comprehensive tool for analyzing U.S. Electronic Code of Federal Regulations (eCFR) data to extract insights about regulatory complexity, historical changes, and agency-specific metrics.
+A tool for analyzing the Electronic Code of Federal Regulations (eCFR) to identify patterns in regulatory language, particularly focusing on DEI (Diversity, Equity, and Inclusion) terminology and bureaucratic complexity.
 
 ## Project Overview
 
@@ -12,65 +12,153 @@ The eCFR Analyzer retrieves and processes data from the [Electronic Code of Fede
 - Keyword footprint analysis across agencies
 - Bureaucratic complexity and vague language metrics
 
-## Key Features
+## Features
 
-### Data Retrieval
-- Fetches real-time data from eCFR API endpoints
-- Downloads bulk historical data from GovInfo
-- Caches responses to minimize API requests
+- Analysis of DEI-related terminology in regulations
+- Measurement of bureaucratic language complexity
+- Historical correction tracking
+- Agency-specific analysis
+- Interactive data visualization
+- Modern Next.js and TypeScript implementation
 
-### Analytics
-- **Word Count Analysis**: Measures regulatory volume by agency
-- **Historical Changes Analysis**: Tracks changes to regulations over time
-- **Corrections Analysis**: Monitors corrections made to published regulations
-- **Keyword Footprint Analysis**: Identifies prevalence of specified keywords (e.g., DEI terms, waste-related terms)
-- **Vague Language Analysis**: Identifies bureaucratic complexity and ambiguous language
+## Project Structure
 
-### Visualizations
-- Word count bar charts and pie charts
-- Historical change timelines 
-- Agency correction heat maps
-- Keyword distribution visualizations
-- Comparative agency metrics
+```
+ecfr-analyzer/
+├── frontend/                   # Next.js frontend application
+│   ├── src/
+│   │   ├── app/                # Next.js app router pages
+│   │   ├── components/         # React components
+│   │   ├── types/              # TypeScript type definitions
+│   │   └── utils/              # Utility functions
+│   ├── public/                 # Static assets
+│   └── package.json            # Frontend dependencies
+├── data/                       # Analysis data files
+│   ├── analysis/               # Generated analysis results
+│   └── raw/                    # Raw eCFR data
+├── src/
+│    └── ecfr_analyzer/         # Source code
+│       ├── process_data/       # Data processing and analysis
+│          ├── ecfr_api.py      # API client for data retrieval
+│          └── data_analyzer.py # Analysis algorithms
+└── README.md
+```
+
+## Prerequisites
+
+- Python 3.11 or higher
+- Node.js 18 or higher
+- npm or yarn
 
 ## Installation
 
-### Prerequisites
-- Python 3.11 or higher
-- Poetry (Python package manager)
-- GovInfo API key ([request here](https://api.govinfo.gov/))
-
-### Setup Environment
-
+1. Clone the repository:
 ```bash
-# Clone repository (if not already done)
-git clone https://github.com/abrewer/ecfr-analyzer.git
+git clone https://github.com/yourusername/ecfr-analyzer.git
 cd ecfr-analyzer
+```
 
-# Set up Python environment with Poetry
-poetry env use /usr/local/bin/python3.11
+2. Install Python dependencies:
+```bash
+poetry env use python3.11
 poetry install
 ```
 
-### Configure API Keys
-
-Create an environment file:
-
+3. Install frontend dependencies:
 ```bash
-touch .env
+cd frontend
+npm install
+# or
+yarn install
 ```
 
-Add your GovInfo API key to the `.env` file:
+## Development
 
+1. Start the frontend development server:
+```bash
+cd frontend
+npm run dev
+# or
+yarn dev
 ```
-GOVINFO_API_KEY = "your-govinfo-api-key"
+
+2. The application will be available at `http://localhost:3000`
+
+## Building for Production
+
+1. Build the frontend:
+```bash
+cd frontend
+npm run build
+# or
+yarn build
 ```
 
-## Usage
+2. Start the production server:
+```bash
+npm run start
+# or
+yarn start
+```
 
-### Download Data
+## Deployment
 
-Download necessary eCFR data before running analyses:
+The frontend can be deployed to any static hosting service that supports Next.js applications. Here are some popular options:
+
+### Vercel (Recommended)
+1. Install Vercel CLI:
+```bash
+npm install -g vercel
+```
+
+2. Deploy:
+```bash
+cd frontend
+vercel
+```
+
+### Netlify
+1. Install Netlify CLI:
+```bash
+npm install -g netlify-cli
+```
+
+2. Deploy:
+```bash
+cd frontend
+netlify deploy
+```
+
+### GitHub Pages
+1. Add the following to your `next.config.js`:
+```javascript
+module.exports = {
+  output: 'export',
+  basePath: '/ecfr-analyzer',
+  images: {
+    unoptimized: true
+  }
+}
+```
+
+2. Build and deploy:
+```bash
+cd frontend
+npm run build
+npm run export
+```
+
+## Data Analysis
+
+The Python scripts in the `scripts` directory handle the analysis of eCFR data. These scripts generate the JSON files used by the frontend application.
+
+### Running Analysis
+
+1. Ensure you have the required Python packages installed:
+```bash
+poetry install
+```
+2. Download the data
 
 ```bash
 # Download administrative data (agencies, corrections)
@@ -80,47 +168,20 @@ poetry run python -m ecfr_analyzer.process_data.ecfr_api download_admin_data
 poetry run python -m ecfr_analyzer.process_data.ecfr_api download_bulk_data
 ```
 
-### Run Analyses
-
-Run the full suite of analyses:
-
+3. Run the analysis scripts:
 ```bash
 poetry run python -m ecfr_analyzer.process_data.data_analyzer
 ```
 
-### Web Interface
+The analysis results will be saved in the `data/analysis` directory.
 
-Start the web interface to view visualizations:
+## Contributing
 
-```bash
-poetry run python -m ecfr_analyzer.website.server
-```
-
-Navigate to `http://localhost:8000` in your browser to access the dashboard.
-
-## Output
-
-Analysis results are stored in the `data/analysis` directory in JSON format. These can be:
-
-1. Loaded directly into other applications
-2. Visualized through the web interface
-3. Exported to CSV format
-
-## Project Structure
-
-```
-ecfr-analyzer/
-├── src/
-│    └── ecfr_analyzer/          # Source code
-│       ├── process_data/       # Data processing and analysis
-│       │   ├── ecfr_api.py     # API client for data retrieval
-│       │   └── data_analyzer.py # Analysis algorithms
-│       └── website/            # All files to host static website
-├── .gitignore
-├── LICENSE
-├── pyproject.toml
-└── README.md
-```
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
