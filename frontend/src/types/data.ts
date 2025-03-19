@@ -38,12 +38,16 @@ export interface AgencyHierarchyData {
 export interface AgencyReference {
     count: number;
     description: string;
+    total_matches: number;
+    keyword_matches?: Record<string, number>;
 }
 
 export interface AgencyData {
     total: number;
+    word_count: number;
     titles: { [key: string]: number };
     references: Record<string, AgencyReference>;
+    keyword_matches: Record<string, number>;
 }
 
 export interface Correction {

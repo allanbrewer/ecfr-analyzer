@@ -6,36 +6,50 @@ import { usePathname } from 'next/navigation';
 export default function Navigation() {
     const pathname = usePathname();
 
+    const isActive = (path: string) => {
+        return pathname === path;
+    };
+
     return (
-        <nav className="bg-white shadow-md">
+        <nav className="bg-white shadow">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16">
-                    <div className="flex">
-                        <Link href="/" className="flex items-center">
-                            <span className="text-xl font-bold text-blue-900">ECFR Analyzer</span>
-                        </Link>
-                    </div>
-                    <div className="flex items-center space-x-4">
+                <div className="flex justify-end h-16">
+                    <div className="flex space-x-8">
                         <Link
                             href="/"
-                            className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/' ? 'text-blue-900 bg-blue-50' : 'text-gray-700 hover:text-blue-900 hover:bg-blue-50'
+                            className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive('/')
+                                ? 'border-blue-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                                 }`}
                         >
                             Dashboard
                         </Link>
                         <Link
                             href="/agency"
-                            className={`px-3 py-2 rounded-md text-sm font-medium ${pathname.startsWith('/agency') ? 'text-blue-900 bg-blue-50' : 'text-gray-700 hover:text-blue-900 hover:bg-blue-50'
+                            className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive('/agency')
+                                ? 'border-blue-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                                 }`}
                         >
                             Agency Detail
                         </Link>
                         <Link
                             href="/historic"
-                            className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/historic' ? 'text-blue-900 bg-blue-50' : 'text-gray-700 hover:text-blue-900 hover:bg-blue-50'
+                            className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive('/historic')
+                                ? 'border-blue-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                                 }`}
                         >
                             Historic Corrections
+                        </Link>
+                        <Link
+                            href="/text-analysis"
+                            className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive('/text-analysis')
+                                ? 'border-blue-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                }`}
+                        >
+                            Text Analysis
                         </Link>
                     </div>
                 </div>
