@@ -51,6 +51,7 @@ export interface Correction {
     year: number;
     corrective_action: string;
     fr_citation: string;
+    cfr_reference: string;
     hierarchy: {
         title: string;
         section?: string;
