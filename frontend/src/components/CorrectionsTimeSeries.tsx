@@ -102,6 +102,16 @@ export default function CorrectionsTimeSeries({ agency, correctionsData }: Corre
             title: {
                 display: true,
                 text: agency ? `Corrections Over Time for ${agency.name}` : 'Total Corrections Over Time'
+            },
+            tooltip: {
+                mode: 'index' as const,
+                intersect: false,
+                callbacks: {
+                    label: (context: any) => {
+                        const year = labels[context.dataIndex];
+                        return `Year ${year}: ${context.parsed.y.toLocaleString()} corrections`;
+                    }
+                }
             }
         },
         scales: {
