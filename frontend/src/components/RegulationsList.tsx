@@ -1,82 +1,65 @@
 'use client';
 
-import { Agency, WordCountData, CorrectionsByAgencyData } from '@/types/data';
+import { Agency, WordCountData } from '@/types/data';
 
 interface RegulationsListProps {
     agency: Agency | null;
     wordCountData: WordCountData | null;
-    correctionsData: CorrectionsByAgencyData | null;
 }
 
-export default function RegulationsList({ agency, wordCountData, correctionsData }: RegulationsListProps) {
-    if (!agency || !wordCountData || !correctionsData) {
-        return (
-            <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Regulations</h3>
-                <p className="text-gray-500">No data available</p>
-            </div>
-        );
-    }
+export default function RegulationsList({ agency, wordCountData }: RegulationsListProps) {
+    const getReferences = () => {
+        if (!wordCountData || !agency) return [];
 
-    const agencyData = wordCountData.agencies[agency.slug];
-    const correctionsAgencyData = correctionsData.agencies[agency.slug];
+        const agencyData = wordCountData.agencies[agency.slug];
+        if (!agencyData?.references) return [];
 
-    if (!agencyData?.titles || !correctionsAgencyData?.references) {
-        return (
-            <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Regulations</h3>
-                <p className="text-gray-500">No regulation data available for this agency</p>
-            </div>
-        );
-    }
+        return Object.entries(agencyData.references)
+            .map(([key, ref]) => {
+                // Extract title number from the tuple string (e.g., "(1, '', 'III', '', '')")
+                const titleMatch = key.match(/^\((\d+)/);
+                const titleNum = titleMatch ? parseInt(titleMatch[1]) : 0;
+                return {
+                    title: titleNum,
+                    description: ref.description || 'N/A',
+                    wordCount: ref.count
+                };
+            })
+            .sort((a, b) => a.title - b.title);
+    };
 
-    // Get all titles from word count data
-    const regulations = Object.entries(agencyData.titles || {}).map(([title, wordCount]) => {
-        // Find corrections for this title
-        const titleCorrections = Object.values(correctionsAgencyData.references || {})
-            .filter(ref => ref.cfr_reference.startsWith(title))
-            .map(ref => ({
-                reference: ref.cfr_reference,
-                corrections: ref.corrections || []
-            }));
-
-        return {
-            title,
-            wordCount,
-            corrections: titleCorrections
-        };
-    });
-
-    // Sort by word count in descending order
-    regulations.sort((a, b) => b.wordCount - a.wordCount);
+    const references = getReferences();
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Regulations</h3>
-            <div className="space-y-6">
-                {regulations.map((regulation) => (
-                    <div key={regulation.title} className="border-b border-gray-200 pb-4 last:border-b-0">
-                        <div className="flex justify-between items-start mb-2">
-                            <h4 className="text-md font-medium text-blue-900">{regulation.title}</h4>
-                            <span className="text-sm text-gray-500">{regulation.wordCount.toLocaleString()} words</span>
-                        </div>
-                        {regulation.corrections.length > 0 && (
-                            <div className="mt-2">
-                                <h5 className="text-sm font-medium text-gray-700 mb-1">Corrections:</h5>
-                                <ul className="list-disc list-inside space-y-1">
-                                    {regulation.corrections.map((correction, index) => (
-                                        <li key={`${correction.reference}-${index}`} className="text-sm text-gray-600">
-                                            <span className="font-medium">{correction.reference}</span>
-                                            <p className="ml-4 text-gray-500">
-                                                {correction.corrections.length} correction{correction.corrections.length !== 1 ? 's' : ''}
-                                            </p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                ))}
+        <div className="mt-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Regulations</h2>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Word Count</th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {references.map((ref, index) => (
+                                <tr key={index} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {ref.title}
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-500">
+                                        {ref.description}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {ref.wordCount.toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

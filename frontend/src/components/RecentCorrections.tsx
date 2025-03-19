@@ -18,7 +18,7 @@ export default function RecentCorrections({ corrections }: RecentCorrectionsProp
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-blue-900">Recent Corrections</h2>
                 <Link
-                    href="/corrections"
+                    href="/historic"
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
                 >
                     View All Corrections

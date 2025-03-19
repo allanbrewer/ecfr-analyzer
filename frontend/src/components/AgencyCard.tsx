@@ -28,7 +28,7 @@ export default function AgencyCard({
     const subAgencyCount = agency.children?.length || 0;
     const subAgencyText = isIndependent
         ? "Independent"
-        : `${subAgencyCount} Sub-agencies`;
+        : `${subAgencyCount} Children`;
     const subAgencyStyle = isIndependent
         ? "bg-indigo-50 text-indigo-700"
         : "bg-blue-50 text-blue-700";

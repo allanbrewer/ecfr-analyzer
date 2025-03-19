@@ -10,7 +10,10 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    LogarithmicScale,
+    ChartOptions,
+    ChartData
 } from 'chart.js';
 
 ChartJS.register(
@@ -19,7 +22,8 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    LogarithmicScale
 );
 
 interface WordCountChartProps {
@@ -27,66 +31,63 @@ interface WordCountChartProps {
     wordCountData: WordCountData | null;
 }
 
-function WordCountChart({ agency, wordCountData }: WordCountChartProps) {
-    if (!wordCountData || !wordCountData.agencies) {
-        return (
-            <div className="bg-white rounded-lg shadow-md p-6">
-                <div className="text-center text-gray-500">
-                    No word count data available
-                </div>
-            </div>
-        );
-    }
+export default function WordCountChart({ agency, wordCountData }: WordCountChartProps) {
+    const getTitleWordCounts = () => {
+        if (!wordCountData) return { labels: [], data: [], indices: [] };
 
-    const getTitleData = () => {
-        try {
-            const titleData: { [key: string]: number } = {};
+        // Initialize counts for all 50 titles
+        const titleCounts = new Array(50).fill(0);
+        const labels = Array.from({ length: 50 }, (_, i) => `Title ${i + 1}`);
 
-            if (agency) {
-                // For specific agency
-                const agencyData = wordCountData.agencies[agency.slug];
-                if (!agencyData?.titles) {
-                    console.warn(`No titles data found for agency: ${agency.slug}`);
-                    return { labels: [], data: [] };
-                }
-                Object.entries(agencyData.titles).forEach(([title, count]) => {
-                    titleData[title] = count;
-                });
-            } else {
-                // For all agencies
-                Object.values(wordCountData.agencies).forEach(agencyData => {
-                    if (agencyData?.titles) {
-                        Object.entries(agencyData.titles).forEach(([title, count]) => {
-                            titleData[title] = (titleData[title] || 0) + count;
-                        });
+        if (agency) {
+            // For specific agency, count words by title
+            const agencyData = wordCountData.agencies[agency.slug];
+            if (agencyData?.references) {
+                Object.entries(agencyData.references).forEach(([key, ref]) => {
+                    // Extract title number from the tuple string (e.g., "(1, '', 'III', '', '')")
+                    const titleMatch = key.match(/^\((\d+)/);
+                    if (titleMatch) {
+                        const titleNum = parseInt(titleMatch[1]) - 1; // Convert to 0-based index
+                        if (titleNum >= 0 && titleNum < 50) {
+                            titleCounts[titleNum] += ref.count;
+                        }
                     }
                 });
             }
-
-            // Sort by title number
-            const sortedTitles = Object.keys(titleData).sort((a, b) => {
-                const numA = parseInt(a.split(' ')[0]);
-                const numB = parseInt(b.split(' ')[0]);
-                return numA - numB;
+        } else {
+            // For all agencies, sum up words by title
+            Object.values(wordCountData.agencies).forEach(agencyData => {
+                if (!agencyData?.references) return;
+                Object.entries(agencyData.references).forEach(([key, ref]) => {
+                    const titleMatch = key.match(/^\((\d+)/);
+                    if (titleMatch) {
+                        const titleNum = parseInt(titleMatch[1]) - 1;
+                        if (titleNum >= 0 && titleNum < 50) {
+                            titleCounts[titleNum] += ref.count;
+                        }
+                    }
+                });
             });
-
-            return {
-                labels: sortedTitles,
-                data: sortedTitles.map(title => titleData[title])
-            };
-        } catch (error) {
-            console.error('Error processing word count data:', error);
-            return { labels: [], data: [] };
         }
+
+        // Filter out titles with zero counts
+        const nonZeroData = titleCounts.map((count, index) => ({ count, index }))
+            .filter(item => item.count > 0);
+
+        return {
+            labels: nonZeroData.map(item => labels[item.index]),
+            data: nonZeroData.map(item => item.count),
+            indices: nonZeroData.map(item => item.index)
+        };
     };
 
-    const { labels, data } = getTitleData();
+    const { labels, data, indices } = getTitleWordCounts();
 
-    const chartData = {
+    const chartData: ChartData<'bar'> = {
         labels,
         datasets: [
             {
-                label: 'Word Count',
+                label: agency ? `Word Count for ${agency.name}` : 'Total Word Count',
                 data,
                 backgroundColor: 'rgba(59, 130, 246, 0.5)',
                 borderColor: 'rgb(59, 130, 246)',
@@ -95,33 +96,45 @@ function WordCountChart({ agency, wordCountData }: WordCountChartProps) {
         ]
     };
 
-    const options = {
+    const options: ChartOptions<'bar'> = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top' as const
+                position: 'top'
             },
             title: {
                 display: true,
-                text: 'Word Count by Title'
+                text: agency ? `Word Count by Title for ${agency.name}` : 'Total Word Count by Title'
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: (context) => {
+                        const titleNum = indices[context.dataIndex] + 1;
+                        return `Title ${titleNum}: ${context.parsed.y.toLocaleString()} words`;
+                    }
+                }
             }
         },
         scales: {
             y: {
-                beginAtZero: true,
+                type: 'logarithmic',
+                min: 1, // Start from 1 to avoid log(0)
                 title: {
                     display: true,
-                    text: 'Word Count'
+                    text: 'Number of Words (log scale)'
+                },
+                ticks: {
+                    callback: function (value) {
+                        return Number(value).toLocaleString();
+                    }
                 }
             },
             x: {
                 title: {
                     display: true,
                     text: 'Title'
-                },
-                ticks: {
-                    maxRotation: 45,
-                    minRotation: 45
                 }
             }
         }
@@ -132,6 +145,4 @@ function WordCountChart({ agency, wordCountData }: WordCountChartProps) {
             <Bar data={chartData} options={options} />
         </div>
     );
-}
-
-export default WordCountChart; 
+} 

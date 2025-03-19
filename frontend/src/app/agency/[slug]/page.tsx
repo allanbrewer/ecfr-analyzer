@@ -125,6 +125,8 @@ export default function AgencyDetailPage() {
                     agency={selectedAgency}
                     wordCountData={wordCountData}
                     correctionsData={correctionsData}
+                    deiData={deiData}
+                    bureaucracyData={bureaucracyData}
                     hierarchyData={hierarchyData}
                 />
 
@@ -151,7 +153,6 @@ export default function AgencyDetailPage() {
                         <RegulationsList
                             agency={selectedAgency}
                             wordCountData={wordCountData}
-                            correctionsData={correctionsData}
                         />
                     </>
                 )}
